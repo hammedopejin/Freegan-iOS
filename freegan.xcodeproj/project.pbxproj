@@ -7,13 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F0CFD8B21E69CC20017C581 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */; };
+		0F0CFD8E21E6A03A0017C581 /* FancyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD8D21E6A03A0017C581 /* FancyField.swift */; };
+		0F0CFD9021E6A2450017C581 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD8F21E6A2450017C581 /* FancyButton.swift */; };
+		0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9221E6A2C30017C581 /* Constants.swift */; };
+		0F0CFD9621E6B0E40017C581 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9521E6B0E40017C581 /* User.swift */; };
+		0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9721E6CF3D0017C581 /* Utilities.swift */; };
+		0F0CFD9A21E71A710017C581 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9921E71A710017C581 /* GoogleService-Info.plist */; };
 		0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */; };
-		0F3FC46721E57E1B006BAC83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC46621E57E1B006BAC83 /* ViewController.swift */; };
 		0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46821E57E1B006BAC83 /* Main.storyboard */; };
 		0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */; };
 		0F3FC46F21E57E1D006BAC83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46D21E57E1D006BAC83 /* LaunchScreen.storyboard */; };
 		0F3FC47A21E57E1E006BAC83 /* freeganTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC47921E57E1E006BAC83 /* freeganTests.swift */; };
 		0F3FC48521E57E1E006BAC83 /* freeganUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */; };
+		377C170BD71EA9073E6A0489 /* Pods_freeganUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A0F7DF9C63D7A597B18A11 /* Pods_freeganUITests.framework */; };
+		3A20BC4F36BAE4419023CC8B /* Pods_freeganTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F287F601FE960B6E13972DE2 /* Pods_freeganTests.framework */; };
+		98BA188621CBA4309215BBF8 /* Pods_freegan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFADAFE74528916A3644DD63 /* Pods_freegan.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +43,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		008371CFC051288E67223300 /* Pods-freeganUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-freeganUITests/Pods-freeganUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		0F0CFD8D21E6A03A0017C581 /* FancyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FancyField.swift; sourceTree = "<group>"; };
+		0F0CFD8F21E6A2450017C581 /* FancyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
+		0F0CFD9221E6A2C30017C581 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		0F0CFD9521E6B0E40017C581 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0F0CFD9721E6CF3D0017C581 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		0F0CFD9921E71A710017C581 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F3FC46121E57E1B006BAC83 /* freegan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freegan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0F3FC46621E57E1B006BAC83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0F3FC46921E57E1B006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F3FC46E21E57E1D006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +63,14 @@
 		0F3FC48021E57E1E006BAC83 /* freeganUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freeganUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freeganUITests.swift; sourceTree = "<group>"; };
 		0F3FC48621E57E1E006BAC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E5DD016FDEF73092998AD08 /* Pods-freeganTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-freeganTests/Pods-freeganTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5A42F7627D36014919C40C7B /* Pods-freeganTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-freeganTests/Pods-freeganTests.release.xcconfig"; sourceTree = "<group>"; };
+		784BB05394710C3C7BF7A3A2 /* Pods-freeganUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-freeganUITests/Pods-freeganUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C3A0F7DF9C63D7A597B18A11 /* Pods_freeganUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_freeganUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFADAFE74528916A3644DD63 /* Pods_freegan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_freegan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFC41019163179983BC7B4BB /* Pods-freegan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freegan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-freegan/Pods-freegan.debug.xcconfig"; sourceTree = "<group>"; };
+		F287F601FE960B6E13972DE2 /* Pods_freeganTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_freeganTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4A75571943FFAF5DADEBFF3 /* Pods-freegan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freegan.release.xcconfig"; path = "Pods/Target Support Files/Pods-freegan/Pods-freegan.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98BA188621CBA4309215BBF8 /* Pods_freegan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A20BC4F36BAE4419023CC8B /* Pods_freeganTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +94,47 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				377C170BD71EA9073E6A0489 /* Pods_freeganUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F0CFD8921E69C730017C581 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0F0CFD8C21E6A01E0017C581 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFD8D21E6A03A0017C581 /* FancyField.swift */,
+				0F0CFD8F21E6A2450017C581 /* FancyButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0F0CFD9121E6A2AA0017C581 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFD9221E6A2C30017C581 /* Constants.swift */,
+				0F0CFD9721E6CF3D0017C581 /* Utilities.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0F0CFD9421E6B0CC0017C581 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFD9521E6B0E40017C581 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0F3FC45821E57E1B006BAC83 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +142,8 @@
 				0F3FC47821E57E1E006BAC83 /* freeganTests */,
 				0F3FC48321E57E1E006BAC83 /* freeganUITests */,
 				0F3FC46221E57E1B006BAC83 /* Products */,
+				6CA6D8929B178935F48F05F9 /* Pods */,
+				7ED558D5557864075A70EF79 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,12 +160,16 @@
 		0F3FC46321E57E1B006BAC83 /* freegan */ = {
 			isa = PBXGroup;
 			children = (
+				0F0CFD9421E6B0CC0017C581 /* Model */,
+				0F0CFD9121E6A2AA0017C581 /* Utils */,
+				0F0CFD8C21E6A01E0017C581 /* View */,
+				0F0CFD8921E69C730017C581 /* Controller */,
 				0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */,
-				0F3FC46621E57E1B006BAC83 /* ViewController.swift */,
 				0F3FC46821E57E1B006BAC83 /* Main.storyboard */,
 				0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */,
 				0F3FC46D21E57E1D006BAC83 /* LaunchScreen.storyboard */,
 				0F3FC47021E57E1D006BAC83 /* Info.plist */,
+				0F0CFD9921E71A710017C581 /* GoogleService-Info.plist */,
 			);
 			path = freegan;
 			sourceTree = "<group>";
@@ -125,6 +192,29 @@
 			path = freeganUITests;
 			sourceTree = "<group>";
 		};
+		6CA6D8929B178935F48F05F9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EFC41019163179983BC7B4BB /* Pods-freegan.debug.xcconfig */,
+				F4A75571943FFAF5DADEBFF3 /* Pods-freegan.release.xcconfig */,
+				2E5DD016FDEF73092998AD08 /* Pods-freeganTests.debug.xcconfig */,
+				5A42F7627D36014919C40C7B /* Pods-freeganTests.release.xcconfig */,
+				008371CFC051288E67223300 /* Pods-freeganUITests.debug.xcconfig */,
+				784BB05394710C3C7BF7A3A2 /* Pods-freeganUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7ED558D5557864075A70EF79 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DFADAFE74528916A3644DD63 /* Pods_freegan.framework */,
+				F287F601FE960B6E13972DE2 /* Pods_freeganTests.framework */,
+				C3A0F7DF9C63D7A597B18A11 /* Pods_freeganUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +222,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F3FC48921E57E1E006BAC83 /* Build configuration list for PBXNativeTarget "freegan" */;
 			buildPhases = (
+				CBDB964423FAF2343F39FFBD /* [CP] Check Pods Manifest.lock */,
 				0F3FC45D21E57E1B006BAC83 /* Sources */,
 				0F3FC45E21E57E1B006BAC83 /* Frameworks */,
 				0F3FC45F21E57E1B006BAC83 /* Resources */,
+				A013188053B3386551B54FF2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +241,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F3FC48C21E57E1E006BAC83 /* Build configuration list for PBXNativeTarget "freeganTests" */;
 			buildPhases = (
+				383E1EFC265702C4B4722BDB /* [CP] Check Pods Manifest.lock */,
 				0F3FC47121E57E1E006BAC83 /* Sources */,
 				0F3FC47221E57E1E006BAC83 /* Frameworks */,
 				0F3FC47321E57E1E006BAC83 /* Resources */,
@@ -167,6 +260,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F3FC48F21E57E1E006BAC83 /* Build configuration list for PBXNativeTarget "freeganUITests" */;
 			buildPhases = (
+				F932E8B11A5DC8AA8DFA3B0E /* [CP] Check Pods Manifest.lock */,
 				0F3FC47C21E57E1E006BAC83 /* Sources */,
 				0F3FC47D21E57E1E006BAC83 /* Frameworks */,
 				0F3FC47E21E57E1E006BAC83 /* Resources */,
@@ -230,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F3FC46F21E57E1D006BAC83 /* LaunchScreen.storyboard in Resources */,
+				0F0CFD9A21E71A710017C581 /* GoogleService-Info.plist in Resources */,
 				0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */,
 				0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */,
 			);
@@ -251,13 +346,123 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		383E1EFC265702C4B4722BDB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-freeganTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A013188053B3386551B54FF2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-freegan/Pods-freegan-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-freegan/Pods-freegan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBDB964423FAF2343F39FFBD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-freegan-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F932E8B11A5DC8AA8DFA3B0E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-freeganUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0F3FC45D21E57E1B006BAC83 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F3FC46721E57E1B006BAC83 /* ViewController.swift in Sources */,
+				0F0CFD8E21E6A03A0017C581 /* FancyField.swift in Sources */,
+				0F0CFD8B21E69CC20017C581 /* RegisterVC.swift in Sources */,
 				0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */,
+				0F0CFD9021E6A2450017C581 /* FancyButton.swift in Sources */,
+				0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */,
+				0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */,
+				0F0CFD9621E6B0E40017C581 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +635,7 @@
 		};
 		0F3FC48A21E57E1E006BAC83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFC41019163179983BC7B4BB /* Pods-freegan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -447,6 +653,7 @@
 		};
 		0F3FC48B21E57E1E006BAC83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4A75571943FFAF5DADEBFF3 /* Pods-freegan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -464,6 +671,7 @@
 		};
 		0F3FC48D21E57E1E006BAC83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E5DD016FDEF73092998AD08 /* Pods-freeganTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -484,6 +692,7 @@
 		};
 		0F3FC48E21E57E1E006BAC83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A42F7627D36014919C40C7B /* Pods-freeganTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -504,6 +713,7 @@
 		};
 		0F3FC49021E57E1E006BAC83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 008371CFC051288E67223300 /* Pods-freeganUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -523,6 +733,7 @@
 		};
 		0F3FC49121E57E1E006BAC83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 784BB05394710C3C7BF7A3A2 /* Pods-freeganUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -1,0 +1,6 @@
+framework module Pods_freeganTests {
+  umbrella header "Pods-freeganTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
