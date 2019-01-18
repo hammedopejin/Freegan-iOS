@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad12_9rounded" orientation="portrait">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,13 +13,13 @@
         <!--RegisterVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="RegisterVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterVC" id="BYZ-38-t0r" customClass="RegisterVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNG-wx-Jup">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                 <color key="backgroundColor" red="0.38655120134353638" green="0.64805078506469727" blue="0.59215384721755981" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="IaN-RZ-ChI"/>
@@ -28,7 +28,7 @@
                                 <viewLayoutGuide key="safeArea" id="nW0-mr-b9X"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter full name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yBg-7K-2n8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="267" y="872" width="495" height="30"/>
+                                <rect key="frame" x="108" y="565" width="200" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="MGt-xC-v6N"/>
                                 <nil key="textColor"/>
@@ -36,7 +36,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-dV-P3P" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="267" y="943" width="495" height="30"/>
+                                <rect key="frame" x="108" y="611" width="200" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="n2z-qz-HYE"/>
                                 <nil key="textColor"/>
@@ -44,18 +44,18 @@
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-TY-3jG" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="267" y="1015" width="495" height="30"/>
+                                <rect key="frame" x="108" y="658" width="200" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="mW1-v1-Q8E"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
-                            <view contentMode="scaleToFill" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBv-UT-lh8">
-                                <rect key="frame" x="0.0" y="29" width="1024" height="233"/>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBv-UT-lh8">
+                                <rect key="frame" x="0.0" y="29" width="414" height="233"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="72S-CC-UR5">
-                                        <rect key="frame" x="366" y="17" width="495" height="200"/>
+                                        <rect key="frame" x="148" y="17" width="200" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <viewLayoutGuide key="safeArea" id="qZD-fH-WpB"/>
                                     </imageView>
@@ -63,16 +63,24 @@
                                 <color key="backgroundColor" red="0.42566940188407898" green="0.70731186866760254" blue="0.62744474411010742" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="zdf-RH-esj"/>
                             </view>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Already a member? Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="GRB-yx-Zhs">
-                                <rect key="frame" x="267" y="1171" width="495" height="39"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Already a member? Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GRB-yx-Zhs">
+                                <rect key="frame" x="108" y="756" width="200" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" staticText="YES" allowsDirectInteraction="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                                <gestureRecognizers/>
                                 <viewLayoutGuide key="safeArea" id="eDC-Af-ooh"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="SeU-Bl-XDp" appends="YES" id="JcM-0b-hQU"/>
+                                </connections>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cw2-AC-esZ" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="267" y="1097" width="495" height="40"/>
+                                <rect key="frame" x="108" y="708" width="200" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="PT0-ae-lVw"/>
@@ -86,11 +94,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="LBv-UT-lh8" firstAttribute="leading" secondItem="gNG-wx-Jup" secondAttribute="leading" id="3Mp-GQ-gPa"/>
                             <constraint firstItem="gNG-wx-Jup" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ast-9d-rie"/>
-                            <constraint firstItem="LBv-UT-lh8" firstAttribute="trailing" secondItem="exL-FN-wcQ" secondAttribute="trailing" id="D3V-TJ-rk8"/>
                             <constraint firstAttribute="trailing" secondItem="gNG-wx-Jup" secondAttribute="trailing" id="MBi-A5-im3"/>
-                            <constraint firstItem="LBv-UT-lh8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="30" id="O7N-Zf-HdM"/>
-                            <constraint firstItem="LBv-UT-lh8" firstAttribute="leading" secondItem="exL-FN-wcQ" secondAttribute="leading" id="mJF-6E-FRY"/>
+                            <constraint firstItem="LBv-UT-lh8" firstAttribute="trailing" secondItem="gNG-wx-Jup" secondAttribute="trailing" id="dKM-jw-TqU"/>
+                            <constraint firstAttribute="bottom" secondItem="LBv-UT-lh8" secondAttribute="bottom" constant="634" id="qrN-VZ-M0A"/>
+                            <constraint firstItem="LBv-UT-lh8" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="-15" id="tnZ-yG-ovm"/>
                             <constraint firstItem="gNG-wx-Jup" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="x2L-gi-iNh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="exL-FN-wcQ"/>
@@ -103,15 +112,20 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="SeU-Bl-XDp">
+                    <connections>
+                        <action selector="gotoLogin:" destination="BYZ-38-t0r" id="t6j-Lx-16N"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="235" y="134"/>
         </scene>
         <!--FeedVC-->
         <scene sceneID="z0x-PC-w4a">
             <objects>
-                <viewController id="xwL-K9-0fc" customClass="FeedVC" sceneMemberID="viewController">
+                <viewController id="xwL-K9-0fc" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2dl-5f-kag">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Lhv-U0-ico"/>
@@ -121,8 +135,108 @@
             </objects>
             <point key="canvasLocation" x="932" y="134"/>
         </scene>
+        <!--Log InVC-->
+        <scene sceneID="BwI-x2-zF7">
+            <objects>
+                <viewController storyboardIdentifier="LogInVC" id="K7V-H7-jq8" customClass="LogInVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HJF-Wl-xls">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frk-0h-mC3">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
+                                <color key="backgroundColor" red="0.38655120129999998" green="0.64805078510000003" blue="0.59215384719999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FN6-Ka-3dZ"/>
+                                </constraints>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                <viewLayoutGuide key="safeArea" id="vn9-qt-jls"/>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rCL-Ea-M3R" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="108" y="611" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="safeArea" id="jIM-VZ-Qzv"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" textContentType="email"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eX7-e1-fQC" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="108" y="658" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="safeArea" id="8GH-nG-59I"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                            </textField>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8d-ih-c4P">
+                                <rect key="frame" x="0.0" y="29" width="414" height="233"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="N2i-Pb-Cth">
+                                        <rect key="frame" x="148" y="17" width="200" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <viewLayoutGuide key="safeArea" id="FpN-Y8-dT5"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="cmO-fs-yvs"/>
+                            </view>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Not a member? Sign up now" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ODY-rC-nIN">
+                                <rect key="frame" x="108" y="756" width="200" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <viewLayoutGuide key="safeArea" id="5kv-zk-Aaf"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="OLY-z7-OJB" appends="YES" id="Nrt-km-gyB"/>
+                                </connections>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPp-ec-cn4" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="108" y="708" width="200" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="kXl-Ed-A6Z"/>
+                                <state key="normal" title="SIGN IN">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInTapped:" destination="K7V-H7-jq8" eventType="touchUpInside" id="l9u-9V-UD4"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="frk-0h-mC3" firstAttribute="leading" secondItem="HJF-Wl-xls" secondAttribute="leading" id="EKP-l1-6E2"/>
+                            <constraint firstItem="frk-0h-mC3" firstAttribute="top" secondItem="HJF-Wl-xls" secondAttribute="top" id="Eom-wT-tn2"/>
+                            <constraint firstAttribute="trailing" secondItem="frk-0h-mC3" secondAttribute="trailing" id="aif-Px-1Iz"/>
+                            <constraint firstItem="U8d-ih-c4P" firstAttribute="trailing" secondItem="frk-0h-mC3" secondAttribute="trailing" id="hdp-hT-nrD"/>
+                            <constraint firstAttribute="bottom" secondItem="U8d-ih-c4P" secondAttribute="bottom" constant="634" id="qVq-Lg-it7"/>
+                            <constraint firstItem="U8d-ih-c4P" firstAttribute="top" secondItem="HJF-Wl-xls" secondAttribute="topMargin" constant="-15" id="sAg-Mk-MI7"/>
+                            <constraint firstItem="U8d-ih-c4P" firstAttribute="leading" secondItem="frk-0h-mC3" secondAttribute="leading" id="sds-pE-ZJp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZZn-vs-F5a"/>
+                    </view>
+                    <connections>
+                        <outlet property="emailField" destination="rCL-Ea-M3R" id="Ual-mN-4aE"/>
+                        <outlet property="pwdField" destination="eX7-e1-fQC" id="EoN-TY-ZDl"/>
+                        <segue destination="xwL-K9-0fc" kind="presentation" identifier="goToFeed" id="C6y-Is-TWl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7rQ-DH-zYW" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="OLY-z7-OJB">
+                    <connections>
+                        <action selector="gotoLogin:" destination="K7V-H7-jq8" id="lua-k2-o8v"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="235" y="819"/>
+        </scene>
     </scenes>
     <resources>
         <image name="freegan_logo_transparent" width="245.75999450683594" height="245.75999450683594"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="C6y-Is-TWl"/>
+    </inferredMetricsTieBreakers>
 </document>
