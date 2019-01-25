@@ -28,7 +28,7 @@
                                 <viewLayoutGuide key="safeArea" id="nW0-mr-b9X"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter full name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yBg-7K-2n8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="565" width="200" height="30"/>
+                                <rect key="frame" x="107" y="565" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="MGt-xC-v6N"/>
                                 <nil key="textColor"/>
@@ -36,7 +36,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-dV-P3P" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="611" width="200" height="30"/>
+                                <rect key="frame" x="107" y="611" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="n2z-qz-HYE"/>
                                 <nil key="textColor"/>
@@ -44,7 +44,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-TY-3jG" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="658" width="200" height="30"/>
+                                <rect key="frame" x="107" y="658" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="mW1-v1-Q8E"/>
                                 <nil key="textColor"/>
@@ -55,7 +55,7 @@
                                 <rect key="frame" x="0.0" y="29" width="414" height="233"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="72S-CC-UR5">
-                                        <rect key="frame" x="148" y="17" width="200" height="200"/>
+                                        <rect key="frame" x="147" y="17" width="201" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <viewLayoutGuide key="safeArea" id="qZD-fH-WpB"/>
                                     </imageView>
@@ -64,7 +64,7 @@
                                 <viewLayoutGuide key="safeArea" id="zdf-RH-esj"/>
                             </view>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Already a member? Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GRB-yx-Zhs">
-                                <rect key="frame" x="108" y="756" width="200" height="39"/>
+                                <rect key="frame" x="107" y="756" width="201" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" staticText="YES" allowsDirectInteraction="YES"/>
@@ -80,7 +80,7 @@
                                 </connections>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cw2-AC-esZ" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="708" width="200" height="40"/>
+                                <rect key="frame" x="107" y="708" width="201" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="PT0-ae-lVw"/>
@@ -108,7 +108,7 @@
                         <outlet property="emailField" destination="NH3-dV-P3P" id="OWK-Xz-GI0"/>
                         <outlet property="pwdField" destination="gnI-TY-3jG" id="Lmi-CZ-YqB"/>
                         <outlet property="userNameField" destination="yBg-7K-2n8" id="AAM-2K-J9g"/>
-                        <segue destination="GNh-BK-xVi" kind="presentation" id="gCe-9c-9wV"/>
+                        <segue destination="GNh-BK-xVi" kind="presentation" identifier="goToFeed" id="gCe-9c-9wV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -138,7 +138,7 @@
                                 <viewLayoutGuide key="safeArea" id="vn9-qt-jls"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rCL-Ea-M3R" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="611" width="200" height="30"/>
+                                <rect key="frame" x="107" y="611" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="jIM-VZ-Qzv"/>
                                 <nil key="textColor"/>
@@ -146,7 +146,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eX7-e1-fQC" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="658" width="200" height="30"/>
+                                <rect key="frame" x="107" y="658" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="8GH-nG-59I"/>
                                 <nil key="textColor"/>
@@ -157,7 +157,7 @@
                                 <rect key="frame" x="0.0" y="29" width="414" height="233"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="N2i-Pb-Cth">
-                                        <rect key="frame" x="148" y="17" width="200" height="200"/>
+                                        <rect key="frame" x="147" y="17" width="201" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <viewLayoutGuide key="safeArea" id="FpN-Y8-dT5"/>
                                     </imageView>
@@ -166,7 +166,7 @@
                                 <viewLayoutGuide key="safeArea" id="cmO-fs-yvs"/>
                             </view>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" text="Not a member? Sign up now" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="ODY-rC-nIN">
-                                <rect key="frame" x="108" y="756" width="200" height="39"/>
+                                <rect key="frame" x="107" y="756" width="201" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <viewLayoutGuide key="safeArea" id="5kv-zk-Aaf"/>
@@ -178,7 +178,7 @@
                                 </connections>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPp-ec-cn4" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="108" y="708" width="200" height="40"/>
+                                <rect key="frame" x="107" y="708" width="201" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="kXl-Ed-A6Z"/>
@@ -220,7 +220,7 @@
         <!--Freegan-->
         <scene sceneID="oq0-RS-O4j">
             <objects>
-                <viewController id="VKv-Lz-4jQ" customClass="ViewController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="VKv-Lz-4jQ" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aje-dK-H7Z"/>
                         <viewControllerLayoutGuide type="bottom" id="9mv-S5-RPk"/>

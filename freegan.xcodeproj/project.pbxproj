@@ -16,6 +16,13 @@
 		0F0CFD9A21E71A710017C581 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9921E71A710017C581 /* GoogleService-Info.plist */; };
 		0F0CFDB421F19CFF0017C581 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFDB321F19CFF0017C581 /* FeedVC.swift */; };
 		0F0CFDB821F24D7F0017C581 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFDB721F24D7F0017C581 /* LogInVC.swift */; };
+		0F0CFE0521FACCC30017C581 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0421FACCC30017C581 /* PhotoCollectionViewCell.swift */; };
+		0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0621FACDFD0017C581 /* PhotoZoomViewController.swift */; };
+		0F0CFE0921FACE360017C581 /* PhotoPageContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0821FACE360017C581 /* PhotoPageContainerViewController.swift */; };
+		0F0CFE0C21FACED30017C581 /* ZoomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0B21FACED30017C581 /* ZoomAnimator.swift */; };
+		0F0CFE0E21FACF060017C581 /* ZoomTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0D21FACF060017C581 /* ZoomTransitionController.swift */; };
+		0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1021FAD5660017C581 /* DataService.swift */; };
+		0F0CFE1321FAD6060017C581 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1221FAD6060017C581 /* Post.swift */; };
 		0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */; };
 		0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46821E57E1B006BAC83 /* Main.storyboard */; };
 		0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */; };
@@ -55,6 +62,13 @@
 		0F0CFD9921E71A710017C581 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F0CFDB321F19CFF0017C581 /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		0F0CFDB721F24D7F0017C581 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
+		0F0CFE0421FACCC30017C581 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		0F0CFE0621FACDFD0017C581 /* PhotoZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomViewController.swift; sourceTree = "<group>"; };
+		0F0CFE0821FACE360017C581 /* PhotoPageContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPageContainerViewController.swift; sourceTree = "<group>"; };
+		0F0CFE0B21FACED30017C581 /* ZoomAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomAnimator.swift; sourceTree = "<group>"; };
+		0F0CFE0D21FACF060017C581 /* ZoomTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomTransitionController.swift; sourceTree = "<group>"; };
+		0F0CFE1021FAD5660017C581 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		0F0CFE1221FAD6060017C581 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0F3FC46121E57E1B006BAC83 /* freegan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freegan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F3FC46921E57E1B006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +125,8 @@
 				0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */,
 				0F0CFDB321F19CFF0017C581 /* FeedVC.swift */,
 				0F0CFDB721F24D7F0017C581 /* LogInVC.swift */,
+				0F0CFE0621FACDFD0017C581 /* PhotoZoomViewController.swift */,
+				0F0CFE0821FACE360017C581 /* PhotoPageContainerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -120,6 +136,7 @@
 			children = (
 				0F0CFD8D21E6A03A0017C581 /* FancyField.swift */,
 				0F0CFD8F21E6A2450017C581 /* FancyButton.swift */,
+				0F0CFE0421FACCC30017C581 /* PhotoCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -137,8 +154,26 @@
 			isa = PBXGroup;
 			children = (
 				0F0CFD9521E6B0E40017C581 /* User.swift */,
+				0F0CFE1221FAD6060017C581 /* Post.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0F0CFE0A21FACEAC0017C581 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFE0B21FACED30017C581 /* ZoomAnimator.swift */,
+				0F0CFE0D21FACF060017C581 /* ZoomTransitionController.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		0F0CFE0F21FAD5510017C581 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0F0CFE1021FAD5660017C581 /* DataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		0F3FC45821E57E1B006BAC83 = {
@@ -166,6 +201,8 @@
 		0F3FC46321E57E1B006BAC83 /* freegan */ = {
 			isa = PBXGroup;
 			children = (
+				0F0CFE0F21FAD5510017C581 /* Services */,
+				0F0CFE0A21FACEAC0017C581 /* Animation */,
 				0F0CFD9421E6B0CC0017C581 /* Model */,
 				0F0CFD9121E6A2AA0017C581 /* Utils */,
 				0F0CFD8C21E6A01E0017C581 /* View */,
@@ -463,14 +500,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F0CFD8E21E6A03A0017C581 /* FancyField.swift in Sources */,
+				0F0CFE0521FACCC30017C581 /* PhotoCollectionViewCell.swift in Sources */,
 				0F0CFD8B21E69CC20017C581 /* RegisterVC.swift in Sources */,
 				0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */,
 				0F0CFD9021E6A2450017C581 /* FancyButton.swift in Sources */,
 				0F0CFDB421F19CFF0017C581 /* FeedVC.swift in Sources */,
+				0F0CFE0921FACE360017C581 /* PhotoPageContainerViewController.swift in Sources */,
 				0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */,
 				0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */,
+				0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */,
 				0F0CFD9621E6B0E40017C581 /* User.swift in Sources */,
+				0F0CFE1321FAD6060017C581 /* Post.swift in Sources */,
 				0F0CFDB821F24D7F0017C581 /* LogInVC.swift in Sources */,
+				0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */,
+				0F0CFE0C21FACED30017C581 /* ZoomAnimator.swift in Sources */,
+				0F0CFE0E21FACF060017C581 /* ZoomTransitionController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
