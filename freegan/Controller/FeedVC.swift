@@ -9,13 +9,11 @@
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
-import MobileCoreServices
 
 class FeedVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var photos: [UIImage]!
     
     var selectedIndexPath: IndexPath!
     
@@ -32,6 +30,7 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
+    var image: UIImage?
     var posts = [Post]()
     var user: User?
     var currentUser: User?
@@ -59,11 +58,11 @@ class FeedVC: UIViewController {
                         let key = snap.key
                         let post = Post(postKey: key, postData: postDict)
                         
-                        
                         self.posts.append(post)
                     }
                 }
             }
+            self.collectionView.reloadData()
         })
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
@@ -71,19 +70,10 @@ class FeedVC: UIViewController {
             if snapshot.exists() {
                 
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                
             }
             
         })
         
-        let firebaseUserName = firebaseUser.child("userName")
-        let firebaseProfileImgUrl = firebaseUser.child("userImgUrl")
-        firebaseUserName.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let value = snapshot.value as? String{
-                self.userName = value
-                print("Hammed:  userName: \(self.userName!)")
-            }
-        })
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
@@ -91,12 +81,12 @@ class FeedVC: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
-            print("HAMMED: ID found in keychain")
-        }
-        logOut()
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
+//            //print("HAMMED: ID found in keychain")
+//        }
+//        logOut()
+//    }
     
     func logOut(){
         
@@ -210,7 +200,8 @@ class FeedVC: UIViewController {
             vc.transitionController.toDelegate = vc
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
-            vc.photos = self.photos
+            vc.posts = self.posts
+            vc.image = self.image
         }
     }
 }
@@ -222,14 +213,33 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.photos.count
+        return self.posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         
-        cell.imageView.image = self.photos[indexPath.row]
+        let ref = Storage.storage().reference(forURL: self.posts[indexPath.row].imageUrl[0])
+        
+        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            if error != nil {
+                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                
+            } else {
+                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                if let imgData = data {
+                    if let img = UIImage(data: imgData) {
+                        cell.imageView.image = img
+                        self.image = img
+                        //FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
+                        
+                    }
+                }
+            }
+        })
+        
+        
         return cell
     }
     

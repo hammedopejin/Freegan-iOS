@@ -22,7 +22,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     override func viewDidAppear(_ animated: Bool) {
         if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
-            print("HAMMED: ID found in keychain")
+            //print("HAMMED: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
     }

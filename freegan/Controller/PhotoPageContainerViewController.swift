@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol PhotoPageContainerViewControllerDelegate: class {
     func containerViewController(_ containerViewController: PhotoPageContainerViewController, indexDidUpdate currentIndex: Int)
@@ -25,7 +26,8 @@ class PhotoPageContainerViewController: UIViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
-    var photos: [UIImage]!
+    var image: UIImage?
+    var posts: [Post]!
     var currentIndex = 0
     var nextIndex: Int?
     
@@ -41,11 +43,29 @@ class PhotoPageContainerViewController: UIViewController {
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         vc.index = self.currentIndex
-        vc.image = self.photos[self.currentIndex]
+        vc.image = self.image
+        
+        let ref = Storage.storage().reference(forURL: self.posts[self.currentIndex].imageUrl[0])
+            
+        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            if error != nil {
+                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    
+            } else {
+                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                if let imgData = data {
+                    if let img = UIImage(data: imgData) {
+                 
+                        vc.image = img
+                        
+                    }
+                }
+            }
+        })
+        
         let viewControllers = [
             vc
         ]
-        
         self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
     }
     
@@ -66,21 +86,58 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         }
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-        //vc.delegate = self
-        vc.image = self.photos[currentIndex - 1]
+        
+        let ref = Storage.storage().reference(forURL: self.posts[currentIndex - 1].imageUrl[0])
+        
+        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            if error != nil {
+                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                
+            } else {
+                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                if let imgData = data {
+                    if let img = UIImage(data: imgData) {
+                        vc.image = img
+                        
+                    }
+                }
+            }
+        })
+        
+        vc.image = self.image
+        
         vc.index = currentIndex - 1
         return vc
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        if currentIndex == (self.photos.count - 1) {
+        if currentIndex == (self.posts.count - 1) {
             return nil
         }
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-        //vc.delegate = self
-        vc.image = self.photos[currentIndex + 1]
+        
+        let ref = Storage.storage().reference(forURL: self.posts[currentIndex + 1].imageUrl[0])
+        
+        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            if error != nil {
+                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                
+            } else {
+                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                if let imgData = data {
+                    if let img = UIImage(data: imgData) {
+                        vc.image = img
+                        
+                        //vc.imageView.reloadData()
+                    }
+                }
+            }
+        })
+        
+        vc.image = self.image
+        
         vc.index = currentIndex + 1
         return vc
     }

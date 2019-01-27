@@ -11,7 +11,7 @@ import Firebase
 
 class Post {
     private var _caption: String!
-    private var _imageUrl: String!
+    private var _imageUrl: [String]!
     private var _profileImgUrl: String!
     private var _userName: String!
     private var _postUserObjectId: String!
@@ -23,7 +23,7 @@ class Post {
         return _caption
     }
     
-    var imageUrl: String {
+    var imageUrl: [String] {
         return _imageUrl
     }
     
@@ -47,7 +47,7 @@ class Post {
         return _postDate
     }
     
-    init(postKey: String, caption: String, imageUrl: String, postDate: String, profileImgUrl: String, userName: String, postUserObjectId: String) {
+    init(postKey: String, caption: String, imageUrl: [String], postDate: String, profileImgUrl: String, userName: String, postUserObjectId: String) {
         self._postKey = postKey
         self._caption = caption
         self._imageUrl = imageUrl
@@ -65,7 +65,7 @@ class Post {
             self._caption = caption
         }
         
-        if let imageUrl = postData["imageUrl"] as? String {
+        if let imageUrl = postData["imageUrl"] as? [String] {
             self._imageUrl = imageUrl
         }
         
