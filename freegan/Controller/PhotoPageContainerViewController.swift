@@ -26,6 +26,7 @@ class PhotoPageContainerViewController: UIViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
+    var images: [UIImage]?
     var image: UIImage?
     var posts: [Post]!
     var currentIndex = 0
@@ -43,25 +44,7 @@ class PhotoPageContainerViewController: UIViewController {
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         vc.index = self.currentIndex
-        vc.image = self.image
-        
-        let ref = Storage.storage().reference(forURL: self.posts[self.currentIndex].imageUrl[0])
-            
-        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                    
-            } else {
-                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                 
-                        vc.image = img
-                        
-                    }
-                }
-            }
-        })
+        vc.image = self.images![self.currentIndex]
         
         let viewControllers = [
             vc
@@ -87,25 +70,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        let ref = Storage.storage().reference(forURL: self.posts[currentIndex - 1].imageUrl[0])
-        
-        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                
-            } else {
-                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                        vc.image = img
-                        
-                    }
-                }
-            }
-        })
-        
-        vc.image = self.image
-        
+        vc.image = self.images![self.currentIndex - 1]
         vc.index = currentIndex - 1
         return vc
     }
@@ -118,26 +83,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        let ref = Storage.storage().reference(forURL: self.posts[currentIndex + 1].imageUrl[0])
-        
-        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                
-            } else {
-                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                        vc.image = img
-                        
-                        //vc.imageView.reloadData()
-                    }
-                }
-            }
-        })
-        
-        vc.image = self.image
-        
+        vc.image = self.images![self.currentIndex + 1]
         vc.index = currentIndex + 1
         return vc
     }
