@@ -282,7 +282,7 @@
             </objects>
             <point key="canvasLocation" x="2501" y="135"/>
         </scene>
-        <!--Zoom-->
+        <!--Photo Page Container View Controller-->
         <scene sceneID="7og-sb-0kw">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="ayj-hi-gul" customClass="PhotoPageContainerViewController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
@@ -310,8 +310,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FA2-bT-6Xv"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Zoom" id="u0i-DN-L0M"/>
+                    <navigationItem key="navigationItem" id="u0i-DN-L0M"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="fhx-lI-5Ab" kind="presentation" id="Zyz-of-hGL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHk-IU-9hY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -324,6 +327,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DsB-eh-CfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4354" y="135"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="UIk-g3-f9H">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="fhx-lI-5Ab" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FEl-uN-sjT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4355" y="896"/>
         </scene>
         <!--Photo Zoom View Controller-->
         <scene sceneID="332-hS-bhO">
@@ -384,6 +395,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="01q-sa-dPS">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -396,7 +409,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1" width="16" height="16"/>
+        <image name="1" width="480" height="423"/>
         <image name="freegan_logo_transparent" width="245.75999450683594" height="245.75999450683594"/>
     </resources>
     <inferredMetricsTieBreakers>
