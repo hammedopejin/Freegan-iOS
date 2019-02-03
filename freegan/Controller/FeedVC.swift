@@ -30,7 +30,6 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var image: UIImage?
     var images = [UIImage]()
     var posts = [Post]()
     var user: User?
@@ -202,7 +201,6 @@ class FeedVC: UIViewController {
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
-            //vc.image = self.image
             vc.images = self.images
         }
     }

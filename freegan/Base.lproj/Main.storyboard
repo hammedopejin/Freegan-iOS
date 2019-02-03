@@ -312,9 +312,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="u0i-DN-L0M"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="fhx-lI-5Ab" kind="presentation" id="Zyz-of-hGL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHk-IU-9hY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -331,7 +328,7 @@
         <!--Page View Controller-->
         <scene sceneID="UIk-g3-f9H">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="fhx-lI-5Ab" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="ShowMorePics" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="fhx-lI-5Ab" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEl-uN-sjT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4355" y="896"/>

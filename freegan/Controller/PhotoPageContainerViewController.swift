@@ -22,12 +22,13 @@ class PhotoPageContainerViewController: UIViewController {
         return self.children[0] as! UIPageViewController
     }
     
+    var verticalPageViewController : UIPageViewController? = nil
+    
     var currentViewController: PhotoZoomViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
     var images: [UIImage]?
-    var image: UIImage?
     var posts: [Post]!
     var currentIndex = 0
     var nextIndex: Int?
@@ -41,6 +42,22 @@ class PhotoPageContainerViewController: UIViewController {
         
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeUp.direction = UISwipeGestureRecognizer.Direction.up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeDown.direction = UISwipeGestureRecognizer.Direction.down
+        self.view.addGestureRecognizer(swipeDown)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.view.addGestureRecognizer(swipeLeft)
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         vc.index = self.currentIndex
@@ -57,6 +74,105 @@ class PhotoPageContainerViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @objc
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.down:
+                showToast(message: "Swiped down")
+                
+                if verticalPageViewController == nil {
+                    verticalPageViewController = vertPageViewController
+                }
+
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
+                
+                vc.index = self.currentIndex
+                vc.image = self.images![self.currentIndex]
+                
+                let viewControllers = [
+                    vc
+                ]
+                verticalPageViewController!.setViewControllers(viewControllers, direction: .reverse, animated: true, completion: nil)
+                
+                self.add(asChildViewController: verticalPageViewController!)
+                
+            case UISwipeGestureRecognizer.Direction.up:
+                showToast(message: "Swiped up")
+                
+                if verticalPageViewController == nil {
+                    verticalPageViewController = vertPageViewController
+                }
+
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
+                
+                vc.index = self.currentIndex
+                vc.image = self.images![self.currentIndex]
+                
+                let viewControllers = [
+                    vc
+                ]
+                verticalPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
+                self.add(asChildViewController: verticalPageViewController!)
+                
+             case UISwipeGestureRecognizer.Direction.left:
+                showToast(message: "Swiped left")
+                if verticalPageViewController != nil {
+                    self.remove(asChildViewController: verticalPageViewController!)
+                }
+                
+             case UISwipeGestureRecognizer.Direction.right:
+                showToast(message: "Swiped right")
+                if verticalPageViewController != nil {
+                    self.remove(asChildViewController: verticalPageViewController!)
+                }
+
+            default:
+                break
+            }
+        }
+    }
+    
+    private lazy var vertPageViewController: UIPageViewController = {
+        // Load Storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // Instantiate View Controller
+        var viewController = storyboard.instantiateViewController(withIdentifier: "ShowMorePics") as! UIPageViewController
+        
+        // Add View Controller as Child View Controller
+        self.add(asChildViewController: viewController)
+        
+        return viewController
+    }()
+    
+    private func add(asChildViewController viewController: UIViewController) {
+        // Add Child View Controller
+        addChild(viewController)
+        
+        // Add Child View as Subview
+        view.addSubview(viewController.view)
+        
+        // Configure Child View
+        viewController.view.frame = view.bounds
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // Notify Child View Controller
+        viewController.didMove(toParent: self)
+    }
+    
+    private func remove(asChildViewController viewController: UIViewController) {
+        // Notify Child View Controller
+        viewController.willMove(toParent: nil)
+        
+        // Remove Child View From Superview
+        viewController.view.removeFromSuperview()
+        
+        // Notify Child View Controller
+        viewController.removeFromParent()
+    }
+
     
 }
 
