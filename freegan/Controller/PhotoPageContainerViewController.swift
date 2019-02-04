@@ -28,7 +28,7 @@ class PhotoPageContainerViewController: UIViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
-    var images: [UIImage]?
+    var images = [[UIImage]]()
     var posts: [Post]!
     var currentIndex = 0
     var nextIndex: Int?
@@ -60,8 +60,8 @@ class PhotoPageContainerViewController: UIViewController {
         self.view.addGestureRecognizer(swipeLeft)
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-        vc.index = self.currentIndex
-        vc.image = self.images![self.currentIndex]
+        //vc.index = self.currentIndex
+        vc.image = self.images[0][self.currentIndex]
         
         let viewControllers = [
             vc
@@ -89,7 +89,7 @@ class PhotoPageContainerViewController: UIViewController {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
                 vc.index = self.currentIndex
-                vc.image = self.images![self.currentIndex]
+                vc.image = self.images[0][self.currentIndex]
                 
                 let viewControllers = [
                     vc
@@ -108,7 +108,7 @@ class PhotoPageContainerViewController: UIViewController {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
                 vc.index = self.currentIndex
-                vc.image = self.images![self.currentIndex]
+                vc.image = self.images[0][self.currentIndex]
                 
                 let viewControllers = [
                     vc
@@ -186,7 +186,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.image = self.images![self.currentIndex - 1]
+        vc.image = self.images[0][self.currentIndex - 1]
         vc.index = currentIndex - 1
         return vc
     }
@@ -199,7 +199,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.image = self.images![self.currentIndex + 1]
+        vc.image = self.images[0][self.currentIndex + 1]
         vc.index = currentIndex + 1
         return vc
     }

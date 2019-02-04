@@ -30,7 +30,7 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var images = [UIImage]()
+    var images = [[UIImage]]()
     var posts = [Post]()
     var user: User?
     var currentUser: User?
@@ -219,8 +219,8 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
-        self.images = []
-        self.images.append(contentsOf: [#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1")])
+        self.images = [[]]
+        self.images[0].append(contentsOf: [#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1")])
         
         let ref = Storage.storage().reference(forURL: self.posts[indexPath.row].imageUrl[0])
         
@@ -233,8 +233,8 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 if let imgData = data {
                     if let img = UIImage(data: imgData) {
                         cell.imageView.image = img
-                        self.images.remove(at: indexPath.row)
-                        self.images.insert(img, at: indexPath.row)
+                        self.images[0].remove(at: indexPath.row)
+                        self.images[0].insert(img, at: indexPath.row)
                         FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
                     }
                 }
