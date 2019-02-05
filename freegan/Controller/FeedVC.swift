@@ -30,7 +30,7 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var images = [[UIImage]]()
+    var images = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
     var posts = [Post]()
     var user: User?
     var currentUser: User?
@@ -219,27 +219,34 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
-        self.images = [[]]
-        self.images[0].append(contentsOf: [#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1"),#imageLiteral(resourceName: "1")])
+        var j = 0
+        for i in self.posts[indexPath.row].imageUrl{
+            //
         
-        let ref = Storage.storage().reference(forURL: self.posts[indexPath.row].imageUrl[0])
-        
-        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                
-            } else {
-                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                        cell.imageView.image = img
-                        self.images[0].remove(at: indexPath.row)
-                        self.images[0].insert(img, at: indexPath.row)
-                        FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
+            
+            let ref = Storage.storage().reference(forURL: i)
+            
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    
+                } else {
+                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            if (j == 0){
+                                cell.imageView.image = img
+                            }
+                            j += 1
+                            self.images[indexPath.row][0] = img
+                            FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
+                        }
                     }
                 }
-            } 
-        })
+            })
+            
+        }
+        j = 0
         
         
         return cell
