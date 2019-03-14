@@ -77,7 +77,7 @@ class PhotoPageContainerViewController: UIViewController {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
                 
-                if self.vertIndex > 0 {
+                if self.vertIndex > 0 && self.posts[self.currentIndex].imageUrl.count > 1{
                     self.vertIndex -= 1
                     vc.image = self.images[self.currentIndex][self.vertIndex]
                     
@@ -94,7 +94,7 @@ class PhotoPageContainerViewController: UIViewController {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
                 
-                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 {
+                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 &&  self.vertIndex < 5{
                     self.vertIndex += 1
                     vc.image = self.images[self.currentIndex][self.vertIndex]
                 

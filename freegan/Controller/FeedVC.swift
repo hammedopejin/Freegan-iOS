@@ -221,8 +221,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         var j = 0
         for i in self.posts[indexPath.row].imageUrl{
-            //
-        
             
             let ref = Storage.storage().reference(forURL: i)
             
@@ -236,18 +234,15 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
                         if let img = UIImage(data: imgData) {
                             if (j == 0){
                                 cell.imageView.image = img
+                                FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
                             }
                             self.images[indexPath.row][j] = img
-                            FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[j] as NSString)
                             j += 1
                         }
                     }
                 }
             })
-            
         }
-        j = 0
-        
         
         return cell
     }
