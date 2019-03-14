@@ -237,9 +237,9 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
                             if (j == 0){
                                 cell.imageView.image = img
                             }
+                            self.images[indexPath.row][j] = img
+                            FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[j] as NSString)
                             j += 1
-                            self.images[indexPath.row][0] = img
-                            FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
                         }
                     }
                 }

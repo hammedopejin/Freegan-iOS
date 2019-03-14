@@ -31,6 +31,7 @@ class PhotoPageContainerViewController: UIViewController {
     var images = [[UIImage]]()
     var posts: [Post]!
     var currentIndex = 0
+    var vertIndex = 0
     var nextIndex: Int?
     
     var panGestureRecognizer: UIPanGestureRecognizer!
@@ -51,16 +52,8 @@ class PhotoPageContainerViewController: UIViewController {
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        self.view.addGestureRecognizer(swipeLeft)
-        
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-        //vc.index = self.currentIndex
+        vc.index = self.currentIndex
         vc.image = self.images[self.currentIndex][0]
         
         let viewControllers = [
@@ -80,52 +73,36 @@ class PhotoPageContainerViewController: UIViewController {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
-                showToast(message: "Swiped down")
-                
-                if verticalPageViewController == nil {
-                    verticalPageViewController = vertPageViewController
-                }
 
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
-                vc.index = self.currentIndex
-                vc.image = self.images[self.currentIndex][0]
                 
-                let viewControllers = [
-                    vc
-                ]
-                verticalPageViewController!.setViewControllers(viewControllers, direction: .reverse, animated: true, completion: nil)
-                
-                self.add(asChildViewController: verticalPageViewController!)
+                if self.vertIndex > 0 {
+                    self.vertIndex -= 1
+                    vc.image = self.images[self.currentIndex][self.vertIndex]
+                    
+                    let viewControllers = [
+                        vc
+                    ]
+                    
+                    self.pageViewController.setViewControllers(viewControllers, direction: .reverse, animated: false, completion: nil)
+                    
+                }
                 
             case UISwipeGestureRecognizer.Direction.up:
-                showToast(message: "Swiped up")
-                
-                if verticalPageViewController == nil {
-                    verticalPageViewController = vertPageViewController
-                }
 
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
-                vc.index = self.currentIndex
-                vc.image = self.images[self.currentIndex][0]
                 
-                let viewControllers = [
-                    vc
-                ]
-                verticalPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
-                self.add(asChildViewController: verticalPageViewController!)
+                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 {
+                    self.vertIndex += 1
+                    vc.image = self.images[self.currentIndex][self.vertIndex]
                 
-             case UISwipeGestureRecognizer.Direction.left:
-                showToast(message: "Swiped left")
-                if verticalPageViewController != nil {
-                    self.remove(asChildViewController: verticalPageViewController!)
-                }
-                
-             case UISwipeGestureRecognizer.Direction.right:
-                showToast(message: "Swiped right")
-                if verticalPageViewController != nil {
-                    self.remove(asChildViewController: verticalPageViewController!)
+                    let viewControllers = [
+                        vc
+                    ]
+                    self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
+                    
                 }
 
             default:
@@ -133,47 +110,6 @@ class PhotoPageContainerViewController: UIViewController {
             }
         }
     }
-    
-    private lazy var vertPageViewController: UIPageViewController = {
-        // Load Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        // Instantiate View Controller
-        var viewController = storyboard.instantiateViewController(withIdentifier: "ShowMorePics") as! UIPageViewController
-        
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
-        
-        return viewController
-    }()
-    
-    private func add(asChildViewController viewController: UIViewController) {
-        // Add Child View Controller
-        addChild(viewController)
-        
-        // Add Child View as Subview
-        view.addSubview(viewController.view)
-        
-        // Configure Child View
-        viewController.view.frame = view.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Notify Child View Controller
-        viewController.didMove(toParent: self)
-    }
-    
-    private func remove(asChildViewController viewController: UIViewController) {
-        // Notify Child View Controller
-        viewController.willMove(toParent: nil)
-        
-        // Remove Child View From Superview
-        viewController.view.removeFromSuperview()
-        
-        // Notify Child View Controller
-        viewController.removeFromParent()
-    }
-
-    
 }
 
 extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
