@@ -30,7 +30,8 @@ class ZoomAnimator: NSObject {
         guard let toVC = transitionContext.viewController(forKey: .to),
             let fromReferenceImageView = self.fromDelegate?.referenceImageView(for: self),
             let toReferenceImageView = self.toDelegate?.referenceImageView(for: self),
-            let fromReferenceImageViewFrame = self.fromDelegate?.referenceImageViewFrameInTransitioningView(for: self)
+            let fromReferenceImageViewFrame = self.fromDelegate?.referenceImageViewFrameInTransitioningView(for: self),
+            let toReferenceImageViewFrame = self.toDelegate?.referenceImageViewFrameInTransitioningView(for: self)
             else {
                 return
         }
@@ -46,7 +47,7 @@ class ZoomAnimator: NSObject {
         
         if self.transitionImageView == nil {
             let transitionImageView = UIImageView(image: referenceImage)
-            transitionImageView.contentMode = .scaleAspectFill
+            transitionImageView.contentMode = .scaleToFill
             transitionImageView.clipsToBounds = true
             transitionImageView.frame = fromReferenceImageViewFrame
             self.transitionImageView = transitionImageView
@@ -55,7 +56,7 @@ class ZoomAnimator: NSObject {
         
         fromReferenceImageView.isHidden = true
         
-        let finalTransitionSize = calculateZoomInImageFrame(image: referenceImage, forView: toVC.view)
+        let finalTransitionSize = toReferenceImageViewFrame
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext),
                        delay: 0,
@@ -133,22 +134,6 @@ class ZoomAnimator: NSObject {
         })
     }
     
-    private func calculateZoomInImageFrame(image: UIImage, forView view: UIView) -> CGRect {
-        
-        let viewRatio = view.frame.size.width / view.frame.size.height
-        let imageRatio = image.size.width / image.size.height
-        let touchesSides = (imageRatio > viewRatio)
-        
-        if touchesSides {
-            let height = view.frame.width / imageRatio
-            let yPoint = view.frame.minY + (view.frame.height - height) / 2
-            return CGRect(x: 0, y: yPoint, width: view.frame.width, height: height)
-        } else {
-            let width = view.frame.height * imageRatio
-            let xPoint = view.frame.minX + (view.frame.width - width) / 2
-            return CGRect(x: xPoint, y: 0, width: width, height: view.frame.height)
-        }
-    }
 }
 
 extension ZoomAnimator: UIViewControllerAnimatedTransitioning {

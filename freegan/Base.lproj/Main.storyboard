@@ -345,43 +345,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="4" translatesAutoresizingMaskIntoConstraints="NO" id="F99-wP-6TP">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-a6-GDh">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-a6-GDh">
-                                        <rect key="frame" x="0.0" y="0.0" width="640" height="412"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="bBy-a6-GDh" secondAttribute="bottom" id="0aV-pR-3EQ"/>
-                                    <constraint firstItem="bBy-a6-GDh" firstAttribute="top" secondItem="F99-wP-6TP" secondAttribute="top" id="Rcx-6l-7uk"/>
-                                    <constraint firstAttribute="trailing" secondItem="bBy-a6-GDh" secondAttribute="trailing" id="gSm-HQ-P9W"/>
-                                    <constraint firstItem="bBy-a6-GDh" firstAttribute="leading" secondItem="F99-wP-6TP" secondAttribute="leading" id="yQw-ta-6Lh"/>
-                                </constraints>
-                            </scrollView>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="F99-wP-6TP" firstAttribute="leading" secondItem="rxk-r3-T4f" secondAttribute="leading" id="5nl-8L-ARs"/>
-                            <constraint firstAttribute="bottom" secondItem="F99-wP-6TP" secondAttribute="bottom" id="CEB-mS-hoM"/>
-                            <constraint firstAttribute="trailing" secondItem="F99-wP-6TP" secondAttribute="trailing" id="aL8-Tb-tPz"/>
-                            <constraint firstItem="F99-wP-6TP" firstAttribute="top" secondItem="rxk-r3-T4f" secondAttribute="top" id="qpA-we-hzz"/>
+                            <constraint firstItem="bBy-a6-GDh" firstAttribute="trailing" secondItem="AdC-f2-eJ6" secondAttribute="trailing" id="Soa-Nf-WnT"/>
+                            <constraint firstAttribute="bottom" secondItem="bBy-a6-GDh" secondAttribute="bottom" id="Sq7-Bb-QgK"/>
+                            <constraint firstItem="bBy-a6-GDh" firstAttribute="leading" secondItem="AdC-f2-eJ6" secondAttribute="leading" id="tWq-fz-ZeY"/>
+                            <constraint firstItem="bBy-a6-GDh" firstAttribute="top" secondItem="rxk-r3-T4f" secondAttribute="top" id="v5j-u0-VGf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AdC-f2-eJ6"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="bBy-a6-GDh" id="mHl-8A-6MQ"/>
-                        <outlet property="imageViewBottomConstraint" destination="0aV-pR-3EQ" id="m1r-my-jBB"/>
-                        <outlet property="imageViewLeadingConstraint" destination="yQw-ta-6Lh" id="aac-AC-0Ka"/>
-                        <outlet property="imageViewTopConstraint" destination="Rcx-6l-7uk" id="gQG-ba-jYk"/>
-                        <outlet property="imageViewTrailingConstraint" destination="gSm-HQ-P9W" id="9wX-wC-TJb"/>
-                        <outlet property="scrollView" destination="F99-wP-6TP" id="QLK-Mq-6y0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hl6-xd-8n9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5122" y="134"/>
+            <point key="canvasLocation" x="5121.739130434783" y="133.92857142857142"/>
         </scene>
         <!--Item-->
         <scene sceneID="kKT-Qs-IN4">

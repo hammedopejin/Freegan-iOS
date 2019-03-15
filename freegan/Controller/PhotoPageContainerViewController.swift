@@ -22,8 +22,6 @@ class PhotoPageContainerViewController: UIViewController {
         return self.children[0] as! UIPageViewController
     }
     
-    var verticalPageViewController : UIPageViewController? = nil
-    
     var currentViewController: PhotoZoomViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
@@ -33,8 +31,6 @@ class PhotoPageContainerViewController: UIViewController {
     var currentIndex = 0
     var vertIndex = 0
     var nextIndex: Int?
-    
-    var panGestureRecognizer: UIPanGestureRecognizer!
     
     var transitionController = ZoomTransitionController()
     
@@ -76,7 +72,6 @@ class PhotoPageContainerViewController: UIViewController {
 
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
-                
                 if self.vertIndex > 0 && self.posts[self.currentIndex].imageUrl.count > 1{
                     self.vertIndex -= 1
                     vc.image = self.images[self.currentIndex][self.vertIndex]
@@ -84,17 +79,14 @@ class PhotoPageContainerViewController: UIViewController {
                     let viewControllers = [
                         vc
                     ]
-                    
                     self.pageViewController.setViewControllers(viewControllers, direction: .reverse, animated: false, completion: nil)
-                    
                 }
                 
             case UISwipeGestureRecognizer.Direction.up:
 
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
-                
-                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 &&  self.vertIndex < 5{
+                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 && self.vertIndex < 5{
                     self.vertIndex += 1
                     vc.image = self.images[self.currentIndex][self.vertIndex]
                 
@@ -102,7 +94,6 @@ class PhotoPageContainerViewController: UIViewController {
                         vc
                     ]
                     self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
-                    
                 }
 
             default:
@@ -151,12 +142,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        if (completed && self.nextIndex != nil) {
-            previousViewControllers.forEach { vc in
-                let zoomVC = vc as! PhotoZoomViewController
-                zoomVC.scrollView.zoomScale = zoomVC.scrollView.minimumZoomScale
-            }
-            
+        if (completed && self.nextIndex != nil) {            
             self.currentIndex = self.nextIndex!
             self.delegate?.containerViewController(self, indexDidUpdate: self.currentIndex)
         }
@@ -179,6 +165,6 @@ extension PhotoPageContainerViewController: ZoomAnimatorDelegate {
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
-        return self.currentViewController.scrollView.convert(self.currentViewController.imageView.frame, to: self.currentViewController.view)
+        return self.currentViewController.imageView.convert(self.currentViewController.imageView.frame, to: self.currentViewController.view)
     }
 }
