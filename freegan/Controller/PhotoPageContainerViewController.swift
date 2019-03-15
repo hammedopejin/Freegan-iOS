@@ -67,15 +67,16 @@ class PhotoPageContainerViewController: UIViewController {
     @objc
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
+            
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
 
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-                
                 if self.vertIndex > 0 && self.posts[self.currentIndex].imageUrl.count > 1{
                     self.vertIndex -= 1
+                    print(self.vertIndex)
                     vc.image = self.images[self.currentIndex][self.vertIndex]
-                    
+                    vc.index = self.currentIndex
                     let viewControllers = [
                         vc
                     ]
@@ -83,13 +84,12 @@ class PhotoPageContainerViewController: UIViewController {
                 }
                 
             case UISwipeGestureRecognizer.Direction.up:
-
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
                 
                 if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 && self.vertIndex < 5{
                     self.vertIndex += 1
+                    print(self.vertIndex)
                     vc.image = self.images[self.currentIndex][self.vertIndex]
-                
+                    vc.index = self.currentIndex
                     let viewControllers = [
                         vc
                     ]
@@ -115,6 +115,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         vc.image = self.images[self.currentIndex - 1][0]
         vc.index = currentIndex - 1
+        print("current index: " + String(self.currentIndex))
         return vc
     }
     
@@ -128,6 +129,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         vc.image = self.images[self.currentIndex + 1][0]
         vc.index = currentIndex + 1
+        print("current index: " + String(self.currentIndex))
         return vc
     }
     
