@@ -206,7 +206,34 @@ class FeedVC: UIViewController {
     }
 }
 
-extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if (kind == UICollectionView.elementKindSectionHeader) {
+            let headerView:UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
+            
+            return headerView
+        }
+        
+        return UICollectionReusableView()
+        
+    }
+    
+    //MARK: - SEARCH
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            //reload your data source if necessary
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText.isEmpty){
+            //reload your data source if necessary
+            self.collectionView?.reloadData()
+        }
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

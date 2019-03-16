@@ -23,6 +23,7 @@
 		0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1021FAD5660017C581 /* DataService.swift */; };
 		0F0CFE1321FAD6060017C581 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1221FAD6060017C581 /* Post.swift */; };
 		0F0CFE1521FD14AA0017C581 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */; };
+		0F2D2D0A223C689600F55867 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */; };
 		0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */; };
 		0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46821E57E1B006BAC83 /* Main.storyboard */; };
 		0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		0F0CFE1021FAD5660017C581 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0F0CFE1221FAD6060017C581 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
 		0F3FC46121E57E1B006BAC83 /* freegan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freegan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F3FC46921E57E1B006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				0F0CFD8D21E6A03A0017C581 /* FancyField.swift */,
 				0F0CFD8F21E6A2450017C581 /* FancyButton.swift */,
 				0F0CFE0421FACCC30017C581 /* PhotoCollectionViewCell.swift */,
+				0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				0F0CFD9021E6A2450017C581 /* FancyButton.swift in Sources */,
 				0F0CFDB421F19CFF0017C581 /* FeedVC.swift in Sources */,
 				0F0CFE0921FACE360017C581 /* PhotoPageContainerViewController.swift in Sources */,
+				0F2D2D0A223C689600F55867 /* SearchCollectionReusableView.swift in Sources */,
 				0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */,
 				0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */,
 				0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */,
