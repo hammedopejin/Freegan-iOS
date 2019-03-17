@@ -314,6 +314,8 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYW-Yz-wpm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="n8j-2J-s6V" kind="embed" id="xxA-rv-Q7X"/>
                                 </connections>
@@ -329,6 +331,7 @@
                         <viewLayoutGuide key="safeArea" id="FA2-bT-6Xv"/>
                     </view>
                     <navigationItem key="navigationItem" id="u0i-DN-L0M"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHk-IU-9hY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -338,7 +341,10 @@
         <!--Page View Controller-->
         <scene sceneID="F3F-lV-IeB">
             <objects>
-                <pageViewController automaticallyAdjustsScrollViewInsets="NO" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="n8j-2J-s6V" sceneMemberID="viewController"/>
+                <pageViewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="flipHorizontal" transitionStyle="scroll" pageSpacing="10" navigationOrientation="horizontal" spineLocation="none" id="n8j-2J-s6V" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DsB-eh-CfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4354" y="135"/>
@@ -346,7 +352,10 @@
         <!--Page View Controller-->
         <scene sceneID="UIk-g3-f9H">
             <objects>
-                <pageViewController storyboardIdentifier="ShowMorePics" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="vertical" spineLocation="none" id="fhx-lI-5Ab" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="ShowMorePics" automaticallyAdjustsScrollViewInsets="NO" transitionStyle="scroll" pageSpacing="10" navigationOrientation="vertical" spineLocation="none" id="fhx-lI-5Ab" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEl-uN-sjT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4355" y="896"/>
@@ -354,7 +363,7 @@
         <!--Photo Zoom View Controller-->
         <scene sceneID="332-hS-bhO">
             <objects>
-                <viewController storyboardIdentifier="PhotoZoomViewController" automaticallyAdjustsScrollViewInsets="NO" id="3mQ-KB-kGi" customClass="PhotoZoomViewController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoZoomViewController" autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" id="3mQ-KB-kGi" customClass="PhotoZoomViewController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eeL-MR-bJz"/>
                         <viewControllerLayoutGuide type="bottom" id="13T-bX-KwC"/>
@@ -365,6 +374,8 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-a6-GDh">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -376,6 +387,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AdC-f2-eJ6"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="imageView" destination="bBy-a6-GDh" id="mHl-8A-6MQ"/>
                     </connections>
@@ -397,6 +411,9 @@
                         <color key="barTintColor" red="0.25458964705467224" green="0.57744717597961426" blue="0.52156585454940796" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cDm-8p-VVo">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="VKv-Lz-4jQ" kind="relationship" relationship="rootViewController" id="t7a-7V-EUr"/>
                     </connections>
