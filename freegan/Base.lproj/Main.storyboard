@@ -233,6 +233,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="789"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="0TU-gy-ExA">
                                     <size key="itemSize" width="120" height="180"/>
                                     <size key="headerReferenceSize" width="400" height="56"/>
@@ -247,8 +248,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go8-x2-8XA">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go8-x2-8XA" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -263,20 +264,34 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionViewHeader" id="4xx-5G-ywb" customClass="SearchCollectionReusableView" customModule="freegan" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionViewHeader" id="4xx-5G-ywb" customClass="SearchCollectionReusableView" customModule="freegan" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="mbj-jv-7xd">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.29377484321594238" green="0.65644913911819458" blue="0.56862062215805054" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="tintColor" red="0.28979915380477905" green="0.6486058235168457" blue="0.56077730655670166" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </imageView>
                                         <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tQl-0W-95I">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                            <color key="barTintColor" red="0.2977505624294281" green="0.66429239511489868" blue="0.57646381855010986" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <rect key="frame" x="64" y="0.0" width="300" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                            <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="barTintColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             <connections>
                                                 <outlet property="delegate" destination="VKv-Lz-4jQ" id="I8O-eW-NFS"/>
                                             </connections>
                                         </searchBar>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_more_vert_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="Abd-b3-AU6">
+                                            <rect key="frame" x="370" y="10" width="36" height="36"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="tintColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </imageView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <connections>
                                         <outlet property="searchBar" destination="tQl-0W-95I" id="Yi2-3F-QdZ"/>
                                     </connections>
@@ -426,8 +441,10 @@
     <resources>
         <image name="1" width="480" height="423"/>
         <image name="freegan_logo_transparent" width="245.75999450683594" height="245.75999450683594"/>
+        <image name="ic_more_vert_white_24dp" width="48" height="48"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gCe-9c-9wV"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

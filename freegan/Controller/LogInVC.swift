@@ -20,6 +20,12 @@ class LogInVC : UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnTap = false
+    }
+    
     func completeSignIn(id: String) {
         // Load User Info/Data
         let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)

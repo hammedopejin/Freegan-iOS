@@ -25,9 +25,13 @@ class PhotoZoomViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imageView.image = self.image
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.hidesBarsOnTap = true
         navigationController?.setNavigationBarHidden(true, animated: false)
-        self.imageView.image = self.image
     }
     
     override func viewDidLayoutSubviews() {

@@ -102,6 +102,7 @@ class FeedVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnTap = false
     }
     
     override func viewSafeAreaInsetsDidChange() {
