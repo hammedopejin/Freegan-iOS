@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_5" orientation="portrait">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -28,7 +28,7 @@
                                 <viewLayoutGuide key="safeArea" id="nW0-mr-b9X"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter full name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yBg-7K-2n8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="107" y="565" width="201" height="30"/>
+                                <rect key="frame" x="107" y="566" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="MGt-xC-v6N"/>
                                 <nil key="textColor"/>
@@ -36,7 +36,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NH3-dV-P3P" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="107" y="611" width="201" height="30"/>
+                                <rect key="frame" x="107" y="610" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="n2z-qz-HYE"/>
                                 <nil key="textColor"/>
@@ -138,7 +138,7 @@
                                 <viewLayoutGuide key="safeArea" id="vn9-qt-jls"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rCL-Ea-M3R" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="107" y="611" width="201" height="30"/>
+                                <rect key="frame" x="107" y="610" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="safeArea" id="jIM-VZ-Qzv"/>
                                 <nil key="textColor"/>
@@ -215,7 +215,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="235" y="819"/>
+            <point key="canvasLocation" x="235" y="896"/>
         </scene>
         <!--FeedVC-->
         <scene sceneID="oq0-RS-O4j">
@@ -234,11 +234,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="0TU-gy-ExA">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="0TU-gy-ExA">
                                     <size key="itemSize" width="120" height="180"/>
                                     <size key="headerReferenceSize" width="400" height="56"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="SqL-kj-zYI" customClass="PhotoCollectionViewCell" customModule="freegan" customModuleProvider="target">
@@ -268,15 +268,16 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="mbj-jv-7xd">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="mbj-jv-7xd">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="56"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.29377484321594238" green="0.65644913911819458" blue="0.56862062215805054" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="tintColor" red="0.28979915380477905" green="0.6486058235168457" blue="0.56077730655670166" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="V1U-Lo-6lz"/>
+                                            </constraints>
                                         </imageView>
-                                        <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tQl-0W-95I">
-                                            <rect key="frame" x="64" y="0.0" width="300" height="56"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tQl-0W-95I">
+                                            <rect key="frame" x="52" y="0.0" width="324" height="56"/>
                                             <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="barTintColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -284,14 +285,27 @@
                                                 <outlet property="delegate" destination="VKv-Lz-4jQ" id="I8O-eW-NFS"/>
                                             </connections>
                                         </searchBar>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_more_vert_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="Abd-b3-AU6">
-                                            <rect key="frame" x="370" y="10" width="36" height="36"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ic_more_vert_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="Abd-b3-AU6">
+                                            <rect key="frame" x="358" y="8" width="0.0" height="40"/>
                                             <color key="backgroundColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="tintColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="FP2-W0-dPf"/>
+                                            </constraints>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Abd-b3-AU6" secondAttribute="trailing" constant="-4" id="8Lt-ak-avF"/>
+                                        <constraint firstItem="tQl-0W-95I" firstAttribute="leading" secondItem="4xx-5G-ywb" secondAttribute="leadingMargin" constant="44" id="A8x-GL-DjD"/>
+                                        <constraint firstItem="mbj-jv-7xd" firstAttribute="centerY" secondItem="Abd-b3-AU6" secondAttribute="centerY" id="CrA-MA-ZTZ"/>
+                                        <constraint firstItem="mbj-jv-7xd" firstAttribute="top" secondItem="4xx-5G-ywb" secondAttribute="top" id="PJs-dn-u8h"/>
+                                        <constraint firstItem="mbj-jv-7xd" firstAttribute="leading" secondItem="4xx-5G-ywb" secondAttribute="leading" id="RaG-8f-NCF"/>
+                                        <constraint firstItem="mbj-jv-7xd" firstAttribute="top" secondItem="tQl-0W-95I" secondAttribute="top" id="UKP-jO-UYy"/>
+                                        <constraint firstItem="Abd-b3-AU6" firstAttribute="top" secondItem="4xx-5G-ywb" secondAttribute="topMargin" constant="8" id="Xd3-95-BF5"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="tQl-0W-95I" secondAttribute="trailing" constant="30" id="ek7-mb-0jC"/>
+                                        <constraint firstAttribute="bottom" secondItem="mbj-jv-7xd" secondAttribute="bottom" id="j2r-1N-Y4y"/>
+                                    </constraints>
                                     <connections>
                                         <outlet property="searchBar" destination="tQl-0W-95I" id="Yi2-3F-QdZ"/>
                                     </connections>
@@ -301,6 +315,15 @@
                                     <outlet property="delegate" destination="VKv-Lz-4jQ" id="6FX-NH-adF"/>
                                 </connections>
                             </collectionView>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="320" y="800" width="56" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6SM-1C-wnp" appends="YES" id="5yj-Yl-OKX"/>
+                                </connections>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="dhg-Jf-mTm"/>
@@ -309,9 +332,15 @@
                     <connections>
                         <outlet property="collectionView" destination="06D-oa-gj6" id="Add-uT-NkB"/>
                         <segue destination="ayj-hi-gul" kind="show" identifier="ShowPhotoPageView" id="Sys-kc-tG1"/>
+                        <segue destination="S0g-5w-CYb" kind="show" identifier="goToPost" id="IiY-hL-mS1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3cb-cn-z9l" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="6SM-1C-wnp">
+                    <connections>
+                        <action selector="gotoPostVC:" destination="VKv-Lz-4jQ" id="bPV-Vg-soh"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2498.5507246376815" y="134.59821428571428"/>
         </scene>
@@ -363,6 +392,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DsB-eh-CfZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4354" y="135"/>
+        </scene>
+        <!--PostVC-->
+        <scene sceneID="XYv-hz-jWY">
+            <objects>
+                <viewController id="S0g-5w-CYb" customClass="PostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RfZ-tu-z1B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="rPg-Y6-sXk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-3E-m3Q" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="593" width="201" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="eW9-Aa-FbQ"/>
+                                <state key="normal" title="POST">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInTapped:" destination="K7V-H7-jq8" eventType="touchUpInside" id="YvL-eo-1Mw"/>
+                                    <action selector="postButton:" destination="S0g-5w-CYb" eventType="touchUpInside" id="xSR-HM-bky"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4R2-TC-Xf8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="541" width="201" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="safeArea" id="P2f-Ii-tKS"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rPg-Y6-sXk" firstAttribute="leading" secondItem="RfZ-tu-z1B" secondAttribute="leading" id="1fz-tZ-GWS"/>
+                            <constraint firstAttribute="bottom" secondItem="rPg-Y6-sXk" secondAttribute="bottom" id="58z-ub-haq"/>
+                            <constraint firstItem="rPg-Y6-sXk" firstAttribute="top" secondItem="RfZ-tu-z1B" secondAttribute="top" id="TPz-S1-InX"/>
+                            <constraint firstAttribute="trailing" secondItem="rPg-Y6-sXk" secondAttribute="trailing" id="xIn-pC-wN3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ptt-hx-icm"/>
+                    </view>
+                    <connections>
+                        <outlet property="postDescription" destination="4R2-TC-Xf8" id="lkD-WK-ipj"/>
+                        <outlet property="postImage" destination="rPg-Y6-sXk" id="TqR-8E-2Kw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fWa-Vk-mIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2499" y="896"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="UIk-g3-f9H">
@@ -421,7 +503,7 @@
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="01q-sa-dPS">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="barTintColor" red="0.25458964705467224" green="0.57744717597961426" blue="0.52156585454940796" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
@@ -441,10 +523,10 @@
     <resources>
         <image name="1" width="480" height="423"/>
         <image name="freegan_logo_transparent" width="245.75999450683594" height="245.75999450683594"/>
-        <image name="ic_more_vert_white_24dp" width="48" height="48"/>
+        <image name="ic_more_vert_white_24dp" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gCe-9c-9wV"/>
+        <segue reference="EAp-Fw-T9O"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

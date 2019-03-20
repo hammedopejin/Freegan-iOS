@@ -20,6 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>App needs access to your Camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to Photo Library</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>App needs access to Media Library</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

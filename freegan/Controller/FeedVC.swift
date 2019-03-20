@@ -14,6 +14,9 @@ class FeedVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBAction func gotoPostVC(_ sender: AnyObject) {
+        performSegue(withIdentifier: "goToPost", sender: nil)
+    }
     
     var selectedIndexPath: IndexPath!
     
@@ -36,8 +39,8 @@ class FeedVC: UIViewController {
     var currentUser: User?
     var postKey: String?
     
+    
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
-    var imageSelected = false
     var profileImgUrl: String!
     var userName: String!
     var userImgUrl: String!
@@ -88,16 +91,16 @@ class FeedVC: UIViewController {
 //        logOut()
 //    }
     
-    func logOut(){
-        
-        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
-        print("HAMMED: ID removed from keychain \(keychainResult)")
-        try! Auth.auth().signOut()
-        
-        
-        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
-        self.present(register, animated: true, completion: nil)
-    }
+//    func logOut(){
+//
+//        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+//        print("HAMMED: ID removed from keychain \(keychainResult)")
+//        try! Auth.auth().signOut()
+//
+//
+//        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
+//        self.present(register, animated: true, completion: nil)
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

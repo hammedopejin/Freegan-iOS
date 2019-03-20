@@ -16,16 +16,20 @@ class PhotoZoomViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    weak var delegate: PhotoZoomViewControllerDelegate?
-    
     var image: UIImage!
     var index: Int = 0
     var isRotating: Bool = false
     var firstTimeLoaded: Bool = true
+    weak var toDelegate: ZoomAnimatorDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.imageView.image = self.image
+        
+        self.imageView.frame = CGRect(x: self.imageView.frame.origin.x,
+                                      y: self.imageView.frame.origin.y,
+                                      width: imageView.bounds.width,
+                                      height: imageView.bounds.height)
     }
     
     override func viewWillAppear(_ animated: Bool) {
