@@ -27,6 +27,7 @@ class PhotoPageContainerViewController: UIViewController {
     }
     
     var images = [[UIImage]]()
+    var posterImages = [UIImage]()
     var posts: [Post]!
     var currentIndex = 0
     var vertIndex = 0
@@ -51,6 +52,7 @@ class PhotoPageContainerViewController: UIViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         vc.index = self.currentIndex
         vc.image = self.images[self.currentIndex][0]
+        vc.posterImage = self.posterImages[self.currentIndex]
         
         let viewControllers = [
             vc
@@ -75,6 +77,7 @@ class PhotoPageContainerViewController: UIViewController {
                     self.vertIndex -= 1
                     print(self.vertIndex)
                     vc.image = self.images[self.currentIndex][self.vertIndex]
+                    vc.posterImage = self.posterImages[self.currentIndex]
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -88,6 +91,7 @@ class PhotoPageContainerViewController: UIViewController {
                     self.vertIndex += 1
                     print(self.vertIndex)
                     vc.image = self.images[self.currentIndex][self.vertIndex]
+                    vc.posterImage = self.posterImages[self.currentIndex]
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -113,6 +117,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
         vc.image = self.images[self.currentIndex - 1][0]
+        vc.posterImage = self.posterImages[self.currentIndex - 1]
         vc.index = currentIndex - 1
         print("current index: " + String(self.currentIndex))
         return vc
@@ -127,6 +132,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
         vc.image = self.images[self.currentIndex + 1][0]
+        vc.posterImage = self.posterImages[self.currentIndex + 1]
         vc.index = currentIndex + 1
         print("current index: " + String(self.currentIndex))
         return vc

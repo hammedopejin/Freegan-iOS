@@ -34,6 +34,7 @@ class FeedVC: UIViewController {
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
     var images = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
+    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 8)
     var posts = [Post]()
     var user: User?
     var currentUser: User?
@@ -206,6 +207,7 @@ class FeedVC: UIViewController {
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
             vc.images = self.images
+            vc.posterImages = self.posterImages
         }
     }
 }
@@ -251,6 +253,39 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         var j = 0
+    
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
+            .observe(.value, with: {
+            snapshot in
+            
+            if snapshot.exists() {
+                
+                let user = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                print(user.userImgUrl)
+                
+                var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
+                
+                if (!user.userImgUrl.isEmpty){
+                    ref = Storage.storage().reference(forURL: user.userImgUrl)
+                }
+                
+                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                    if error != nil {
+                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                        
+                    } else {
+                        if let imgData = data {
+                            if let img = UIImage(data: imgData) {
+                                self.posterImages[indexPath.row] = img
+                            }
+                        }
+                        
+                    }
+                })
+            }
+            
+        })
+        
         for i in self.posts[indexPath.row].imageUrl{
             
             let ref = Storage.storage().reference(forURL: i)

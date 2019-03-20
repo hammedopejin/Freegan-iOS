@@ -11,13 +11,13 @@ import Firebase
 
 
 class User {
-    let objectId: String
+    var objectId: String
     var pushId: String?
     
-    let createdAt: Date
-    var updatedAt: Date
+    var createdAt: Date?
+    var updatedAt: Date?
     
-    let email: String
+    var email: String
     var userName: String
     var userImgUrl: String
     
@@ -26,7 +26,7 @@ class User {
     var longitude: Double = 0.00
    
     var blockedUsersList: [String] = [""]
-    let loginMethod: String
+    var loginMethod: String
     
     //MARK: Initializers
     
@@ -52,8 +52,8 @@ class User {
         objectId = _dictionary[kOBJECTID] as! String
         pushId = _dictionary[kPUSHID] as? String
         
-        createdAt = dateFormatter().date(from: _dictionary[kCREATEDAT] as! String)!
-        updatedAt = dateFormatter().date(from:_dictionary[kUPDATEDAT] as! String)!
+        createdAt = dateFormatter().date(from: _dictionary[kCREATEDAT] as! String)
+        updatedAt = dateFormatter().date(from:_dictionary[kUPDATEDAT] as! String)
         
         email = _dictionary[kEMAIL] as! String
         userName = _dictionary[kUSERNAME] as! String
@@ -165,8 +165,8 @@ class User {
     
     func userDictionaryFrom(user: User) -> NSDictionary {
         
-        let createdAt = dateFormatter().string(from: user.createdAt)
-        let updatedAt = dateFormatter().string(from: user.updatedAt)
+        let createdAt = dateFormatter().string(from: user.createdAt ?? Date())
+        let updatedAt = dateFormatter().string(from: user.updatedAt ?? Date())
         
         return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.userName, user.userImgUrl], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kUSERNAME as NSCopying, kAVATAR as NSCopying])
         

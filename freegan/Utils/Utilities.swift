@@ -9,7 +9,7 @@
 import Foundation
 import Firebase
 
-private let dateFormat = "yyyy-MM-dd hh:mm:ss a"
+private let dateFormat = "yyyy-MM-dd"
 
 func dateFormatter() -> DateFormatter {
     
