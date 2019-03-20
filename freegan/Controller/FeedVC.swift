@@ -35,6 +35,7 @@ class FeedVC: UIViewController {
     
     var images = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 8)
+    var postDescriptionTexts = ["","","","","","","",""]
     var posts = [Post]()
     var user: User?
     var currentUser: User?
@@ -208,6 +209,7 @@ class FeedVC: UIViewController {
             vc.posts = self.posts
             vc.images = self.images
             vc.posterImages = self.posterImages
+            vc.postDescriptionTexts = self.postDescriptionTexts
         }
     }
 }
@@ -254,6 +256,8 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         var j = 0
     
+        self.postDescriptionTexts[indexPath.row] = self.posts[indexPath.row].caption
+        
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
             .observe(.value, with: {
             snapshot in

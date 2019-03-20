@@ -16,9 +16,11 @@ class PhotoZoomViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var posterImageView: CircleView!
+    @IBOutlet weak var postDescription: UITextField!
     
     var image: UIImage!
     var posterImage: UIImage!
+    var postDescriptionText: String!
     var index: Int = 0
     var isRotating: Bool = false
     var firstTimeLoaded: Bool = true
@@ -28,6 +30,7 @@ class PhotoZoomViewController: UIViewController {
         super.viewDidLoad()
         self.imageView.image = self.image
         self.posterImageView.image = self.posterImage
+        postDescription.text = postDescriptionText
         
         self.imageView.frame = CGRect(x: self.imageView.frame.origin.x,
                                       y: self.imageView.frame.origin.y,
