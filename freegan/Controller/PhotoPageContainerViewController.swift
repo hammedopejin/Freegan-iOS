@@ -178,6 +178,6 @@ extension PhotoPageContainerViewController: ZoomAnimatorDelegate {
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
-        return self.currentViewController.imageView.convert(self.currentViewController.imageView.frame, to: self.currentViewController.view)
+        return self.currentViewController.imageView.convert(self.currentViewController.view.frame, to: self.currentViewController.imageView)
     }
 }
