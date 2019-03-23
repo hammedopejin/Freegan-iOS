@@ -77,6 +77,7 @@
 		0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundEdgeImageView.swift; sourceTree = "<group>"; };
 		0F2D2D0D2241629E00F55867 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		0F2D2D0F2241EB8D00F55867 /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		0F2D2D112246D4F400F55867 /* Freegan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freegan-Bridging-Header.h"; sourceTree = "<group>"; };
 		0F3FC46121E57E1B006BAC83 /* freegan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freegan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F3FC46921E57E1B006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -220,6 +221,7 @@
 				0F0CFD8C21E6A01E0017C581 /* View */,
 				0F0CFD8921E69C730017C581 /* Controller */,
 				0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */,
+				0F2D2D112246D4F400F55867 /* Freegan-Bridging-Header.h */,
 				0F3FC46821E57E1B006BAC83 /* Main.storyboard */,
 				0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */,
 				0F3FC46D21E57E1D006BAC83 /* LaunchScreen.storyboard */,
