@@ -227,11 +227,11 @@
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DX2-ki-a1h">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="06D-oa-gj6">
                                 <rect key="frame" x="0.0" y="88" width="414" height="789"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="0TU-gy-ExA">
@@ -243,22 +243,18 @@
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="SqL-kj-zYI" customClass="PhotoCollectionViewCell" customModule="freegan" customModuleProvider="target">
                                         <rect key="frame" x="8" y="64" width="120" height="180"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go8-x2-8XA" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go8-x2-8XA" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <rect key="contentStretch" x="0.94999999999999996" y="0.0" width="1" height="1"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
-                                        <constraints>
-                                            <constraint firstItem="Go8-x2-8XA" firstAttribute="leading" secondItem="SqL-kj-zYI" secondAttribute="leading" id="9G2-W0-Jp2"/>
-                                            <constraint firstAttribute="bottom" secondItem="Go8-x2-8XA" secondAttribute="bottom" id="CBR-CW-CTo"/>
-                                            <constraint firstAttribute="trailing" secondItem="Go8-x2-8XA" secondAttribute="trailing" id="FZP-SY-bUv"/>
-                                            <constraint firstItem="Go8-x2-8XA" firstAttribute="top" secondItem="SqL-kj-zYI" secondAttribute="top" id="th8-NN-BaM"/>
-                                        </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="Go8-x2-8XA" id="wDy-9b-kZf"/>
                                         </connections>
@@ -285,8 +281,8 @@
                                                 <outlet property="delegate" destination="VKv-Lz-4jQ" id="I8O-eW-NFS"/>
                                             </connections>
                                         </searchBar>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ic_more_vert_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="Abd-b3-AU6">
-                                            <rect key="frame" x="358" y="8" width="0.0" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_more_vert_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="Abd-b3-AU6">
+                                            <rect key="frame" x="370" y="16" width="40" height="24"/>
                                             <color key="backgroundColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="tintColor" red="0.29761052131652832" green="0.65644985437393188" blue="0.56862056255340576" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
@@ -469,7 +465,7 @@
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rxk-r3-T4f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-a6-GDh">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -490,7 +486,7 @@
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="bxq-Il-U8e">
                                 <rect key="frame" x="20" y="784" width="374" height="33"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="3j1-on-eV5"/>

@@ -214,7 +214,7 @@ class FeedVC: UIViewController {
     }
 }
 
-extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
+extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -249,6 +249,19 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let numberOfCell: CGFloat
+        if UIScreen.main.bounds.size.width > 700{
+            numberOfCell = 7.3
+        }else if UIScreen.main.bounds.size.width > 500{
+            numberOfCell = 5.3
+        }else{
+           numberOfCell = 3.3
+        }
+        let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
+        return CGSize(width: cellWidth, height: 180)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -343,7 +356,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             //Guard against nil values
             guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
                 //Return a default UIImageView
-                return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 200.0, height: 200.0))
+                return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
             //The PhotoCollectionViewCell was found in the collectionView, return the image
             return guardedCell.imageView
@@ -352,7 +365,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             //Guard against nil return values
             guard let guardedCell = self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell else {
                 //Return a default UIImageView
-                return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 200.0, height: 200.0))
+                return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
             //The PhotoCollectionViewCell was found in the collectionView, return the image
             return guardedCell.imageView
@@ -380,7 +393,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             
             //Prevent the collectionView from returning a nil value
             guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
-                return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 200.0, height: 200.0)
+                return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             
             return guardedCell.frame
@@ -389,7 +402,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         else {
             //Prevent the collectionView from returning a nil value
             guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
-                return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 200.0, height: 200.0)
+                return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             //The cell was found successfully
             return guardedCell.frame
