@@ -10,11 +10,20 @@ import Foundation
 import Firebase
 
 private let dateFormat = "yyyy-MM-dd"
+private let dateFormatWithTime = "yyyy-MM-dd hh:mm:ss a"
 
 func dateFormatter() -> DateFormatter {
     
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = dateFormat
+    
+    return dateFormatter
+}
+
+func dateFormatterWithTime() -> DateFormatter {
+    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = dateFormatWithTime
     
     return dateFormatter
 }

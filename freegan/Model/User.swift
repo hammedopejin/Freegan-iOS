@@ -78,9 +78,7 @@ class User {
     //MARK: Returning current user funcs
     
     class func currentId() -> String {
-        
         return Auth.auth().currentUser!.uid
-        
     }
     
     //    class func currentUser () -> User? {

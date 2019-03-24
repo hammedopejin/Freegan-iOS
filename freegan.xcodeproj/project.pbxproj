@@ -27,6 +27,10 @@
 		0F2D2D0C22402B6A00F55867 /* RoundEdgeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */; };
 		0F2D2D0E2241629E00F55867 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0D2241629E00F55867 /* CircleView.swift */; };
 		0F2D2D102241EB8D00F55867 /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0F2241EB8D00F55867 /* PostVC.swift */; };
+		0F2D2D132246D63C00F55867 /* Recent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D122246D63C00F55867 /* Recent.swift */; };
+		0F2D2D152246D6A900F55867 /* IncomingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D142246D6A900F55867 /* IncomingMessage.swift */; };
+		0F2D2D172246D73A00F55867 /* OutgoingMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D162246D73A00F55867 /* OutgoingMessage.swift */; };
+		0F2D2D192246E4D900F55867 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D182246E4D900F55867 /* ChatViewController.swift */; };
 		0F3FC46521E57E1B006BAC83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */; };
 		0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46821E57E1B006BAC83 /* Main.storyboard */; };
 		0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46B21E57E1D006BAC83 /* Assets.xcassets */; };
@@ -78,6 +82,10 @@
 		0F2D2D0D2241629E00F55867 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		0F2D2D0F2241EB8D00F55867 /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		0F2D2D112246D4F400F55867 /* Freegan-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Freegan-Bridging-Header.h"; sourceTree = "<group>"; };
+		0F2D2D122246D63C00F55867 /* Recent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recent.swift; sourceTree = "<group>"; };
+		0F2D2D142246D6A900F55867 /* IncomingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingMessage.swift; sourceTree = "<group>"; };
+		0F2D2D162246D73A00F55867 /* OutgoingMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessage.swift; sourceTree = "<group>"; };
+		0F2D2D182246E4D900F55867 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		0F3FC46121E57E1B006BAC83 /* freegan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freegan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F3FC46921E57E1B006BAC83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -137,6 +145,7 @@
 				0F0CFDB721F24D7F0017C581 /* LogInVC.swift */,
 				0F0CFE0621FACDFD0017C581 /* PhotoZoomViewController.swift */,
 				0F0CFE0821FACE360017C581 /* PhotoPageContainerViewController.swift */,
+				0F2D2D182246E4D900F55867 /* ChatViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -167,7 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				0F0CFD9521E6B0E40017C581 /* User.swift */,
+				0F2D2D122246D63C00F55867 /* Recent.swift */,
 				0F0CFE1221FAD6060017C581 /* Post.swift */,
+				0F2D2D142246D6A900F55867 /* IncomingMessage.swift */,
+				0F2D2D162246D73A00F55867 /* OutgoingMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -523,12 +535,16 @@
 				0F0CFE0921FACE360017C581 /* PhotoPageContainerViewController.swift in Sources */,
 				0F2D2D0A223C689600F55867 /* SearchCollectionReusableView.swift in Sources */,
 				0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */,
+				0F2D2D192246E4D900F55867 /* ChatViewController.swift in Sources */,
+				0F2D2D132246D63C00F55867 /* Recent.swift in Sources */,
 				0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */,
 				0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */,
+				0F2D2D152246D6A900F55867 /* IncomingMessage.swift in Sources */,
 				0F0CFD9621E6B0E40017C581 /* User.swift in Sources */,
 				0F0CFE1321FAD6060017C581 /* Post.swift in Sources */,
 				0F2D2D102241EB8D00F55867 /* PostVC.swift in Sources */,
 				0F0CFDB821F24D7F0017C581 /* LogInVC.swift in Sources */,
+				0F2D2D172246D73A00F55867 /* OutgoingMessage.swift in Sources */,
 				0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */,
 				0F0CFE0C21FACED30017C581 /* ZoomAnimator.swift in Sources */,
 				0F2D2D0C22402B6A00F55867 /* RoundEdgeImageView.swift in Sources */,
