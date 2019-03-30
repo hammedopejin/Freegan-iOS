@@ -68,12 +68,13 @@ class FeedVC: UIViewController {
             snapshot in
             
             if snapshot.exists() {
-                
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                print("--------------------------------")
+                print((self.currentUser?.objectId)!)
+                 print("--------------------------------")
             }
             
         })
-        
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)

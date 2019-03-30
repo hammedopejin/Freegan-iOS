@@ -84,6 +84,8 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.image = self.images[self.currentIndex][self.vertIndex]
                     vc.posterImage = self.posterImages[self.currentIndex]
                     vc.post = self.posts[self.currentIndex]
+                    vc.user = self.users[self.currentIndex]
+                    vc.currentUser = self.currentUser
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -99,6 +101,8 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.image = self.images[self.currentIndex][self.vertIndex]
                     vc.posterImage = self.posterImages[self.currentIndex]
                     vc.post = self.posts[self.currentIndex]
+                    vc.user = self.users[self.currentIndex]
+                    vc.currentUser = self.currentUser
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -126,6 +130,8 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.image = self.images[self.currentIndex - 1][0]
         vc.posterImage = self.posterImages[self.currentIndex - 1]
         vc.post = self.posts[self.currentIndex - 1]
+        vc.user = self.users[self.currentIndex - 1]
+        vc.currentUser = self.currentUser
         vc.index = currentIndex - 1
         print("current index: " + String(self.currentIndex))
         return vc
@@ -142,6 +148,8 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.image = self.images[self.currentIndex + 1][0]
         vc.posterImage = self.posterImages[self.currentIndex + 1]
         vc.post = self.posts[self.currentIndex + 1]
+        vc.user = self.users[self.currentIndex + 1]
+        vc.currentUser = self.currentUser
         vc.index = currentIndex + 1
         print("current index: " + String(self.currentIndex))
         return vc
