@@ -47,6 +47,17 @@ class User {
         
     }
     
+    init() {
+        objectId = ""
+        pushId = ""
+        createdAt = nil
+        updatedAt = nil
+        email = ""
+        userName = ""
+        userImgUrl = ""
+        loginMethod = ""
+    }
+    
     init(_dictionary: NSDictionary) {
         
         objectId = _dictionary[kOBJECTID] as! String

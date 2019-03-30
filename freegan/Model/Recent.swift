@@ -10,7 +10,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 
-func startChat(user1: User, user2: User) -> String {
+func startChat(user1: User, user2: User, postId: String) -> String {
     
     let userId1 = user1.objectId as String
     let userId2 = user2.objectId as String
@@ -20,23 +20,23 @@ func startChat(user1: User, user2: User) -> String {
     let value = userId1.compare(userId2).rawValue
     
     if value < 0 {
-        chatRoomId = userId1 + userId2
+        chatRoomId = userId1 + userId2 + postId
         
     } else {
-        chatRoomId = userId2 + userId1
+        chatRoomId = userId2 + userId1 + postId
     }
     
     let members = [userId1, userId2]
     
-    createRecent(userId: userId1, chatRoomId: chatRoomId, members: members, withUserUserId: userId2, withUserUsername: user2.userName, type: kPRIVATE)
-    createRecent(userId: userId2, chatRoomId: chatRoomId, members: members, withUserUserId: userId1, withUserUsername: user1.userName, type: kPRIVATE)
+    createRecent(userId: userId1, chatRoomId: chatRoomId, members: members, postId: postId, withUserUserId: userId2, withUserUsername: user2.userName, type: kPRIVATE)
+    createRecent(userId: userId2, chatRoomId: chatRoomId, members: members, postId: postId, withUserUserId: userId1, withUserUsername: user1.userName, type: kPRIVATE)
     
     
     return chatRoomId
 }
 
 
-func createRecent(userId: String, chatRoomId: String, members: [String], withUserUserId: String, withUserUsername: String, type: String) {
+func createRecent(userId: String, chatRoomId: String, members: [String], postId: String, withUserUserId: String, withUserUsername: String, type: String) {
     
     firebase.child(kRECENT).queryOrdered(byChild: kCHATROOMID).queryEqual(toValue: chatRoomId).observeSingleEvent(of: .value, with: {
         snapshot in
@@ -65,7 +65,7 @@ func createRecent(userId: String, chatRoomId: String, members: [String], withUse
         
         if create && userId != withUserUserId {
             
-            creatRecentItem(userId: userId, chatRoomId: chatRoomId, members: members, withUserUserId: withUserUserId, withUserUsername: withUserUsername, type: type)
+            creatRecentItem(userId: userId, chatRoomId: chatRoomId, members: members, postId: postId, withUserUserId: withUserUserId, withUserUsername: withUserUsername, type: type)
         }
         
         
@@ -73,15 +73,16 @@ func createRecent(userId: String, chatRoomId: String, members: [String], withUse
     
 }
 
-func creatRecentItem(userId: String, chatRoomId: String, members: [String], withUserUserId: String, withUserUsername: String, type: String) {
+func creatRecentItem(userId: String, chatRoomId: String, members: [String], postId: String,
+                     withUserUserId: String, withUserUsername: String, type: String) {
     
     let refernce = firebase.child(kRECENT).childByAutoId()
     
     let recentId = refernce.key
-    let date = dateFormatter().string(from: Date())
+    let date = dateFormatterWithTime().string(from: Date())
     
     
-    let recent = [kRECENTID: recentId, kUSERID: userId, kCHATROOMID: chatRoomId, kMEMBERS: members, kWITHUSERUSERNAME: withUserUsername, kWITHUSERUSERID: withUserUserId, kLASTMESSAGE: "", kCOUNTER: 0, kDATE: date, kTYPE: type] as [String : Any]
+    let recent = [kRECENTID: recentId, kUSERID: userId, kCHATROOMID: chatRoomId, kMEMBERS: members, kPOSTID: postId, kWITHUSERUSERNAME: withUserUsername, kWITHUSERUSERID: withUserUserId, kLASTMESSAGE: "", kCOUNTER: 0, kDATE: date, kTYPE: type] as [String : Any]
     
     
     refernce.setValue(recent) { (error, ref) in
@@ -96,7 +97,7 @@ func creatRecentItem(userId: String, chatRoomId: String, members: [String], with
     }
 }
 
-func restartRecentChat(recent: NSDictionary) {
+func restartRecentChat(recent: NSDictionary, postId: String) {
     
     var currentUser: User?
     
@@ -113,7 +114,7 @@ func restartRecentChat(recent: NSDictionary) {
                     
                     if (userId != KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!) {
                         
-                        createRecent(userId: userId, chatRoomId: (recent[kCHATROOMID] as? String)!, members: recent[kMEMBERS] as! [String], withUserUserId: currentUser!.objectId, withUserUsername: currentUser!.userName, type: kPRIVATE)
+                        createRecent(userId: userId, chatRoomId: (recent[kCHATROOMID] as? String)!, members: recent[kMEMBERS] as! [String], postId: postId, withUserUserId: currentUser!.objectId, withUserUsername: currentUser!.userName, type: kPRIVATE)
                     }
                     
                 }
@@ -147,7 +148,7 @@ func updateRecents(chatRoomId: String, lastMessage: String) {
 
 func updateRecentItem(recent: NSDictionary, lastMessage: String) {
     
-    let date = dateFormatter().string(from: Date())
+    let date = dateFormatterWithTime().string(from: Date())
     
     var counter = recent[kCOUNTER] as! Int
     

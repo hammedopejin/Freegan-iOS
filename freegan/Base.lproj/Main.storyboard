@@ -477,6 +477,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="j1N-Wn-is5" appends="YES" id="mTe-Tf-SqA"/>
+                                </connections>
                             </imageView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMn-I6-W42" customClass="CircleView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="340" y="44" width="48" height="48"/>
@@ -514,6 +517,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hl6-xd-8n9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="j1N-Wn-is5">
+                    <connections>
+                        <action selector="startChat:" destination="3mQ-KB-kGi" id="zDn-DW-kbr"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5121.739130434783" y="133.92857142857142"/>
         </scene>

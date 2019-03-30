@@ -10,17 +10,17 @@ import Foundation
 import Firebase
 
 class Post {
-    private var _caption: String!
+    private var _description: String!
     private var _imageUrl: [String]!
     private var _profileImgUrl: String!
     private var _userName: String!
     private var _postUserObjectId: String!
-    private var _postKey: String!
+    private var _postId: String!
     private var _postDate: String!
     private var _postRef: DatabaseReference!
     
-    var caption: String {
-        return _caption
+    var description: String {
+        return _description
     }
     
     var imageUrl: [String] {
@@ -39,17 +39,17 @@ class Post {
         return _postUserObjectId
     }
     
-    var postKey: String {
-        return _postKey
+    var postId: String {
+        return _postId
     }
     
     var postDate: String {
         return _postDate
     }
     
-    init(postKey: String, caption: String, imageUrl: [String], postDate: String, profileImgUrl: String, userName: String, postUserObjectId: String) {
-        self._postKey = postKey
-        self._caption = caption
+    init(postId: String, description: String, imageUrl: [String], postDate: String, profileImgUrl: String, userName: String, postUserObjectId: String) {
+        self._postId = postId
+        self._description = description
         self._imageUrl = imageUrl
         self._postDate = postDate
         self._profileImgUrl = profileImgUrl
@@ -58,11 +58,11 @@ class Post {
         
     }
     
-    init(postKey: String, postData: Dictionary<String, AnyObject>) {
-        self._postKey = postKey
+    init(postId: String, postData: Dictionary<String, AnyObject>) {
+        self._postId = postId
         
-        if let caption = postData["description"] as? String {
-            self._caption = caption
+        if let description = postData["description"] as? String {
+            self._description = description
         }
         
         if let imageUrl = postData["imageUrl"] as? [String] {
@@ -85,8 +85,7 @@ class Post {
             self._postDate = postDate
         }
         
-        _postRef = DataService.ds.REF_POSTS.child(_postKey)
+        _postRef = DataService.ds.REF_POSTS.child(_postId)
         
     }
-
 }

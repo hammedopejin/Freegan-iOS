@@ -8,19 +8,32 @@
 
 import UIKit
 
-protocol PhotoZoomViewControllerDelegate: class {
-    func photoZoomViewController(_ photoZoomViewController: PhotoZoomViewController, scrollViewDidScroll scrollView: UIScrollView)
-}
-
 class PhotoZoomViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var posterImageView: CircleView!
     @IBOutlet weak var postDescription: UITextField!
     
+    @IBAction func startChat(_ sender: Any) {
+        let chatVC = ChatViewController()
+        
+        chatVC.titleName = self.user!.userName
+        chatVC.withUserId = self.post.postUserObjectId
+        if ((self.currentUser) != nil) {
+            print((self.currentUser?.objectId)!)
+            chatVC.chatRoomId = freegan.startChat(user1: self.currentUser!, user2: self.user!, postId: self.post.postId)
+            chatVC.hidesBottomBarWhenPushed = true
+            if (self.currentUser?.objectId != self.user!.objectId){
+                self.navigationController?.pushViewController(chatVC, animated: true)
+            }
+        }
+    }
+    
     var image: UIImage!
     var posterImage: UIImage!
-    var postDescriptionText: String!
+    var post: Post!
+    var user: User!
+    var currentUser: User!
     var index: Int = 0
     
     override func viewDidLoad() {
@@ -28,7 +41,7 @@ class PhotoZoomViewController: UIViewController {
         
         self.imageView.image = self.image
         self.posterImageView.image = self.posterImage
-        postDescription.text = postDescriptionText
+        postDescription.text = post.description
         
     }
     

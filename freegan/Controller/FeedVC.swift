@@ -35,19 +35,14 @@ class FeedVC: UIViewController {
     
     var images = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 8)
-    var postDescriptionTexts = ["","","","","","","",""]
+    var users = Array(repeating: User(), count: 8)
     var posts = [Post]()
-    var user: User?
     var currentUser: User?
-    var postKey: String?
-    
-    
+    var postId: String?
+  
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
-    var userName: String!
     var userImgUrl: String!
-    var username: String!
-    var postkey: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +56,7 @@ class FeedVC: UIViewController {
                     print("SNAP: \(snap)")
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
-                        let post = Post(postKey: key, postData: postDict)
+                        let post = Post(postId: key, postData: postDict)
                         
                         self.posts.append(post)
                     }
@@ -207,9 +202,10 @@ class FeedVC: UIViewController {
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
+            vc.users = self.users
             vc.images = self.images
             vc.posterImages = self.posterImages
-            vc.postDescriptionTexts = self.postDescriptionTexts
+            vc.currentUser = self.currentUser
         }
     }
 }
@@ -268,8 +264,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         var j = 0
-    
-        self.postDescriptionTexts[indexPath.row] = self.posts[indexPath.row].caption
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
             .observe(.value, with: {
@@ -278,8 +272,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             if snapshot.exists() {
                 
                 let user = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                print(user.userImgUrl)
-                
+                self.users[indexPath.row] = user
                 var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
                 
                 if (!user.userImgUrl.isEmpty){

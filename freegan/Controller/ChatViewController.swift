@@ -33,7 +33,8 @@ class ChatViewController: JSQMessagesViewController {
     var avatarDictionary: NSMutableDictionary?
     
     var members: [String] = []
-    var withUsers: [User] = []
+    var withUserId: String = ""
+    var withUser: User?
     var titleName: String?
     var currentUser: User?
     
@@ -79,18 +80,12 @@ class ChatViewController: JSQMessagesViewController {
             snapshot in
             
             if snapshot.exists() {
-                
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                
+                self.senderDisplayName = self.currentUser?.userName
             }
-            
         })
-        
+        self.title = self.titleName
         self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
-        self.senderDisplayName = currentUser?.userName
-        
-        self.title = titleName
-        
         loadMessegas()
     }
     
@@ -332,20 +327,18 @@ class ChatViewController: JSQMessagesViewController {
     }
 
     func updateUI() {
-        getWithUserFromRecent(members: members) { (withUsers) in
-            self.withUsers = withUsers
+        getWithUserFromRecent(member: withUserId) { (withUser) in
+            self.withUser = withUser
         }
     }
     
-    func getWithUserFromRecent(members: [String], result: @escaping (_ withUsers: [User]) -> Void) {
+    func getWithUserFromRecent(member: String, result: @escaping (_ withUser: User) -> Void) {
         
-        var receivedMembers: [User] = []
-        
-        for userId in members {
+        var receivedMember: User?
             
-            if userId != KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
+            if withUserId != KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
                 
-                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: userId).observe(.value, with: {
+                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserId).observe(.value, with: {
                     snapshot in
                     
                     if snapshot.exists() {
@@ -354,15 +347,14 @@ class ChatViewController: JSQMessagesViewController {
                         
                         let cUser = User.init(_dictionary: userDictionary as! NSDictionary)
                         
-                        receivedMembers.append(cUser)
+                        receivedMember = cUser
                         
-                        if receivedMembers.count == (members.count - 1) {
-                            result(receivedMembers)
+                        if receivedMember != nil {
+                            result(receivedMember!)
                         }
                     }
                 })
             }
-        }
     }
     
     //MARK: Typing indicator

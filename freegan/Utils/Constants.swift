@@ -49,7 +49,7 @@ public let kAUDIOMAXDURATION = 10.0
 public let kSUCCESS = 2
 
 //recent
-public let kRECENT = "Recent"
+public let kRECENT = "recent"
 public let kCHATROOMID = "chatRoomID"
 public let kUSERID = "userId"
 public let kDATE = "date"
