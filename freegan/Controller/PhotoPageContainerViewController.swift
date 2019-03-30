@@ -26,9 +26,9 @@ class PhotoPageContainerViewController: UIViewController {
         return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
-    var images = [[UIImage]]()
+    var postImages = [[UIImage]]()
     var posterImages = [UIImage]()
-    var users = [User]()
+    var posters = [User]()
     var posts: [Post]!
     var currentUser: User!
     var currentIndex = 0
@@ -53,10 +53,10 @@ class PhotoPageContainerViewController: UIViewController {
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         vc.index = self.currentIndex
-        vc.image = self.images[self.currentIndex][0]
+        vc.postImage = self.postImages[self.currentIndex][0]
         vc.posterImage = self.posterImages[self.currentIndex]
         vc.post = self.posts[self.currentIndex]
-        vc.user = self.users[self.currentIndex]
+        vc.poster = self.posters[self.currentIndex]
         vc.currentUser = self.currentUser
         
         let viewControllers = [
@@ -81,10 +81,10 @@ class PhotoPageContainerViewController: UIViewController {
                 if self.vertIndex > 0 && self.posts[self.currentIndex].imageUrl.count > 1{
                     self.vertIndex -= 1
                     print(self.vertIndex)
-                    vc.image = self.images[self.currentIndex][self.vertIndex]
+                    vc.postImage = self.postImages[self.currentIndex][self.vertIndex]
                     vc.posterImage = self.posterImages[self.currentIndex]
                     vc.post = self.posts[self.currentIndex]
-                    vc.user = self.users[self.currentIndex]
+                    vc.poster = self.posters[self.currentIndex]
                     vc.currentUser = self.currentUser
                     vc.index = self.currentIndex
                     let viewControllers = [
@@ -98,10 +98,10 @@ class PhotoPageContainerViewController: UIViewController {
                 if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 && self.vertIndex < 5{
                     self.vertIndex += 1
                     print(self.vertIndex)
-                    vc.image = self.images[self.currentIndex][self.vertIndex]
+                    vc.postImage = self.postImages[self.currentIndex][self.vertIndex]
                     vc.posterImage = self.posterImages[self.currentIndex]
                     vc.post = self.posts[self.currentIndex]
-                    vc.user = self.users[self.currentIndex]
+                    vc.poster = self.posters[self.currentIndex]
                     vc.currentUser = self.currentUser
                     vc.index = self.currentIndex
                     let viewControllers = [
@@ -127,10 +127,10 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.image = self.images[self.currentIndex - 1][0]
+        vc.postImage = self.postImages[self.currentIndex - 1][0]
         vc.posterImage = self.posterImages[self.currentIndex - 1]
         vc.post = self.posts[self.currentIndex - 1]
-        vc.user = self.users[self.currentIndex - 1]
+        vc.poster = self.posters[self.currentIndex - 1]
         vc.currentUser = self.currentUser
         vc.index = currentIndex - 1
         print("current index: " + String(self.currentIndex))
@@ -145,10 +145,10 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.image = self.images[self.currentIndex + 1][0]
+        vc.postImage = self.postImages[self.currentIndex + 1][0]
         vc.posterImage = self.posterImages[self.currentIndex + 1]
         vc.post = self.posts[self.currentIndex + 1]
-        vc.user = self.users[self.currentIndex + 1]
+        vc.poster = self.posters[self.currentIndex + 1]
         vc.currentUser = self.currentUser
         vc.index = currentIndex + 1
         print("current index: " + String(self.currentIndex))
@@ -185,10 +185,10 @@ extension PhotoPageContainerViewController: ZoomAnimatorDelegate {
     }
     
     func referenceImageView(for zoomAnimator: ZoomAnimator) -> UIImageView? {
-        return self.currentViewController.imageView
+        return self.currentViewController.postImageView
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
-        return self.currentViewController.imageView.convert(self.currentViewController.view.frame, to: self.currentViewController.imageView)
+        return self.currentViewController.postImageView.convert(self.currentViewController.view.frame, to: self.currentViewController.postImageView)
     }
 }

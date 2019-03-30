@@ -512,8 +512,8 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chatButtonImage" destination="GfL-P8-VuE" id="7dv-rH-4Si"/>
-                        <outlet property="imageView" destination="bBy-a6-GDh" id="mHl-8A-6MQ"/>
                         <outlet property="postDescription" destination="bxq-Il-U8e" id="xtr-eA-NTq"/>
+                        <outlet property="postImageView" destination="bBy-a6-GDh" id="8NC-V2-TsR"/>
                         <outlet property="posterImageView" destination="uMn-I6-W42" id="6y7-v7-7yi"/>
                     </connections>
                 </viewController>

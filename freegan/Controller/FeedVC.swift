@@ -33,9 +33,9 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var images = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
+    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 8)
-    var users = Array(repeating: User(), count: 8)
+    var posters = Array(repeating: User(), count: 8)
     var posts = [Post]()
     var currentUser: User?
     var postId: String?
@@ -69,9 +69,6 @@ class FeedVC: UIViewController {
             
             if snapshot.exists() {
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                print("--------------------------------")
-                print((self.currentUser?.objectId)!)
-                 print("--------------------------------")
             }
             
         })
@@ -203,8 +200,8 @@ class FeedVC: UIViewController {
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
-            vc.users = self.users
-            vc.images = self.images
+            vc.posters = self.posters
+            vc.postImages = self.postImages
             vc.posterImages = self.posterImages
             vc.currentUser = self.currentUser
         }
@@ -272,12 +269,12 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             
             if snapshot.exists() {
                 
-                let user = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.users[indexPath.row] = user
+                let poster = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.posters[indexPath.row] = poster
                 var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
                 
-                if (!user.userImgUrl.isEmpty){
-                    ref = Storage.storage().reference(forURL: user.userImgUrl)
+                if (!poster.userImgUrl.isEmpty){
+                    ref = Storage.storage().reference(forURL: poster.userImgUrl)
                 }
                 
                 ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
@@ -313,7 +310,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                                 cell.imageView.image = img
                                 FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
                             }
-                            self.images[indexPath.row][j] = img
+                            self.postImages[indexPath.row][j] = img
                             j += 1
                         }
                     }

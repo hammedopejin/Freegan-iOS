@@ -10,7 +10,7 @@ import UIKit
 
 class PhotoZoomViewController: UIViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var posterImageView: CircleView!
     @IBOutlet weak var postDescription: UITextField!
     @IBOutlet weak var chatButtonImage: CircleView!
@@ -18,33 +18,28 @@ class PhotoZoomViewController: UIViewController {
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
         
-        chatVC.titleName = self.user!.userName
+        chatVC.titleName = self.poster!.userName
         chatVC.withUserId = self.post!.postUserObjectId
         if ((self.currentUser) != nil) {
-            print("--------------------------------")
-            print((self.currentUser?.objectId)!)
-            print("--------------------------------")
-            print((self.user?.objectId)!)
-            print("--------------------------------")
-            chatVC.chatRoomId = freegan.startChat(user1: self.currentUser!, user2: self.user!, postId: self.post!.postId)
+            chatVC.chatRoomId = freegan.startChat(user1: self.currentUser!, user2: self.poster!, postId: self.post!.postId)
             chatVC.hidesBottomBarWhenPushed = true
-            if (self.currentUser!.objectId != self.user!.objectId){
+            if (self.currentUser!.objectId != self.poster!.objectId){
                 self.navigationController?.pushViewController(chatVC, animated: true)
             }
         }
     }
     
-    var image: UIImage!
+    var postImage: UIImage!
     var posterImage: UIImage!
     var post: Post?
-    var user: User?
+    var poster: User?
     var currentUser: User?
     var index: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.imageView.image = self.image
+        self.postImageView.image = self.postImage
         self.posterImageView.image = self.posterImage
         postDescription.text = post!.description
     }
@@ -53,7 +48,7 @@ class PhotoZoomViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.hidesBarsOnTap = true
         navigationController?.setNavigationBarHidden(true, animated: false)
-        if (self.currentUser!.objectId == self.user!.objectId){
+        if (self.currentUser!.objectId == self.poster!.objectId){
             self.chatButtonImage.isHidden = true
         }
     }
