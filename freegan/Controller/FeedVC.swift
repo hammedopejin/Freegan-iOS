@@ -248,6 +248,12 @@ class FeedVC: UIViewController {
             break
         }
     }
+    
+    func updateUserLocation(location: CLLocationCoordinate2D){
+        
+        let locationData: [AnyHashable : Any] = [kLATITUDE : location.latitude, kLONGITUDE : location.longitude]
+        firebase.child(kUSER).child(currentUser!.objectId).updateChildValues(locationData)
+    }
 }
 
 extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
@@ -280,8 +286,9 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(location.latitude) \(location.longitude)")
+        updateUserLocation(location: location)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
