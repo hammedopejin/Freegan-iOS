@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
+import MapKit
+import CoreLocation
 
 class FeedVC: UIViewController {
     
@@ -44,8 +46,12 @@ class FeedVC: UIViewController {
     var profileImgUrl: String!
     var userImgUrl: String!
     
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationManager.requestWhenInUseAuthorization()
         
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             
@@ -73,29 +79,34 @@ class FeedVC: UIViewController {
             
         })
         
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
+        switch(CLLocationManager.authorizationStatus()) {
+            
+        // get the user location
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+            break
+            
+        case .restricted, .denied:
+            self.requestLocationPermission()
+            break
+            
+        case .authorizedAlways:
+            break
+        case .authorizedWhenInUse:
+            break
+        }
+        
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
         self.collectionView.frame = self.view.bounds
         
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
-//            //print("HAMMED: ID found in keychain")
-//        }
-//        logOut()
-//    }
-    
-//    func logOut(){
-//
-//        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
-//        print("HAMMED: ID removed from keychain \(keychainResult)")
-//        try! Auth.auth().signOut()
-//
-//
-//        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
-//        self.present(register, animated: true, completion: nil)
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -206,9 +217,40 @@ class FeedVC: UIViewController {
             vc.currentUser = self.currentUser
         }
     }
+    
+    func requestLocationPermission() {
+        
+        let alertController = UIAlertController(title: "Freegan", message: "Please go to Settings and turn on location permissions",
+                                                preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(settingsAction)
+        
+        switch(CLLocationManager.authorizationStatus()) {
+            
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+            
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+            break
+            
+        case .restricted, .denied:
+            self.present(alertController, animated: true, completion: nil)
+            break
+        }
+    }
 }
 
-extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
+extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -235,6 +277,11 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             //reload your data source if necessary
             self.collectionView?.reloadData()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -450,4 +497,16 @@ extension FeedVC: ZoomAnimatorDelegate {
         }
         return cellFrame
     }
+    
+    
+    //    func logOut(){
+    //
+    //        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+    //        print("HAMMED: ID removed from keychain \(keychainResult)")
+    //        try! Auth.auth().signOut()
+    //
+    //
+    //        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
+    //        self.present(register, animated: true, completion: nil)
+    //    }
 }
