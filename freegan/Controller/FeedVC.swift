@@ -17,6 +17,10 @@ class FeedVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func gotoPostVC(_ sender: AnyObject) {
+        guard let _ = currentUser?.latitude else {
+            showToast(message: "Current location needed to post an item!")
+            return
+        }
         performSegue(withIdentifier: "goToPost", sender: nil)
     }
     
@@ -252,7 +256,7 @@ class FeedVC: UIViewController {
     func updateUserLocation(location: CLLocationCoordinate2D){
         
         let locationData: [AnyHashable : Any] = [kLATITUDE : location.latitude, kLONGITUDE : location.longitude]
-        firebase.child(kUSER).child(currentUser!.objectId).updateChildValues(locationData)
+        firebase.child(kUSER).child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).updateChildValues(locationData)
     }
 }
 

@@ -22,8 +22,8 @@ class User {
     var userImgUrl: String
     
     var status: String = ""
-    var latitude: Double = 0.00
-    var longitude: Double = 0.00
+    var latitude: Double?
+    var longitude: Double?
    
     var blockedUsersList: [String] = [""]
     var loginMethod: String
@@ -70,6 +70,8 @@ class User {
         userName = _dictionary[kUSERNAME] as! String
         userImgUrl = _dictionary[kAVATAR] as! String
         
+        latitude = _dictionary[kLATITUDE] as? Double
+        longitude = _dictionary[kLONGITUDE] as? Double
         
         if let blockedUserList = _dictionary[kBLOCKEDUSERS] {
             
