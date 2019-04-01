@@ -20,12 +20,13 @@ class DataService {
     // DB references
     private var _REF_BASE = DB_BASE
     private var _REF_POSTS = DB_BASE.child("posts")
+    private var _REF_POSTS_LOCATION = DB_BASE.child("posts_location")
     private var _REF_USERS = DB_BASE.child("users")
-    private var _REF_CHATS = DB_BASE.child("chats")
+    private var _REF_CHATS = DB_BASE.child("message")
     
     // Storage references
-    private var _REF_POST_IMAGES = STORAGE_BASE.child("post-pics")
-    private var _REF_USER_IMAGES = STORAGE_BASE.child("user-images")
+    private var _REF_POST_IMAGES = STORAGE_BASE.child("post_pics")
+    private var _REF_USER_IMAGES = STORAGE_BASE.child("user_images")
     
     var REF_BASE: DatabaseReference {
         return _REF_BASE
@@ -33,6 +34,10 @@ class DataService {
     
     var REF_POSTS: DatabaseReference {
         return _REF_POSTS
+    }
+    
+    var REF_POSTS_LOCATION: DatabaseReference{
+        return _REF_POSTS_LOCATION
     }
     
     var REF_USERS: DatabaseReference {

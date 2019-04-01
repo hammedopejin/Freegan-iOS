@@ -42,7 +42,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
    
     @IBAction func registerTapped(_ sender: Any) {
-        if emailField.text == nil || userNameField.text == nil || pwdField.text == nil {
+        if emailField.text == "" || userNameField.text == "" || pwdField.text == "" {
             self.showToast(message : "All text fields must be entered properly!")
             return
         }

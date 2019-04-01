@@ -220,7 +220,7 @@
         <!--FeedVC-->
         <scene sceneID="oq0-RS-O4j">
             <objects>
-                <viewController id="VKv-Lz-4jQ" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedVC" id="VKv-Lz-4jQ" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aje-dK-H7Z"/>
                         <viewControllerLayoutGuide type="bottom" id="9mv-S5-RPk"/>
@@ -421,7 +421,6 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="P2f-Ii-tKS"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>

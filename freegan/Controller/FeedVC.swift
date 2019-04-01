@@ -21,8 +21,7 @@ class FeedVC: UIViewController {
             showToast(message: "Current location needed to post an item!")
             return
         }
-        
-        performSegue(withIdentifier: "goToPost", sender: nil)
+        self.showCameraLibraryOptions()
     }
     
     var selectedIndexPath: IndexPath!
@@ -40,9 +39,9 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 8)
-    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 8)
-    var posters = Array(repeating: User(), count: 8)
+    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 9)
+    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 9)
+    var posters = Array(repeating: User(), count: 9)
     var posts = [Post]()
     var currentUser: User?
     var postId: String?
@@ -50,6 +49,8 @@ class FeedVC: UIViewController {
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
     var userImgUrl: String!
+    
+    var postVC: PostVC?
     
     let locationManager = CLLocationManager()
     
@@ -220,6 +221,9 @@ class FeedVC: UIViewController {
             vc.postImages = self.postImages
             vc.posterImages = self.posterImages
             vc.currentUser = self.currentUser
+        } else if segue.identifier == "goToPost" {
+            let vc = segue.destination as! PostVC
+            vc.currentUser = self.currentUser
         }
     }
     
@@ -258,6 +262,30 @@ class FeedVC: UIViewController {
         
         let locationData: [AnyHashable : Any] = [kLATITUDE : location.latitude, kLONGITUDE : location.longitude]
         firebase.child(kUSER).child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).updateChildValues(locationData)
+    }
+    
+    func showCameraLibraryOptions(){
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
+            PostVC.useCamera = true
+            self.performSegue(withIdentifier: "goToPost", sender: nil)
+        }
+        
+        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
+            PostVC.useCamera = false
+            self.performSegue(withIdentifier: "goToPost", sender: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
+            
+        }
+        
+        optionMenu.addAction(camera)
+        optionMenu.addAction(library)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
 }
 

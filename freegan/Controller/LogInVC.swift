@@ -33,6 +33,11 @@ class LogInVC : UIViewController {
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
     @IBAction func logInTapped(_ sender: Any) {
+        if emailField.text == "" || pwdField.text == "" {
+            self.showToast(message : "All text fields must be entered properly!")
+            return
+        }
+        
         if let email = emailField.text, let pwd = pwdField.text {
             Auth.auth().signIn(withEmail: email, password: pwd, completion: { (user, error) in
                 if error == nil {
@@ -53,7 +58,6 @@ class LogInVC : UIViewController {
         
         let Register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
         self.present(Register, animated: true, completion: nil)
-        
     }
  
 }
