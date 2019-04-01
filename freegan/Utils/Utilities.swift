@@ -51,11 +51,9 @@ func imageFromData(pictureData: String, withBlock: (_ image: UIImage?) -> Void) 
     
     let decodedData = NSData(base64Encoded: pictureData, options: NSData.Base64DecodingOptions(rawValue: 0))
     
-    
     image = UIImage(data: decodedData! as Data)
     
     withBlock(image)
-    
 }
 
 

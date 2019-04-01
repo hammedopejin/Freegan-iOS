@@ -20,7 +20,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     
     var imagePicker: UIImagePickerController!
     var imageSelected = false
-    
+    var cam: Camera?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,22 +32,23 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         super.viewDidLoad()
         
         imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-    
-        present(imagePicker, animated: true, completion: nil)
+        cam = Camera(delegate_: self)
         
         
+        cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: imagePicker)
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             postImage.image = image
             imageSelected = true
         } else {
             print("TAG: A valid image wasn't selected")
+            
         }
+        
         imagePicker.dismiss(animated: true, completion: nil)
     }
     

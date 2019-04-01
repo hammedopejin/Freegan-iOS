@@ -23,6 +23,7 @@
 		0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1021FAD5660017C581 /* DataService.swift */; };
 		0F0CFE1321FAD6060017C581 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1221FAD6060017C581 /* Post.swift */; };
 		0F0CFE1521FD14AA0017C581 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */; };
+		0F181788225284B000C2C26A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F181787225284B000C2C26A /* Camera.swift */; };
 		0F2D2D0A223C689600F55867 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */; };
 		0F2D2D0C22402B6A00F55867 /* RoundEdgeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */; };
 		0F2D2D0E2241629E00F55867 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0D2241629E00F55867 /* CircleView.swift */; };
@@ -77,6 +78,7 @@
 		0F0CFE1021FAD5660017C581 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0F0CFE1221FAD6060017C581 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0F181787225284B000C2C26A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
 		0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundEdgeImageView.swift; sourceTree = "<group>"; };
 		0F2D2D0D2241629E00F55867 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				0F0CFD9221E6A2C30017C581 /* Constants.swift */,
+				0F181787225284B000C2C26A /* Camera.swift */,
 				0F0CFD9721E6CF3D0017C581 /* Utilities.swift */,
 			);
 			path = Utils;
@@ -546,6 +549,7 @@
 				0F0CFDB821F24D7F0017C581 /* LogInVC.swift in Sources */,
 				0F2D2D172246D73A00F55867 /* OutgoingMessage.swift in Sources */,
 				0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */,
+				0F181788225284B000C2C26A /* Camera.swift in Sources */,
 				0F0CFE0C21FACED30017C581 /* ZoomAnimator.swift in Sources */,
 				0F2D2D0C22402B6A00F55867 /* RoundEdgeImageView.swift in Sources */,
 				0F0CFE0E21FACF060017C581 /* ZoomTransitionController.swift in Sources */,

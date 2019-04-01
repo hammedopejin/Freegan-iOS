@@ -17,10 +17,11 @@ class FeedVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBAction func gotoPostVC(_ sender: AnyObject) {
-        guard let _ = currentUser?.latitude else {
+        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
             showToast(message: "Current location needed to post an item!")
             return
         }
+        
         performSegue(withIdentifier: "goToPost", sender: nil)
     }
     
