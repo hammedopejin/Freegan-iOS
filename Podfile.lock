@@ -42,6 +42,8 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GTMSessionFetcher/Core (~> 1.1)
+  - GeoFire (3.0.0):
+    - Firebase/Database (~> 5.0)
   - GoogleAppMeasurement (5.4.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -84,6 +86,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - GeoFire (from `https://github.com/firebase/geofire-objc.git`)
   - JSQMessagesViewController (= 7.3.3)
   - MBProgressHUD
   - SwiftKeychainWrapper (from `https://github.com/jrendel/SwiftKeychainWrapper.git`, branch `master`)
@@ -108,11 +111,16 @@ SPEC REPOS:
     - nanopb
 
 EXTERNAL SOURCES:
+  GeoFire:
+    :git: https://github.com/firebase/geofire-objc.git
   SwiftKeychainWrapper:
     :branch: master
     :git: https://github.com/jrendel/SwiftKeychainWrapper.git
 
 CHECKOUT OPTIONS:
+  GeoFire:
+    :commit: 95a0bf39b1bcc87685dc7aba3caf4e23d9600c30
+    :git: https://github.com/firebase/geofire-objc.git
   SwiftKeychainWrapper:
     :commit: 63076cd9e9adf772129f46d31309f612334fea02
     :git: https://github.com/jrendel/SwiftKeychainWrapper.git
@@ -126,6 +134,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 0621689f77528d62b47e1c06ca737c4c19275d1a
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
+  GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
@@ -136,6 +145,6 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
 
-PODFILE CHECKSUM: d94c8cf060bf7f1d17f678b730f4f911862bf0a8
+PODFILE CHECKSUM: 983ac880aeb28d074481c1a8d8efddccedddaff8
 
 COCOAPODS: 1.5.3

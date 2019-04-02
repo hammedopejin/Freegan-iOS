@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FAF55FFF5E7BDF5CC844EC6FD92A48A1"
+               BlueprintIdentifier = "5F30ABD26C782070FEB6F7BDC83B31CD"
                BlueprintName = "SwiftKeychainWrapper"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "SwiftKeychainWrapper.framework">

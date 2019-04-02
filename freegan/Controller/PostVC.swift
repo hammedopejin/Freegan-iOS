@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+
 class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     @IBOutlet weak var postImage: UIImageView!
@@ -23,20 +24,20 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             showToast(message: "Item must have description!")
             return
         }
-        
+
         if let imgData = img.jpegData(compressionQuality: 0.2) {
-            
+
             let imgUid = NSUUID().uuidString
-            
+
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            
+
             let ref = DataService.ds.REF_POST_IMAGES.child(imgUid)
-            
+
             // Upload the file to the path "images/rivers.jpg"
             let uploadTask = ref.putData(imgData, metadata: metadata) { (metadata, error) in
                 guard let metadata = metadata else {
-                
+
                     return
                 }
                 // Metadata contains file metadata such as size, content-type.
@@ -44,7 +45,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
                 // You can also access to download URL after upload.
                 ref.downloadURL { (url, error) in
                     guard let downloadURL = url else {
-                       
+
                         return
                     }
                     self.postToFirebase(imgUrl: downloadURL.absoluteString)
@@ -68,6 +69,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         imagePicker = UIImagePickerController()
         cam = Camera(delegate_: self)
@@ -96,7 +98,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     func postToFirebase(imgUrl: String) {
         let date = Date()
         let result = dateFormatterWithTime().string(from: date)
-        
+
         let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
         let postId: String = firebasePost.key!
 
@@ -116,8 +118,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         imageSelected = false
         postImage.image = UIImage(named: "1")
 
-        let feedVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FeedVC")
-        self.present(feedVC, animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

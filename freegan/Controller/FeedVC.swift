@@ -39,9 +39,9 @@ class FeedVC: UIViewController {
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 9)
-    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 9)
-    var posters = Array(repeating: User(), count: 9)
+    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 20)
+    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
+    var posters = Array(repeating: User(), count: 20)
     var posts = [Post]()
     var currentUser: User?
     var postId: String?
