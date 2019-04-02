@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-
+import GeoFire
 
 class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
@@ -60,6 +60,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     static var useCamera = false
     var cam: Camera?
     var currentUser: User?
+    var geoRef: GeoFire?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,7 +71,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
         imagePicker = UIImagePickerController()
         cam = Camera(delegate_: self)
         
@@ -99,8 +100,8 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         let date = Date()
         let result = dateFormatterWithTime().string(from: date)
 
-        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
-        let postId: String = firebasePost.key!
+        let postRef = DataService.ds.REF_POSTS.childByAutoId()
+        let postId: String = postRef.key!
 
         let post: Dictionary<String, AnyObject> = [
             kPOSTID : postId as AnyObject,
@@ -112,7 +113,8 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             kPOSTUSEROBJECTID : currentUser!.objectId as AnyObject
         ]
 
-        firebasePost.setValue(post)
+        postRef.setValue(post)
+        geoRef?.setLocation(CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), forKey: postId)
 
         postDescription.text = ""
         imageSelected = false
