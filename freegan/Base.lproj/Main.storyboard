@@ -435,6 +435,7 @@
                         <viewLayoutGuide key="safeArea" id="Ptt-hx-icm"/>
                     </view>
                     <connections>
+                        <outlet property="postButtonView" destination="2dQ-3E-m3Q" id="zVr-Tn-pos"/>
                         <outlet property="postDescription" destination="4R2-TC-Xf8" id="lkD-WK-ipj"/>
                         <outlet property="postImage" destination="rPg-Y6-sXk" id="TqR-8E-2Kw"/>
                     </connections>

@@ -30,7 +30,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
     }
     
-
+    
     
     
     func completeSignIn(id: String) {
@@ -40,7 +40,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
     
-   
+    
     @IBAction func registerTapped(_ sender: Any) {
         if emailField.text == "" || userNameField.text == "" || pwdField.text == "" {
             self.showToast(message : "All text fields must be entered properly!")
@@ -54,22 +54,21 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 } else {
                     print("HAMMED: Successfully authenticated with Firebase")
                     if let user = user {
-                                    User.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
-                                    self.completeSignIn(id: user.user.uid)
+                        User.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
+                        self.completeSignIn(id: user.user.uid)
                     }
                 }
             })
         }
     }
     
-  
+    
     @IBAction func gotoLogin(_ sender: Any) {
         let logIn = UIStoryboard(name: "Main", bundle:
             nil).instantiateViewController(withIdentifier: "LogInVC")
         self.present(logIn, animated: true, completion: nil)
     }
 }
-    
 
 extension UIViewController {
     
@@ -92,4 +91,29 @@ extension UIViewController {
         })
     }
     
+}
+
+var vSpinner : UIView?
+extension UIViewController {
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            vSpinner?.removeFromSuperview()
+            vSpinner = nil
+        }
+    }
 }

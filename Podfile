@@ -10,9 +10,9 @@ pod 'Firebase/Database'
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
-pod 'MBProgressHUD'
 pod 'SwiftKeychainWrapper', :git => 'https://github.com/jrendel/SwiftKeychainWrapper.git', :branch => 'master'
 pod 'GeoFire', :git => 'https://github.com/firebase/geofire-objc.git'
+
   # Pods for freegan
 
   target 'freeganTests' do

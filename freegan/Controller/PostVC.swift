@@ -15,7 +15,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDescription: FancyField!
     @IBAction func postButton(_ sender: Any) {
-       
+        
         guard let img = postImage.image, imageSelected == true else {
             showToast(message: "An image must be selected!")
             return
@@ -24,20 +24,24 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             showToast(message: "Item must have description!")
             return
         }
-
+        
+        postButtonView.isHidden = true
+        postDescription.isHidden = true
+        self.showSpinner(onView: self.view)
+        
         if let imgData = img.jpegData(compressionQuality: 0.2) {
-
+            
             let imgUid = NSUUID().uuidString
-
+            
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-
+            
             let ref = DataService.ds.REF_POST_IMAGES.child(imgUid)
-
+            
             // Upload the file to the path "images/rivers.jpg"
-            let uploadTask = ref.putData(imgData, metadata: metadata) { (metadata, error) in
+            let _ = ref.putData(imgData, metadata: metadata) { (metadata, error) in
                 guard let metadata = metadata else {
-
+                    
                     return
                 }
                 // Metadata contains file metadata such as size, content-type.
@@ -45,15 +49,17 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
                 // You can also access to download URL after upload.
                 ref.downloadURL { (url, error) in
                     guard let downloadURL = url else {
-
+                        
                         return
                     }
                     self.postToFirebase(imgUrl: downloadURL.absoluteString)
                 }
             }
         }
-   
+        
     }
+    
+    @IBOutlet weak var postButtonView: FancyButton!
     
     var imagePicker: UIImagePickerController!
     var imageSelected = false
@@ -99,10 +105,10 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     func postToFirebase(imgUrl: String) {
         let date = Date()
         let result = dateFormatterWithTime().string(from: date)
-
+        
         let postRef = DataService.ds.REF_POSTS.childByAutoId()
         let postId: String = postRef.key!
-
+        
         let post: Dictionary<String, AnyObject> = [
             kPOSTID : postId as AnyObject,
             kDESCRIPTION : postDescription.text! as AnyObject,
@@ -112,14 +118,15 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             kPOSTDATE : result as AnyObject,
             kPOSTUSEROBJECTID : currentUser!.objectId as AnyObject
         ]
-
+        
         postRef.setValue(post)
         geoRef?.setLocation(CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), forKey: postId)
-
+        
+        self.removeSpinner()
         postDescription.text = ""
         imageSelected = false
         postImage.image = UIImage(named: "1")
-
+        
         self.navigationController?.popViewController(animated: true)
     }
     
