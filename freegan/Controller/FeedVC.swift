@@ -45,6 +45,7 @@ class FeedVC: UIViewController {
     var posters = Array(repeating: User(), count: 20)
     var posts = [Post]()
     var currentUser: User?
+    var askLocationFlag = false
   
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
@@ -57,40 +58,15 @@ class FeedVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.locationManager.requestWhenInUseAuthorization()
-        
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
             
             if snapshot.exists() {
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.checkPosts()
+                self.requestLocation()
             }
             
         })
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-        
-        switch(CLLocationManager.authorizationStatus()) {
-            
-        // get the user location
-        case .notDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
-            break
-            
-        case .restricted, .denied:
-            self.requestLocationPermission()
-            break
-            
-        case .authorizedAlways:
-            break
-        case .authorizedWhenInUse:
-            break
-        }
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
@@ -211,7 +187,44 @@ class FeedVC: UIViewController {
         }
     }
     
+    func requestLocation(){
+        
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
+        switch(CLLocationManager.authorizationStatus()) {
+            
+        // get the user location
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+            break
+            
+        case .restricted, .denied:
+            self.requestLocationPermission()
+            break
+            
+        case .authorizedAlways:
+            self.askLocationFlag = true
+            break
+        case .authorizedWhenInUse:
+            self.askLocationFlag = true
+            break
+        }
+        
+        
+        if (self.askLocationFlag){
+            self.checkPosts()
+        }
+    }
+    
     func requestLocationPermission() {
+        
+        self.askLocationFlag = true
         
         let alertController = UIAlertController(title: "Freegan", message: "Please go to Settings and turn on location permissions",
                                                 preferredStyle: .alert)
@@ -273,8 +286,11 @@ class FeedVC: UIViewController {
     }
     
     func checkPosts(){
+        
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
-            showError("No Freegan!", message: "User location needed to see posts in the area")
+            if(self.askLocationFlag){
+                showError("No Freegan!", message: "User location needed to see posts in the area")
+            }
             return
         }
         
@@ -342,6 +358,13 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         print("locations = \(location.latitude) \(location.longitude)")
         updateUserLocation(location: location)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
+            showError("No Freegan!", message: "User location needed to see posts in the area")
+        }
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
