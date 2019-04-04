@@ -11,6 +11,7 @@ import Firebase
 import SwiftKeychainWrapper
 import MapKit
 import CoreLocation
+import GeoFire
 
 class FeedVC: UIViewController {
     
@@ -44,7 +45,6 @@ class FeedVC: UIViewController {
     var posters = Array(repeating: User(), count: 20)
     var posts = [Post]()
     var currentUser: User?
-    var postId: String?
   
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
@@ -59,28 +59,12 @@ class FeedVC: UIViewController {
         
         self.locationManager.requestWhenInUseAuthorization()
         
-        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
-            
-            self.posts = []
-            
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-                    print("SNAP: \(snap)")
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        let key = snap.key
-                        let post = Post(postId: key, postData: postDict)
-                        
-                        self.posts.append(post)
-                    }
-                }
-            }
-            self.collectionView.reloadData()
-        })
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
             
             if snapshot.exists() {
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.checkPosts()
             }
             
         })
@@ -286,6 +270,42 @@ class FeedVC: UIViewController {
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func checkPosts(){
+        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
+            showError("No Freegan!", message: "User location needed to see posts in the area")
+            return
+        }
+        
+        var postIds = [String]()
+        let geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
+        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: 50)
+        
+        query.observe(.keyEntered, with: { key, location in
+            postIds.append(key)
+            
+        })
+        
+        query.observeReady {
+            self.loadPosts(postIds: postIds)
+            print("Key: " + postIds[0] )
+        }
+    }
+    
+    func loadPosts(postIds: [String]){
+        
+        self.posts = []
+        
+        for postId in postIds{
+            DataService.ds.REF_POSTS.child(postId).observe(.value, with: { (snapshot) in
+                let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                print("Key: " + snapshot.key )
+                self.posts.append(post)
+                
+                self.collectionView.reloadData()
+            })
+        }
     }
 }
 
