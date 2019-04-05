@@ -20,6 +20,7 @@ class FeedVC: UIViewController {
     @IBAction func gotoPostVC(_ sender: AnyObject) {
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
             showToast(message: "Current location needed to post an item!")
+            self.requestLocationPermission()
             return
         }
         self.showCameraLibraryOptions()
@@ -205,7 +206,11 @@ class FeedVC: UIViewController {
             break
             
         case .restricted, .denied:
-            self.requestLocationPermission()
+            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
+                self.requestLocationPermission()
+            } else {
+                self.askLocationFlag = true
+            }
             break
             
         case .authorizedAlways:
@@ -214,6 +219,7 @@ class FeedVC: UIViewController {
         case .authorizedWhenInUse:
             self.askLocationFlag = true
             break
+            
         }
         
         
@@ -362,7 +368,9 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
-            showError("No Freegan!", message: "User location needed to see posts in the area")
+            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
+                showError("No Freegan!", message: "User location needed to see posts in the area")
+            }
         }
         
     }
