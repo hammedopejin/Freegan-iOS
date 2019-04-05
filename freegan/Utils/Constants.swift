@@ -11,13 +11,13 @@ import Firebase
 import FirebaseDatabase
 
 
-var firebase = Database.database().reference()
-let userDefaults = UserDefaults.standard
+public let firebase = Database.database().reference()
+public let userDefaults = UserDefaults.standard
 
 
-let SHADOW_GRAY: CGFloat = 120.0 / 255.0
+public let SHADOW_GRAY: CGFloat = 120.0 / 255.0
 
-let KEY_UID = "uid"
+public let KEY_UID = "uid"
 
 
 //User

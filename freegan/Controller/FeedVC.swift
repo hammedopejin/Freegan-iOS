@@ -46,7 +46,11 @@ class FeedVC: UIViewController {
     var posters = Array(repeating: User(), count: 20)
     var posts = [Post]()
     var currentUser: User?
+    var postIds = [String]()
     var askLocationFlag = false
+    let PAGE_LOAD_SIZE = 10
+    let GEOGRAPHIC_RADIUS = 50.0
+    var totalLoadSize = 0;
   
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
@@ -300,34 +304,46 @@ class FeedVC: UIViewController {
             return
         }
         
-        var postIds = [String]()
         let geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
-        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: 50)
+        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: self.GEOGRAPHIC_RADIUS)
+        
+        self.totalLoadSize = 0
+        self.postIds.removeAll()
+        self.posts.removeAll()
         
         query.observe(.keyEntered, with: { key, location in
-            postIds.append(key)
-            
+            self.postIds.append(key)
         })
         
         query.observeReady {
-            self.loadPosts(postIds: postIds)
-            print("Key: " + postIds[0] )
+            if (self.postIds.count > 0) {
+                if (self.PAGE_LOAD_SIZE < self.postIds.count) {
+                    self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: 0);
+                } else {
+                    self.loadPosts(page_load_size: self.postIds.count, offset: 0);
+                }
+            } else {
+                self.showToast(message: "No Freegan posted in your area yet! Go ahead, post one")
+            }
         }
     }
     
-    func loadPosts(postIds: [String]){
+    func loadPosts(page_load_size: Int, offset: Int){
         
-        self.posts = []
+        var maxBoundary = page_load_size + offset;
+        if (maxBoundary > self.postIds.count) {
+            maxBoundary = self.postIds.count;
+        }
         
-        for postId in postIds{
-            DataService.ds.REF_POSTS.child(postId).observe(.value, with: { (snapshot) in
+        for i in offset..<maxBoundary {
+            DataService.ds.REF_POSTS.child(self.postIds[i]).observe(.value, with: { (snapshot) in
                 let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                print("Key: " + snapshot.key )
                 self.posts.append(post)
                 
                 self.collectionView.reloadData()
             })
         }
+
     }
 }
 
@@ -399,6 +415,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
+        
         var j = 0
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
@@ -454,6 +471,16 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                     }
                 }
             })
+        }
+        
+        
+        let totalItemsCount = collectionView.numberOfItems(inSection: 0)
+        
+        if indexPath.row >= self.totalLoadSize - 3 {
+            if (self.PAGE_LOAD_SIZE < self.postIds.count) {
+                self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: totalItemsCount);
+                self.totalLoadSize += PAGE_LOAD_SIZE;
+            }
         }
         
         return cell
