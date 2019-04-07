@@ -579,7 +579,7 @@
         <!--Recent-->
         <scene sceneID="7Yc-JT-sLB">
             <objects>
-                <viewController id="zwN-mT-DNe" sceneMemberID="viewController">
+                <viewController id="zwN-mT-DNe" customClass="RecentViewController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QXG-jA-AOI"/>
                         <viewControllerLayoutGuide type="bottom" id="6XN-jY-9r8"/>
@@ -593,7 +593,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="Utl-MK-ngz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" id="Utl-MK-ngz" customClass="RecentTableViewCell" customModule="freegan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Utl-MK-ngz" id="vRd-Ca-Mur">
@@ -607,8 +607,8 @@
                                                         <constraint firstAttribute="height" constant="36" id="O30-bp-nkx"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OPK-VN-Ybp">
-                                                    <rect key="frame" x="8" y="40" width="36" height="36"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OPK-VN-Ybp">
+                                                    <rect key="frame" x="8" y="40.5" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36" id="u27-rw-wWj"/>
                                                         <constraint firstAttribute="width" constant="36" id="xWK-ec-Fem"/>
@@ -657,10 +657,12 @@
                                                 <constraint firstItem="aih-ec-74e" firstAttribute="centerY" secondItem="vRd-Ca-Mur" secondAttribute="centerY" constant="-18.25" id="2hN-NN-TwW"/>
                                                 <constraint firstItem="VkH-nl-nQq" firstAttribute="leading" secondItem="aih-ec-74e" secondAttribute="trailing" constant="22" id="DHC-dY-eav"/>
                                                 <constraint firstItem="pIy-3N-uNE" firstAttribute="top" secondItem="vRd-Ca-Mur" secondAttribute="topMargin" constant="-1" id="EFh-WG-uUN"/>
+                                                <constraint firstItem="OPK-VN-Ybp" firstAttribute="centerY" secondItem="VkH-nl-nQq" secondAttribute="centerY" id="Kqn-lk-BGI"/>
                                                 <constraint firstItem="Uni-bQ-AFH" firstAttribute="leading" secondItem="VkH-nl-nQq" secondAttribute="trailing" constant="8" id="P42-zm-v69"/>
                                                 <constraint firstItem="Bjd-ys-QXU" firstAttribute="top" secondItem="vRd-Ca-Mur" secondAttribute="topMargin" constant="-1" id="Vah-VC-Lzp"/>
                                                 <constraint firstItem="pIy-3N-uNE" firstAttribute="leading" secondItem="aih-ec-74e" secondAttribute="trailing" constant="22" id="YsP-ET-ZkB"/>
                                                 <constraint firstItem="VkH-nl-nQq" firstAttribute="top" secondItem="pIy-3N-uNE" secondAttribute="bottom" constant="17" id="bDw-cC-iOe"/>
+                                                <constraint firstItem="OPK-VN-Ybp" firstAttribute="leading" secondItem="aih-ec-74e" secondAttribute="leading" id="fvP-vG-uRf"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="VkH-nl-nQq" secondAttribute="bottom" constant="-3" id="mJV-7E-90B"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Uni-bQ-AFH" secondAttribute="bottom" constant="-3" id="pSh-rI-t0X"/>
                                                 <constraint firstItem="Bjd-ys-QXU" firstAttribute="trailing" secondItem="vRd-Ca-Mur" secondAttribute="trailingMargin" id="tr4-hV-ncg"/>
@@ -671,14 +673,19 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="avatarImageView" destination="aih-ec-74e" id="rq9-JV-2Vf"/>
-                                            <outlet property="counterLabel" destination="Uni-bQ-AFH" id="i4O-nE-aIn"/>
-                                            <outlet property="dateLabel" destination="Bjd-ys-QXU" id="JjI-21-o2J"/>
-                                            <outlet property="lastMessageLabel" destination="VkH-nl-nQq" id="pyW-xm-Ph3"/>
-                                            <outlet property="nameLabel" destination="pIy-3N-uNE" id="eFn-7e-9lG"/>
+                                            <outlet property="avatarImageView" destination="aih-ec-74e" id="9BZ-he-0rE"/>
+                                            <outlet property="counterLabel" destination="Uni-bQ-AFH" id="GKE-ld-DAy"/>
+                                            <outlet property="dateLabel" destination="Bjd-ys-QXU" id="p8u-la-fVR"/>
+                                            <outlet property="lastMessageLabel" destination="VkH-nl-nQq" id="Xgp-96-BtV"/>
+                                            <outlet property="nameLabel" destination="pIy-3N-uNE" id="tyk-ts-CsZ"/>
+                                            <outlet property="postImageView" destination="OPK-VN-Ybp" id="Vg5-rt-VA2"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zwN-mT-DNe" id="dIC-gy-BMW"/>
+                                    <outlet property="delegate" destination="zwN-mT-DNe" id="cMh-eE-Tzc"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -691,6 +698,9 @@
                         <viewLayoutGuide key="safeArea" id="csz-Ch-T8M"/>
                     </view>
                     <navigationItem key="navigationItem" title="Recent" id="Rx9-oW-b1P"/>
+                    <connections>
+                        <outlet property="tableView" destination="peJ-Mb-mLc" id="IgB-bk-9Uu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGO-Cp-Eki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

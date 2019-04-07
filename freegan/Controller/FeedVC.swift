@@ -378,7 +378,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(location.latitude) \(location.longitude)")
         updateUserLocation(location: location)
     }
     
@@ -428,8 +427,8 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                 self.posters[indexPath.row] = poster
                 var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
                 
-                if (!poster.userImgUrl.isEmpty){
-                    ref = Storage.storage().reference(forURL: poster.userImgUrl)
+                if (!(poster.userImgUrl?.isEmpty)!){
+                    ref = Storage.storage().reference(forURL: poster.userImgUrl!)
                 }
                 
                 ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
@@ -472,7 +471,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                 }
             })
         }
-        
         
         let totalItemsCount = collectionView.numberOfItems(inSection: 0)
         

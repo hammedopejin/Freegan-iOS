@@ -33,10 +33,9 @@ class ChatViewController: JSQMessagesViewController {
     var avatarDictionary: NSMutableDictionary?
     
     var members: [String] = []
-    var withUserId: String = ""
     var withUser: User?
-    var titleName: String?
     var currentUser: User?
+    var post : Post?
     
     var chatRoomId: String!
     
@@ -67,14 +66,10 @@ class ChatViewController: JSQMessagesViewController {
         
         avatarDictionary = [ : ]
         
-        
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
-        
         
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
-        
-        //updateUI()
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
@@ -84,7 +79,10 @@ class ChatViewController: JSQMessagesViewController {
                 self.senderDisplayName = self.currentUser?.userName
             }
         })
-        self.title = self.titleName
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
+        
+        self.title = withUser?.userName
         self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
         loadMessegas()
     }
@@ -93,7 +91,13 @@ class ChatViewController: JSQMessagesViewController {
         clearRecentCounter(chatRoomID: chatRoomId)
         chatRef.child(chatRoomId).removeAllObservers()
         typingRef.child(chatRoomId).removeAllObservers()
+        
+        
         self.navigationController?.popViewController(animated: true)
+        
+//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
+//        vc.selectedIndex = 0
+//        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: JSQMessages Data Source functions
@@ -171,7 +175,6 @@ class ChatViewController: JSQMessagesViewController {
         }
     }
     
-    //MARK: JSQMesages Delegate functions
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
         if text != "" {
@@ -185,7 +188,6 @@ class ChatViewController: JSQMessagesViewController {
         self.collectionView!.reloadData()
     }
     
-    //MARK: Send Message
     func sendMessage(text: String?, date: Date) {
         
         var outgoingMessage: OutgoingMessage?
@@ -194,15 +196,12 @@ class ChatViewController: JSQMessagesViewController {
         if let text = text {
             let encryptedText = text
 //            let encryptedText = EncryptText(chatRoomID: chatRoomId, string: text)
-            //Needs receiverId and postId
-            outgoingMessage = OutgoingMessage(message: encryptedText, senderId: self.currentUser!.objectId, senderName: self.currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: kRECEIVERID, postId: kPOSTID)
+            
+            outgoingMessage = OutgoingMessage(message: encryptedText, senderId: self.currentUser!.objectId, senderName: self.currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: (withUser?.objectId)!, postId: (post?.postId)!)
         }
         self.finishSendingMessage()
-        outgoingMessage!.sendMessage(chatRoomID: chatRoomId, item: outgoingMessage!.messageDictionary)
+        outgoingMessage!.sendMessage(chatRoomID: chatRoomId, item: outgoingMessage!.messageDictionary, vc: self)
     }
-    
-    
-    //MARK: Load Messages
     
     func loadMessegas() {
         //createTypingObservers()
@@ -324,37 +323,6 @@ class ChatViewController: JSQMessagesViewController {
         } else {
             return false
         }
-    }
-
-    func updateUI() {
-        getWithUserFromRecent(member: withUserId) { (withUser) in
-            self.withUser = withUser
-        }
-    }
-    
-    func getWithUserFromRecent(member: String, result: @escaping (_ withUser: User) -> Void) {
-        
-        var receivedMember: User?
-            
-            if withUserId != KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
-                
-                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserId).observe(.value, with: {
-                    snapshot in
-                    
-                    if snapshot.exists() {
-                        
-                        let userDictionary = ((snapshot.value as! NSDictionary).allValues as Array).first
-                        
-                        let cUser = User.init(_dictionary: userDictionary as! NSDictionary)
-                        
-                        receivedMember = cUser
-                        
-                        if receivedMember != nil {
-                            result(receivedMember!)
-                        }
-                    }
-                })
-            }
     }
     
     //MARK: Typing indicator

@@ -18,14 +18,15 @@ class PhotoZoomViewController: UIViewController {
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
         
-        chatVC.titleName = self.poster!.userName
-        chatVC.withUserId = self.post!.postUserObjectId
-        if ((self.currentUser) != nil) {
+        if (self.currentUser!.objectId != self.poster!.objectId){
+            
+            chatVC.withUser = self.poster
+            chatVC.currentUser = self.currentUser
+            chatVC.post = self.post
             chatVC.chatRoomId = freegan.startChat(user1: self.currentUser!, user2: self.poster!, postId: self.post!.postId)
+            
             chatVC.hidesBottomBarWhenPushed = true
-            if (self.currentUser!.objectId != self.poster!.objectId){
-                self.navigationController?.pushViewController(chatVC, animated: true)
-            }
+            self.navigationController?.pushViewController(chatVC, animated: true)
         }
     }
     

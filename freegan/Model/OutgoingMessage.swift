@@ -6,7 +6,7 @@
 //  Copyright © 2019 Hammed opejin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class OutgoingMessage {
     let ref = firebase.child(kMESSAGE)
@@ -14,11 +14,10 @@ class OutgoingMessage {
     
     init (message: String, senderId: String, senderName: String, date: Date, status: String, type: String, receiverId: String,
           postId: String) {
-        messageDictionary = NSMutableDictionary(objects: [message, senderId, senderName, dateFormatterWithTime().string(from: date), status, type,
-                                                          receiverId, postId], forKeys: [kMESSAGES as NSCopying, kSENDERID as NSCopying, kSENDERNAME as NSCopying, kDATE as NSCopying, kSTATUS as NSCopying, kTYPE as NSCopying, kRECEIVERID as NSCopying, kPOSTID as NSCopying])
+        messageDictionary = NSMutableDictionary(objects: [message, senderId, senderName, dateFormatterWithTime().string(from: date), status, type, receiverId, postId], forKeys: [kMESSAGE as NSCopying, kSENDERID as NSCopying, kSENDERNAME as NSCopying, kDATE as NSCopying, kSTATUS as NSCopying, kTYPE as NSCopying, kRECEIVERID as NSCopying, kPOSTID as NSCopying])
     }
     
-    func sendMessage(chatRoomID: String, item: NSMutableDictionary) {
+    func sendMessage(chatRoomID: String, item: NSMutableDictionary, vc: UIViewController) {
         
         let reference = ref.child(chatRoomID).childByAutoId()
         item[kMESSAGEID] = reference.key
@@ -26,11 +25,10 @@ class OutgoingMessage {
         
         reference.setValue(item) { (error, ref) in
             if error != nil {
-                
-                //ProgressHUD.showError("Outgoing message error: \(error?.localizedDescription)")
+                vc.showError("Error sending message!", message: "Outgoing message error: \(String(describing: error?.localizedDescription))")
             }
         }
-        updateRecents(chatRoomId: chatRoomID, lastMessage: (item[kMESSAGES] as? String)!)
+        updateRecents(chatRoomId: chatRoomID, lastMessage: (item[kMESSAGE] as? String)!)
         
         //send push notification
         //        let decryptedString = DecryptText(chatRoomID: chatRoomID, string: (item[kMESSAGES] as? String)!)

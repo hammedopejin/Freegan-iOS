@@ -37,7 +37,7 @@ public let kAVATAR = "userImgUrl"
 public let kCURRENTUSER = "currentUser"
 
 //typeing
-public let kTYPINGPATH = "Typing"
+public let kTYPINGPATH = "typing"
 
 //
 public let kAVATARSTATE = "avatarState"
@@ -66,8 +66,7 @@ public let kWITHUSERUSERNAME = "withUserUserName"
 public let kWITHUSERUSERID = "withUserUserID"
 public let kOWNERID = "ownerID"
 public let kSTATUS = "status"
-public let kMESSAGE = "Message"
-public let kMESSAGES = "message"
+public let kMESSAGE = "message"
 public let kMESSAGEID = "messageId"
 public let kNAME = "name"
 public let kRECEIVERID = "receiverId"

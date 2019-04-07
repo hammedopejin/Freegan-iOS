@@ -19,9 +19,9 @@ class User {
     
     var email: String
     var userName: String
-    var userImgUrl: String
+    var userImgUrl: String?
     
-    var status: String = ""
+    var status: String?
     var latitude: Double?
     var longitude: Double?
    
@@ -30,7 +30,7 @@ class User {
     
     //MARK: Initializers
     
-    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _username: String, _userimgurl: String = "", _loginMethod: String) {
+    init(_objectId: String, _pushId: String?, _createdAt: Date, _updatedAt: Date, _email: String, _username: String, _userimgurl: String?, _loginMethod: String) {
         
         objectId = _objectId
         pushId = _pushId
@@ -44,7 +44,6 @@ class User {
         status = ""
         blockedUsersList.append("placeHolder")
         loginMethod = _loginMethod
-        
     }
     
     init() {
@@ -55,6 +54,8 @@ class User {
         email = ""
         userName = ""
         userImgUrl = ""
+        status = ""
+        blockedUsersList = [""]
         loginMethod = ""
     }
     
@@ -68,10 +69,12 @@ class User {
         
         email = _dictionary[kEMAIL] as! String
         userName = _dictionary[kUSERNAME] as! String
-        userImgUrl = _dictionary[kAVATAR] as! String
+        userImgUrl = _dictionary[kAVATAR] as? String
         
         latitude = _dictionary[kLATITUDE] as? Double
         longitude = _dictionary[kLONGITUDE] as? Double
+        
+        status = _dictionary[kSTATUS] as? String
         
         if let blockedUserList = _dictionary[kBLOCKEDUSERS] {
             
@@ -82,41 +85,20 @@ class User {
             blockedUsersList.append("placeHolder")
         }
         
-        
         loginMethod = _dictionary[kLOGINMETHOD] as! String
-        
     }
-    
-    
-    //MARK: Returning current user funcs
-    
-    class func currentId() -> String {
-        return Auth.auth().currentUser!.uid
-    }
-    
-    //    class func currentUser () -> User? {
-    //
-    //        if Auth.auth().currentUser != nil {
-    //
-    //            let dictionary = UserDefaults.standard.object(forKey: kCURRENTUSER)
-    //
-    //            return User.init(_dictionary: dictionary as! NSDictionary)
-    //        }
-    //
-    //        return nil
-    //
-    //    }
-    
     
     //MARK: Register functions
     
     class func registerUserWith(email: String, firuseruid: String, userName: String) {
         let fuser = User.init(_objectId: firuseruid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: email, _username: userName, _userimgurl: "", _loginMethod: kEMAIL)
-        fuser.saveUserLocally(fuser: fuser)
         fuser.saveUserInBackground(fuser: fuser)
- 
     }
     
+    //MARK: Returning current id
+    class func currentId() -> String {
+        return Auth.auth().currentUser!.uid
+    }
     
     //MARK: Save user funcs
     func saveUserInBackground(fuser: User, completion: @escaping (_ error: Error?) -> Void) {
@@ -124,33 +106,16 @@ class User {
         let ref = firebase.child(kUSER).child(fuser.objectId)
         
         ref.setValue(userDictionaryFrom(user: fuser)) { (error, ref) -> Void in
-            
             completion(error)
-            
         }
-        
     }
     
     func saveUserInBackground(fuser: User) {
-        
         let ref = firebase.child(kUSER).child(fuser.objectId)
-        
         ref.setValue(userDictionaryFrom(user: fuser))
-        
     }
-    
-    
-    func saveUserLocally(fuser: User) {
-        
-        UserDefaults.standard.set(userDictionaryFrom(user: fuser), forKey: kCURRENTUSER)
-        UserDefaults.standard.synchronize()
-        
-    }
-    
     
     //MARK: Fetch User funcs
-    
-    
     class func fetchUser(userId: String) -> User? {
         var user : NSDictionary = NSDictionary()
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: userId).observe(.value, with: {
@@ -171,9 +136,7 @@ class User {
         
     }
     
-    
     //MARK: Helper funcs
-    
     func userDictionaryFrom(user: User) -> NSDictionary {
         
         let createdAt = dateFormatter().string(from: user.createdAt ?? Date())
