@@ -80,11 +80,17 @@ class ChatViewController: JSQMessagesViewController {
         
         
         self.title = post?.description
+        
         self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
         
-        loadWithUserImage(withUserImageUrl: (withUser?.userImgUrl)!){(image) in
-           self.withUserImage = image
+        loadImage(imageUrl: (withUser?.userImgUrl)!){(image) in
+            self.withUserImage = image
             self.loadMessegas()
+        }
+        
+        loadImage(imageUrl: (post?.imageUrl[0])!){(image) in
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: nil)
+            self.navigationItem.rightBarButtonItem?.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
         }
     }
     
@@ -93,11 +99,10 @@ class ChatViewController: JSQMessagesViewController {
         chatRef.child(chatRoomId).removeAllObservers()
         typingRef.child(chatRoomId).removeAllObservers()
         
-        
         self.navigationController?.popViewController(animated: true)
     }
     
-    //MARK: JSQMessages Data Source functions
+    //JSQMessages Data Source functions
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
@@ -225,23 +230,7 @@ class ChatViewController: JSQMessagesViewController {
         self.finishSendingMessage()
         outgoingMessage!.sendMessage(chatRoomID: chatRoomId, item: outgoingMessage!.messageDictionary, vc: self)
     }
-    
-    func loadWithUserImage(withUserImageUrl: String, image: @escaping(_ image: UIImage) -> Void){
-        let ref = Storage.storage().reference(forURL: withUserImageUrl)
-        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-            if error != nil {
-                print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-            } else {
-                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                if let imgData = data {
-                    if let img = UIImage(data: imgData) {
-                        image(img)
-                        FeedVC.imageCache.setObject(img, forKey: withUserImageUrl as NSString)
-                    }
-                }
-            }
-        })
-    }
+
     
     func loadMessegas() {
         //createTypingObservers()
