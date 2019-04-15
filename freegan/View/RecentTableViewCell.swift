@@ -18,9 +18,6 @@ class RecentTableViewCell: UITableViewCell {
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    static var imageCache: NSCache<NSString, UIImage> = NSCache()
-    
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -59,7 +56,7 @@ class RecentTableViewCell: UITableViewCell {
                                 if let imgData = data {
                                     if let img = UIImage(data: imgData) {
                                         self.avatarImageView.image = img
-                                        RecentTableViewCell.imageCache.setObject(img, forKey: recentChatMate.userImgUrl! as NSString)
+                                        FeedVC.imageCache.setObject(img, forKey: recentChatMate.userImgUrl! as NSString)
                                     }
                                 }
                             }
@@ -79,7 +76,7 @@ class RecentTableViewCell: UITableViewCell {
                         if let imgData = data {
                             if let img = UIImage(data: imgData) {
                                 self.postImageView.image = img
-                                RecentTableViewCell.imageCache.setObject(img, forKey: currentPost.imageUrl[0] as NSString)
+                                FeedVC.imageCache.setObject(img, forKey: currentPost.imageUrl[0] as NSString)
                             }
                         }
                     }
@@ -105,7 +102,6 @@ class RecentTableViewCell: UITableViewCell {
         dateLabel.text = timeElapsed(date: date!)
     }
     
-    
     func timeElapsed(date: Date) -> String {
         
         let seconds = NSDate().timeIntervalSince(date)
@@ -122,6 +118,5 @@ class RecentTableViewCell: UITableViewCell {
         }
         return elapsed!
     }
-    
     
 }

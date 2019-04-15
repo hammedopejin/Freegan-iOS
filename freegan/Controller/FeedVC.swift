@@ -439,6 +439,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                         if let imgData = data {
                             if let img = UIImage(data: imgData) {
                                 self.posterImages[indexPath.row] = img
+                                FeedVC.imageCache.setObject(img, forKey: poster.userImgUrl! as NSString)
                             }
                         }
                         

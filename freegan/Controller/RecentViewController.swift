@@ -69,13 +69,9 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         let recent = recents[indexPath.row]
-        
         recents.remove(at: indexPath.row)
-        
-        deleteRecentItem(recentID: (recent[kRECENTID] as? String)!)
-        
+        deleteRecentItem(recentID: (recent[kRECENTID] as? String)!, vc: self)
         tableView.reloadData()
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -86,12 +82,12 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let postId = (recent[kPOSTID] as? String)!
         let withUserUserId = (recent[kWITHUSERUSERID] as? String)!
         let chatRoomId = (recent[kCHATROOMID] as? String)!
+        restartRecentChat(recent: recent, postId: postId)
         
         self.loadWithUser(withUserUserId: withUserUserId) {(withUser) in
             
             self.loadPost(postId: postId){ (post) in
                 
-                restartRecentChat(recent: recent, postId: postId)
                 let chatVC = ChatViewController()
                 
                 chatVC.withUser = withUser

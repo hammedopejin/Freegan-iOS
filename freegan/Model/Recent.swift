@@ -58,9 +58,7 @@ func createRecent(userId: String, chatRoomId: String, members: [String], postId:
                     snapshot in
                     
                 })
-                
             }
-            
         }
         
         if create && userId != withUserUserId {
@@ -116,17 +114,10 @@ func restartRecentChat(recent: NSDictionary, postId: String) {
                         
                         createRecent(userId: userId, chatRoomId: (recent[kCHATROOMID] as? String)!, members: recent[kMEMBERS] as! [String], postId: postId, withUserUserId: currentUser!.objectId, withUserUsername: currentUser!.userName, type: kPRIVATE)
                     }
-                    
                 }
-                
             }
-            
         }
-        
     })
-    
-    
-    
 }
 
 
@@ -204,19 +195,17 @@ func clearRecentCounterItem(recent: NSDictionary) {
     
 }
 
-func deleteRecentItem(recentID: String) {
+func deleteRecentItem(recentID: String, vc: UIViewController) {
     
     firebase.child(kRECENT).child(recentID).removeValue { (error, ref) in
         
         if error != nil {
-            
-            // ProgressHUD.showError("Couldnt delete recent item: \(error!.localizedDescription)")
+            vc.showError("Error deleting recent item!", message: "Couldnt delete recent item: \(error!.localizedDescription)")
         }
     }
-    
 }
 
-func deleteMultipleRecentItems(chatRoomID: String) {
+func deleteMultipleRecentItems(chatRoomID: String, vc: UIViewController) {
     
     firebase.child(kRECENT).queryOrdered(byChild: kCHATROOMID).queryEqual(toValue: chatRoomID).observeSingleEvent(of: .value, with: {
         snapshot in
@@ -227,7 +216,7 @@ func deleteMultipleRecentItems(chatRoomID: String) {
                 
                 let currentRecent = recent as! NSDictionary
                 
-                deleteRecentItem(recentID: (currentRecent[kRECENTID] as? String)!)
+                deleteRecentItem(recentID: (currentRecent[kRECENTID] as? String)!, vc: vc)
                 
             }
             
@@ -255,6 +244,5 @@ func deleteChatroom(chatRoomID: String) {
             //ProgressHUD.showError("Couldnt delete chatroom: \(error!.localizedDescription)")
         }
     }
-    
 }
 
