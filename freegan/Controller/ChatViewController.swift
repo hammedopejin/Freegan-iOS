@@ -78,7 +78,8 @@ class ChatViewController: JSQMessagesViewController {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
         
-        self.title = withUser?.userName
+        
+        self.title = post?.description
         self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
         
         loadWithUserImage(withUserImageUrl: (withUser?.userImgUrl)!){(image) in
@@ -120,7 +121,6 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
     
         let message = messages[indexPath.row]
-    
         var avatar: JSQMessageAvatarImageDataSource
     
         if message.senderId != self.currentUser!.objectId {
@@ -136,14 +136,18 @@ class ChatViewController: JSQMessagesViewController {
         return avatar
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString!
+    {
+        return messages[indexPath.item].senderId == senderId ? nil : NSAttributedString(string: messages[indexPath.item].senderDisplayName)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
     
-        let data = messages[indexPath.row]
-        if data.senderId == self.currentUser!.objectId {
+        if messages[indexPath.item].senderId == senderId {
             return outgoingBubble
         } else {
             return incomingBubble
@@ -180,6 +184,10 @@ class ChatViewController: JSQMessagesViewController {
         
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat
+    {
+        return messages[indexPath.item].senderId == senderId ? 0 : kJSQMessagesCollectionViewCellLabelHeightDefault
+    }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAt indexPath: IndexPath!) -> CGFloat {
         

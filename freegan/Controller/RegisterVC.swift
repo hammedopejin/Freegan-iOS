@@ -25,13 +25,9 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         navigationController?.hidesBarsOnTap = false
         
         if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
-            //print("HAMMED: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
     }
-    
-    
-    
     
     func completeSignIn(id: String) {
         // Load User Info/Data
@@ -39,7 +35,6 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         print("HAMMED: Data saved to keychain \(keychainResult)")
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
-    
     
     @IBAction func registerTapped(_ sender: Any) {
         if emailField.text == "" || userNameField.text == "" || pwdField.text == "" {
@@ -61,7 +56,6 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             })
         }
     }
-    
     
     @IBAction func gotoLogin(_ sender: Any) {
         let logIn = UIStoryboard(name: "Main", bundle:
