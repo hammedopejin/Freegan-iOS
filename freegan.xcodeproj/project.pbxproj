@@ -40,6 +40,7 @@
 		0F3FC48521E57E1E006BAC83 /* freeganUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */; };
 		0FE48C5522593AE000D3D1EA /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C5422593AE000D3D1EA /* RecentTableViewCell.swift */; };
 		0FE48C572259446600D3D1EA /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C562259446600D3D1EA /* RecentViewController.swift */; };
+		0FE48C592266441500D3D1EA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C582266441500D3D1EA /* ProfileVC.swift */; };
 		377C170BD71EA9073E6A0489 /* Pods_freeganUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A0F7DF9C63D7A597B18A11 /* Pods_freeganUITests.framework */; };
 		3A20BC4F36BAE4419023CC8B /* Pods_freeganTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F287F601FE960B6E13972DE2 /* Pods_freeganTests.framework */; };
 		98BA188621CBA4309215BBF8 /* Pods_freegan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFADAFE74528916A3644DD63 /* Pods_freegan.framework */; };
@@ -104,6 +105,7 @@
 		0F3FC48621E57E1E006BAC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FE48C5422593AE000D3D1EA /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		0FE48C562259446600D3D1EA /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
+		0FE48C582266441500D3D1EA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		2E5DD016FDEF73092998AD08 /* Pods-freeganTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-freeganTests/Pods-freeganTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A42F7627D36014919C40C7B /* Pods-freeganTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-freeganTests/Pods-freeganTests.release.xcconfig"; sourceTree = "<group>"; };
 		784BB05394710C3C7BF7A3A2 /* Pods-freeganUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-freeganUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-freeganUITests/Pods-freeganUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */,
+				0FE48C582266441500D3D1EA /* ProfileVC.swift */,
 				0FE48C562259446600D3D1EA /* RecentViewController.swift */,
 				0F2D2D0F2241EB8D00F55867 /* PostVC.swift */,
 				0F0CFDB321F19CFF0017C581 /* FeedVC.swift */,
@@ -548,6 +551,7 @@
 				0F2D2D132246D63C00F55867 /* Recent.swift in Sources */,
 				0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */,
 				0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */,
+				0FE48C592266441500D3D1EA /* ProfileVC.swift in Sources */,
 				0F2D2D152246D6A900F55867 /* IncomingMessage.swift in Sources */,
 				0F0CFD9621E6B0E40017C581 /* User.swift in Sources */,
 				0F0CFE1321FAD6060017C581 /* Post.swift in Sources */,

@@ -312,7 +312,7 @@
                                 </connections>
                             </collectionView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="320" y="800" width="56" height="56"/>
+                                <rect key="frame" x="319" y="800" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -473,7 +473,7 @@
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bubble_min.png" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-P8-VuE" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="320" y="700" width="56" height="56"/>
+                                <rect key="frame" x="319" y="700" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -486,9 +486,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="8de-nr-Unq" appends="YES" id="toX-5v-gnb"/>
+                                </connections>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="bxq-Il-U8e">
-                                <rect key="frame" x="20" y="784" width="374" height="33"/>
+                                <rect key="frame" x="19" y="784" width="375" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -523,6 +526,11 @@
                         <action selector="startChat:" destination="3mQ-KB-kGi" id="zDn-DW-kbr"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="8de-nr-Unq">
+                    <connections>
+                        <action selector="seeProfile:" destination="3mQ-KB-kGi" id="b34-X1-1sS"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5121.739130434783" y="133.92857142857142"/>
         </scene>
@@ -551,10 +559,28 @@
             </objects>
             <point key="canvasLocation" x="1604" y="135"/>
         </scene>
+        <!--Profile-->
+        <scene sceneID="ctO-N1-YTg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Boj-D7-C0y" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" id="G99-uE-euN"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JOV-6e-bjY">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.36086896061897278" green="0.73836958408355713" blue="0.67450696229934692" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ULX-LG-bXP" kind="relationship" relationship="rootViewController" id="CwO-cB-rjJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wvv-3l-12C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="542" y="-689"/>
+        </scene>
         <!--Recent-->
         <scene sceneID="R7X-Se-0gY">
             <objects>
-                <navigationController storyboardIdentifier="ncVC" automaticallyAdjustsScrollViewInsets="NO" id="nbF-pb-2lT" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="recentVC" automaticallyAdjustsScrollViewInsets="NO" id="nbF-pb-2lT" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recent" id="CV3-6B-LbH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bc7-R0-6iU">
@@ -719,11 +745,75 @@
                     <connections>
                         <segue destination="GNh-BK-xVi" kind="relationship" relationship="viewControllers" id="OpN-tD-3f8"/>
                         <segue destination="nbF-pb-2lT" kind="relationship" relationship="viewControllers" id="Flb-9y-Ued"/>
+                        <segue destination="Boj-D7-C0y" kind="relationship" relationship="viewControllers" id="7Yb-0d-18k"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3cW-B5-iBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="543" y="134"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="JY1-ha-A5a">
+            <objects>
+                <viewController storyboardIdentifier="ProfileVC" id="ULX-LG-bXP" customClass="ProfileVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fRB-7q-7xe"/>
+                        <viewControllerLayoutGuide type="bottom" id="pvI-SS-wGF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v0h-40-3yr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sne-w9-MnY">
+                                <rect key="frame" x="0.0" y="88" width="414" height="789"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="FFL-br-QFe">
+                                    <size key="itemSize" width="120" height="180"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCollectionViewCell" id="5Ek-BN-Ryj" customClass="PhotoCollectionViewCell" customModule="freegan" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="120" height="180"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJc-ju-ljL" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="180"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <rect key="contentStretch" x="0.94999999999999996" y="0.0" width="1" height="1"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <connections>
+                                            <outlet property="imageView" destination="dJc-ju-ljL" id="l2O-tK-o0e"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="ULX-LG-bXP" id="JJi-bC-tbD"/>
+                                    <outlet property="delegate" destination="ULX-LG-bXP" id="hBL-n1-J59"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="Vm0-8e-6A8"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Profile" id="4em-H0-Czs"/>
+                    <connections>
+                        <outlet property="collectionView" destination="Sne-w9-MnY" id="RLS-3l-WEK"/>
+                        <segue destination="ayj-hi-gul" kind="show" identifier="ShowPhotoPageView" id="UQs-Vz-jXm"/>
+                    </connections>
+                </viewController>
+                <tapGestureRecognizer id="1jq-5o-lLv"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hJg-Bd-VK3" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1603" y="-689"/>
         </scene>
     </scenes>
     <resources>
@@ -734,7 +824,8 @@
         <image name="ic_more_vert_white_24dp" width="36" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oPw-hj-gG7"/>
+        <segue reference="qxC-P5-nN3"/>
+        <segue reference="UQs-Vz-jXm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

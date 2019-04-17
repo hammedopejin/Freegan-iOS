@@ -15,6 +15,14 @@ class PhotoZoomViewController: UIViewController {
     @IBOutlet weak var postDescription: UITextField!
     @IBOutlet weak var chatButtonImage: CircleView!
     
+    
+    var postImage: UIImage!
+    var posterImage: UIImage!
+    var post: Post?
+    var poster: User?
+    var currentUser: User?
+    var index: Int = 0
+    
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
         
@@ -30,12 +38,11 @@ class PhotoZoomViewController: UIViewController {
         }
     }
     
-    var postImage: UIImage!
-    var posterImage: UIImage!
-    var post: Post?
-    var poster: User?
-    var currentUser: User?
-    var index: Int = 0
+    @IBAction func seeProfile(_ sender: Any) {
+        
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")
+        self.present(profileVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,5 +60,7 @@ class PhotoZoomViewController: UIViewController {
             self.chatButtonImage.isHidden = true
         }
     }
+    
+    
 
 }

@@ -1,30 +1,20 @@
 //
-//  FeedVC.swift
+//  ProfileVC.swift
 //  freegan
 //
-//  Created by Hammed opejin on 1/17/19.
+//  Created by Hammed opejin on 4/16/19.
 //  Copyright © 2019 Hammed opejin. All rights reserved.
 //
 
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
-import MapKit
-import CoreLocation
-import GeoFire
 
-class FeedVC: UIViewController {
+class ProfileVC: UIViewController{
     
+   
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBAction func gotoPostVC(_ sender: AnyObject) {
-        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
-            showToast(message: "Current location needed to post an item!")
-            self.requestLocationPermission()
-            return
-        }
-        self.showCameraLibraryOptions()
-    }
     
     var selectedIndexPath: IndexPath!
     
@@ -43,22 +33,12 @@ class FeedVC: UIViewController {
     
     var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 20)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
-    var posters = Array(repeating: User(), count: 20)
     var posts = [Post]()
     var currentUser: User?
-    var postIds = [String]()
-    var askLocationFlag = false
-    let PAGE_LOAD_SIZE = 10
-    let GEOGRAPHIC_RADIUS = 50.0
-    var totalLoadSize = 0;
-  
-    static var imageCache: NSCache<NSString, UIImage> = NSCache()
+    var poster: User?
+    
     var profileImgUrl: String!
     var userImgUrl: String!
-    
-    var postVC: PostVC?
-    
-    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +48,7 @@ class FeedVC: UIViewController {
             
             if snapshot.exists() {
                 self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.requestLocation()
+                self.loadPosts()
             }
             
         })
@@ -173,6 +153,8 @@ class FeedVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowPhotoPageView" {
+            let posters = Array(repeating: poster, count: posts.count)
+            
             let nav = self.navigationController
             let vc = segue.destination as! PhotoPageContainerViewController
             nav?.delegate = vc.transitionController
@@ -181,212 +163,52 @@ class FeedVC: UIViewController {
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
-            vc.posters = self.posters
-            vc.postImages = self.postImages
+            vc.posters = posters as! [User]
             vc.posterImages = self.posterImages
-            vc.currentUser = self.currentUser
-        } else if segue.identifier == "goToPost" {
-            let vc = segue.destination as! PostVC
+            vc.postImages = self.postImages
             vc.currentUser = self.currentUser
         }
     }
     
-    func requestLocation(){
-        
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-        
-        switch(CLLocationManager.authorizationStatus()) {
-            
-        // get the user location
-        case .notDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
-            break
-            
-        case .restricted, .denied:
-            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
-                self.requestLocationPermission()
-            } else {
-                self.askLocationFlag = true
-            }
-            break
-            
-        case .authorizedAlways:
-            self.askLocationFlag = true
-            break
-        case .authorizedWhenInUse:
-            self.askLocationFlag = true
-            break
-            
-        }
-        
-        if (self.askLocationFlag){
-            self.checkPosts()
-        }
-    }
     
-    func requestLocationPermission() {
+    func loadPosts(){
+        self.posts.removeAll()
         
-        self.askLocationFlag = true
-        
-        let alertController = UIAlertController(title: "Freegan", message: "Please go to Settings and turn on location permissions",
-                                                preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                return
-            }
-            if UIApplication.shared.canOpenURL(settingsUrl) {
-                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
-            }
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        alertController.addAction(cancelAction)
-        alertController.addAction(settingsAction)
-        
-        switch(CLLocationManager.authorizationStatus()) {
+        guard let user = self.poster else {
+            self.poster = self.currentUser
             
-        case .authorizedAlways, .authorizedWhenInUse:
-            break
-            
-        case .notDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
-            break
-            
-        case .restricted, .denied:
-            self.present(alertController, animated: true, completion: nil)
-            break
-        }
-    }
-    
-    func updateUserLocation(location: CLLocationCoordinate2D){
-        
-        let locationData: [AnyHashable : Any] = [kLATITUDE : location.latitude, kLONGITUDE : location.longitude]
-        firebase.child(kUSER).child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).updateChildValues(locationData)
-    }
-    
-    func showCameraLibraryOptions(){
-        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
-            PostVC.useCamera = true
-            self.performSegue(withIdentifier: "goToPost", sender: nil)
-        }
-        
-        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
-            PostVC.useCamera = false
-            self.performSegue(withIdentifier: "goToPost", sender: nil)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
-            
-        }
-        
-        optionMenu.addAction(camera)
-        optionMenu.addAction(library)
-        optionMenu.addAction(cancelAction)
-        
-        self.present(optionMenu, animated: true, completion: nil)
-    }
-    
-    func checkPosts(){
-        
-        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
-            if(self.askLocationFlag){
-                showError("No Freegan!", message: "User location needed to see posts in the area")
-            }
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: currentUser?.objectId).observe(.value, with: { (snapshot) in
+                if snapshot.exists() {
+                
+                    let postData = snapshot.value as! Dictionary<String, AnyObject>
+                    
+                    for key in postData.keys {
+                        let post = Post(postId: key, postData: postData[key] as! Dictionary<String, AnyObject>)
+                        self.posts.append(post)
+                    }
+                    self.collectionView.reloadData()
+                }
+            })
             return
         }
         
-        let geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
-        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: self.GEOGRAPHIC_RADIUS)
-        
-        self.totalLoadSize = 0
-        self.postIds.removeAll()
-        self.posts.removeAll()
-        
-        query.observe(.keyEntered, with: { key, location in
-            self.postIds.append(key)
-        })
-        
-        query.observeReady {
-            if (self.postIds.count > 0) {
-                if (self.PAGE_LOAD_SIZE < self.postIds.count) {
-                    self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: 0);
-                } else {
-                    self.loadPosts(page_load_size: self.postIds.count, offset: 0);
+        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: user.objectId).observe(.value, with: { (snapshot) in
+            if snapshot.exists() {
+                
+                let postData = snapshot.value as! Dictionary<String, AnyObject>
+                
+                for key in postData.keys {
+                    let post = Post(postId: key, postData: postData[key] as! Dictionary<String, AnyObject>)
+                    self.posts.append(post)
                 }
-            } else {
-                self.showToast(message: "No Freegan posted in your area yet! Go ahead, post one")
+                self.collectionView.reloadData()
             }
-        }
+        })
     }
     
-    func loadPosts(page_load_size: Int, offset: Int){
-        
-        var maxBoundary = page_load_size + offset;
-        if (maxBoundary > self.postIds.count) {
-            maxBoundary = self.postIds.count;
-        }
-        
-        for i in offset..<maxBoundary {
-            DataService.ds.REF_POSTS.child(self.postIds[i]).observe(.value, with: { (snapshot) in
-                let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                self.posts.append(post)
-                
-                self.collectionView.reloadData()
-            })
-        }
-
-    }
 }
 
-extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if (kind == UICollectionView.elementKindSectionHeader) {
-            let headerView:UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
-            
-            return headerView
-        }
-        
-        return UICollectionReusableView()
-        
-    }
-    
-    //MARK: - SEARCH
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(searchText.isEmpty){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        updateUserLocation(location: location)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
-            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
-                showError("No Freegan!", message: "User location needed to see posts in the area")
-            }
-        }
-        
-    }
+extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -403,7 +225,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         }else if UIScreen.main.bounds.size.width > 500{
             numberOfCell = 5.3
         }else{
-           numberOfCell = 3.3
+            numberOfCell = 3.3
         }
         let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
         return CGSize(width: cellWidth, height: 180)
@@ -415,46 +237,14 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         
         var j = 0
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
-            .observe(.value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
-                
-                let poster = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.posters[indexPath.row] = poster
-                var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
-                
-                if (!(poster.userImgUrl?.isEmpty)!){
-                    ref = Storage.storage().reference(forURL: poster.userImgUrl!)
-                }
-                
-                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                    if error != nil {
-                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                        
-                    } else {
-                        if let imgData = data {
-                            if let img = UIImage(data: imgData) {
-                                self.posterImages[indexPath.row] = img
-                                FeedVC.imageCache.setObject(img, forKey: poster.userImgUrl! as NSString)
-                            }
-                        }
-                        
-                    }
-                })
-            }
-            
-        })
-        
         for i in self.posts[indexPath.row].imageUrl{
-            
+
             let ref = Storage.storage().reference(forURL: i)
-            
+
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 if error != nil {
                     print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                    
+
                 } else {
                     print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                     if let imgData = data {
@@ -469,15 +259,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                     }
                 }
             })
-        }
-        
-        let totalItemsCount = collectionView.numberOfItems(inSection: 0)
-        
-        if indexPath.row >= self.totalLoadSize - 3 {
-            if (self.PAGE_LOAD_SIZE < self.postIds.count) {
-                self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: totalItemsCount);
-                self.totalLoadSize += PAGE_LOAD_SIZE;
-            }
         }
         
         return cell
@@ -564,8 +345,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
 }
 
-
-extension FeedVC: PhotoPageContainerViewControllerDelegate {
+extension ProfileVC: PhotoPageContainerViewControllerDelegate {
     
     func containerViewController(_ containerViewController: PhotoPageContainerViewController, indexDidUpdate currentIndex: Int) {
         self.selectedIndexPath = IndexPath(row: currentIndex, section: 0)
@@ -573,7 +353,7 @@ extension FeedVC: PhotoPageContainerViewControllerDelegate {
     }
 }
 
-extension FeedVC: ZoomAnimatorDelegate {
+extension ProfileVC: ZoomAnimatorDelegate {
     
     func transitionWillStartWith(zoomAnimator: ZoomAnimator) {}
     
@@ -613,15 +393,4 @@ extension FeedVC: ZoomAnimatorDelegate {
         return cellFrame
     }
     
-    
-    //    func logOut(){
-    //
-    //        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
-    //        print("HAMMED: ID removed from keychain \(keychainResult)")
-    //        try! Auth.auth().signOut()
-    //
-    //
-    //        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
-    //        self.present(register, animated: true, completion: nil)
-    //    }
 }
