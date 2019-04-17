@@ -34,6 +34,7 @@ class PhotoPageContainerViewController: UIViewController {
     var currentIndex = 0
     var vertIndex = 0
     var nextIndex: Int?
+    var forSelf: Bool!
     
     var transitionController = ZoomTransitionController()
     
@@ -58,6 +59,7 @@ class PhotoPageContainerViewController: UIViewController {
         vc.post = self.posts[self.currentIndex]
         vc.poster = self.posters[self.currentIndex]
         vc.currentUser = self.currentUser
+        vc.forSelf = self.forSelf
         
         let viewControllers = [
             vc
@@ -86,6 +88,7 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.post = self.posts[self.currentIndex]
                     vc.poster = self.posters[self.currentIndex]
                     vc.currentUser = self.currentUser
+                    vc.forSelf = self.forSelf
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -103,6 +106,7 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.post = self.posts[self.currentIndex]
                     vc.poster = self.posters[self.currentIndex]
                     vc.currentUser = self.currentUser
+                    vc.forSelf = self.forSelf
                     vc.index = self.currentIndex
                     let viewControllers = [
                         vc
@@ -132,6 +136,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.post = self.posts[self.currentIndex - 1]
         vc.poster = self.posters[self.currentIndex - 1]
         vc.currentUser = self.currentUser
+        vc.forSelf = self.forSelf
         vc.index = currentIndex - 1
         print("current index: " + String(self.currentIndex))
         return vc
@@ -150,6 +155,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.post = self.posts[self.currentIndex + 1]
         vc.poster = self.posters[self.currentIndex + 1]
         vc.currentUser = self.currentUser
+        vc.forSelf = self.forSelf
         vc.index = currentIndex + 1
         print("current index: " + String(self.currentIndex))
         return vc

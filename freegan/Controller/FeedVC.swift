@@ -185,6 +185,7 @@ class FeedVC: UIViewController {
             vc.postImages = self.postImages
             vc.posterImages = self.posterImages
             vc.currentUser = self.currentUser
+            vc.forSelf = false
         } else if segue.identifier == "goToPost" {
             let vc = segue.destination as! PostVC
             vc.currentUser = self.currentUser

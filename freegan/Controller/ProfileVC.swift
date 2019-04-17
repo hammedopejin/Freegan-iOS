@@ -167,6 +167,7 @@ class ProfileVC: UIViewController{
             vc.posterImages = self.posterImages
             vc.postImages = self.postImages
             vc.currentUser = self.currentUser
+            vc.forSelf = true
         }
     }
     

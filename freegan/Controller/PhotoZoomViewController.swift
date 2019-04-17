@@ -22,6 +22,7 @@ class PhotoZoomViewController: UIViewController {
     var poster: User?
     var currentUser: User?
     var index: Int = 0
+    var forSelf: Bool!
     
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
@@ -48,7 +49,14 @@ class PhotoZoomViewController: UIViewController {
         super.viewDidLoad()
         
         self.postImageView.image = self.postImage
-        self.posterImageView.image = self.posterImage
+        
+        if(forSelf){
+            self.posterImageView.image = UIImage(named: "ic_settings_white_24dp")
+        } else {
+            self.posterImageView.image = self.posterImage
+        }
+        
+        
         postDescription.text = post!.description
     }
     
