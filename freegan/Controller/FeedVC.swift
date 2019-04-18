@@ -351,7 +351,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if (kind == UICollectionView.elementKindSectionHeader) {
-            let headerView:UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
+            let headerView: UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
             
             return headerView
         }
@@ -462,7 +462,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
                         if let img = UIImage(data: imgData) {
                             if (j == 0){
                                 cell.imageView.image = img
-                                FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
+                                FeedVC.imageCache.setObject(img, forKey: i as NSString)
                             }
                             self.postImages[indexPath.row][j] = img
                             j += 1

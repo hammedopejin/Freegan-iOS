@@ -43,15 +43,8 @@ class ProfileVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.loadPosts()
-            }
-            
-        })
+        self.currentUser = (tabBarController as! UserTabController).currentUser!
+        self.loadPosts()
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
@@ -175,10 +168,9 @@ class ProfileVC: UIViewController{
     func loadPosts(){
         self.posts.removeAll()
         
-        guard let user = self.poster else {
+        guard let poster = self.poster else {
             self.poster = self.currentUser
-            
-            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: currentUser?.objectId).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { (snapshot) in
                 if snapshot.exists() {
                 
                     let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -193,7 +185,7 @@ class ProfileVC: UIViewController{
             return
         }
         
-        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: user.objectId).observe(.value, with: { (snapshot) in
+        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { (snapshot) in
             if snapshot.exists() {
                 
                 let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -210,6 +202,71 @@ class ProfileVC: UIViewController{
 }
 
 extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if (kind == UICollectionView.elementKindSectionHeader) {
+            let headerView: ProfileCollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath) as! ProfileCollectionReusableView
+            
+            guard let user = self.poster else {
+                headerView.profileName.text = self.currentUser?.userName
+                
+                guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else{
+                    return headerView
+                }
+                
+                let ref = Storage.storage().reference(forURL: imgUrl)
+                
+                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                    if error != nil {
+                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                        
+                    } else {
+                        print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                        if let imgData = data {
+                            if let img = UIImage(data: imgData) {
+                                
+                                headerView.profileImage.image = img
+                                FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
+                                
+                            }
+                        }
+                    }
+                })
+                
+                return headerView
+            }
+            
+            headerView.profileName.text = user.userName
+            guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
+                return headerView
+            }
+         
+            let ref = Storage.storage().reference(forURL: imgUrl)
+                
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                        
+                } else {
+                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                                
+                            headerView.profileImage.image = img
+                            FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
+                                
+                        }
+                    }
+                }
+            })
+            
+            return headerView
+        }
+        
+        return UICollectionReusableView()
+        
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -252,7 +309,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
                         if let img = UIImage(data: imgData) {
                             if (j == 0){
                                 cell.imageView.image = img
-                                FeedVC.imageCache.setObject(img, forKey: self.posts[indexPath.row].imageUrl[0] as NSString)
+                                FeedVC.imageCache.setObject(img, forKey: i as NSString)
                             }
                             self.postImages[indexPath.row][j] = img
                             j += 1
