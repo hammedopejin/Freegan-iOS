@@ -732,10 +732,10 @@
             </objects>
             <point key="canvasLocation" x="3537.68115942029" y="-687.05357142857144"/>
         </scene>
-        <!--User Tab Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="eaN-cs-vuR">
             <objects>
-                <tabBarController storyboardIdentifier="BaseVC" automaticallyAdjustsScrollViewInsets="NO" id="R7F-fa-S1S" customClass="UserTabController" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="BaseVC" automaticallyAdjustsScrollViewInsets="NO" id="R7F-fa-S1S" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="61L-aX-o6p">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
