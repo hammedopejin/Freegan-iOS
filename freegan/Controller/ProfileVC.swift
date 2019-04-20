@@ -57,6 +57,20 @@ class ProfileVC: UIViewController{
         //(this is required to support iOS 10 devices and earlier)
         self.collectionView.frame = self.view.bounds
         
+        if let _ = self.poster {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
+            return
+        }
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+    }
+    
+    @objc func backActionWithPoster() {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func backActionDefault() {
+        tabBarController?.selectedIndex = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
