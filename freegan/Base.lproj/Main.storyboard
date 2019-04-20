@@ -799,10 +799,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="persoicon" translatesAutoresizingMaskIntoConstraints="NO" id="kKt-8g-f9w" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                            <rect key="frame" x="117" y="20" width="180" height="180"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGo-Gp-jbp">
                                             <rect key="frame" x="0.0" y="192" width="414" height="40"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
@@ -810,6 +806,10 @@
                                             <color key="textColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="persoicon" translatesAutoresizingMaskIntoConstraints="NO" id="kKt-8g-f9w" customClass="CircleView" customModule="freegan" customModuleProvider="target">
+                                            <rect key="frame" x="127" y="24" width="160" height="160"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.36086896060000001" green="0.73836958409999998" blue="0.67450696229999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <connections>
@@ -847,7 +847,7 @@
         <image name="persoicon" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qxC-P5-nN3"/>
+        <segue reference="oPw-hj-gG7"/>
         <segue reference="UQs-Vz-jXm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

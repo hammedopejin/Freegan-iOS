@@ -62,8 +62,6 @@ class ChatViewController: JSQMessagesViewController {
         
         incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
-        
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height:kJSQMessagesCollectionViewAvatarSizeDefault )
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
@@ -76,9 +74,6 @@ class ChatViewController: JSQMessagesViewController {
             }
         })
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
-        
-        
         self.title = post?.description
         
         self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
@@ -88,8 +83,10 @@ class ChatViewController: JSQMessagesViewController {
             self.loadMessegas()
         }
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
+        
         loadImage(imageUrl: (post?.imageUrl[0])!){(image) in
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: nil)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
             self.navigationItem.rightBarButtonItem?.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
         }
     }
@@ -100,6 +97,28 @@ class ChatViewController: JSQMessagesViewController {
         typingRef.child(chatRoomId).removeAllObservers()
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func seeProfile(_ sender: Any) {
+        var poster: User?
+        if self.post?.postUserObjectId == currentUser?.objectId {
+            poster = currentUser
+        } else {
+            poster = withUser
+        }
+        
+        guard let _ = poster else {
+            return
+        }
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
+        
+        let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
+        profileVC.poster = poster
+        profileVC.hidesBottomBarWhenPushed = true
+        
+        self.navigationController?.present(vc, animated: false, completion: nil)
+        vc.selectedIndex = 2
     }
     
     //JSQMessages Data Source functions
