@@ -411,8 +411,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="logInTapped:" destination="K7V-H7-jq8" eventType="touchUpInside" id="YvL-eo-1Mw"/>
-                                    <action selector="postButton:" destination="S0g-5w-CYb" eventType="touchUpInside" id="xSR-HM-bky"/>
+                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="gfj-I7-lz0"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4R2-TC-Xf8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
@@ -759,21 +758,41 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-PG-Nvu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-PG-Nvu" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="20" y="100" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="YGO-cO-7Zq" appends="YES" id="vga-oE-qTq"/>
+                                </connections>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dpz-w8-AwV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dpz-w8-AwV" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="118" y="100" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0Mx-HB-AEd" appends="YES" id="dYf-le-U85"/>
+                                </connections>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S49-b0-gHR">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S49-b0-gHR" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="216" y="100" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="FNg-b7-NqV" appends="YES" id="WH9-y9-Q57"/>
+                                </connections>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMh-DG-BJu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NMh-DG-BJu" customClass="RoundEdgeImageView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="314" y="100" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="cN5-Zz-lcC" appends="YES" id="NWU-1A-bv1"/>
+                                </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9R-gU-h7V" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="107" y="791" width="201" height="40"/>
@@ -784,8 +803,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="logInTapped:" destination="K7V-H7-jq8" eventType="touchUpInside" id="W43-9X-jfd"/>
-                                    <action selector="postButton:" destination="S0g-5w-CYb" eventType="touchUpInside" id="Ko9-ZM-aNZ"/>
+                                    <action selector="saveButtonTapped:" destination="CpY-uO-yzl" eventType="touchUpInside" id="3K6-CX-WQf"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9WZ-dN-vPK" customClass="FancyField" customModule="freegan" customModuleProvider="target">
@@ -805,12 +823,32 @@
                         <outlet property="firstPostImageView" destination="Nqu-PG-Nvu" id="hiX-Sf-iMp"/>
                         <outlet property="fourthPostImageView" destination="NMh-DG-BJu" id="1fw-0q-ebV"/>
                         <outlet property="postDescriptionText" destination="9WZ-dN-vPK" id="577-Xv-TAZ"/>
-                        <outlet property="saveBotton" destination="R9R-gU-h7V" id="cK9-kH-pkb"/>
+                        <outlet property="saveBottonView" destination="R9R-gU-h7V" id="AKB-yN-GMU"/>
                         <outlet property="secondPostImageView" destination="Dpz-w8-AwV" id="XSM-w7-yQI"/>
                         <outlet property="thirdPostImageView" destination="S49-b0-gHR" id="p7y-au-hVb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bLk-tY-il7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="YGO-cO-7Zq">
+                    <connections>
+                        <action selector="firstPostImageViewAction:" destination="CpY-uO-yzl" id="IbI-st-YSg"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="0Mx-HB-AEd">
+                    <connections>
+                        <action selector="secondPostImageViewAction:" destination="CpY-uO-yzl" id="FC7-VZ-0Vj"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="FNg-b7-NqV">
+                    <connections>
+                        <action selector="thirdPostImageViewAction:" destination="CpY-uO-yzl" id="8sg-d8-Ujd"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="cN5-Zz-lcC">
+                    <connections>
+                        <action selector="fourthPostImageViewAction:" destination="CpY-uO-yzl" id="qHO-fz-a1j"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="5121.739130434783" y="-689.0625"/>
         </scene>

@@ -14,7 +14,16 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDescription: FancyField!
-    @IBAction func postButton(_ sender: Any) {
+    @IBOutlet weak var postButtonView: FancyButton!
+    
+    var imagePicker: UIImagePickerController!
+    var imageSelected = false
+    static var useCamera = false
+    var cam: Camera?
+    var currentUser: User?
+    var geoRef: GeoFire?
+    
+    @IBAction func postButtonTapped(_ sender: Any) {
         
         guard let img = postImage.image, imageSelected == true else {
             showToast(message: "An image must be selected!")
@@ -56,22 +65,6 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
                 }
             }
         }
-        
-    }
-    
-    @IBOutlet weak var postButtonView: FancyButton!
-    
-    var imagePicker: UIImagePickerController!
-    var imageSelected = false
-    static var useCamera = false
-    var cam: Camera?
-    var currentUser: User?
-    var geoRef: GeoFire?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.hidesBarsOnTap = true
     }
     
     override func viewDidLoad() {
@@ -86,6 +79,12 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         } else {
             cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: imagePicker)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.hidesBarsOnTap = true
     }
     
     func imagePickerController(_ picker: UIImagePickerController,
