@@ -41,18 +41,35 @@ class PhotoZoomViewController: UIViewController {
     
     @IBAction func seeProfile(_ sender: Any) {
         
-        guard let poster = self.poster else {
+        if(forSelf){
+            guard let post = self.post else{
                 return
+            }
+            
+            if post.postUserObjectId == currentUser?.objectId{
+                let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
+                editPostVC.post = post
+                
+                self.present(editPostVC, animated: true, completion: nil)
+            } else {
+                
+            }
+            
+        } else {
+            guard let poster = self.poster else {
+                return
+            }
+            
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
+            
+            let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
+            profileVC.poster = poster
+            profileVC.hidesBottomBarWhenPushed = true
+            
+            self.navigationController?.present(vc, animated: false, completion: nil)
+            vc.selectedIndex = 2
         }
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
-        
-        let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
-        profileVC.poster = poster
-        profileVC.hidesBottomBarWhenPushed = true
-        
-        self.navigationController?.present(vc, animated: false, completion: nil)
-        vc.selectedIndex = 2
     }
     
     override func viewDidLoad() {
@@ -65,7 +82,6 @@ class PhotoZoomViewController: UIViewController {
         } else {
             self.posterImageView.image = self.posterImage
         }
-        
         
         postDescription.text = post!.description
     }

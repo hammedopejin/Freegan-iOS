@@ -56,8 +56,8 @@ class LogInVC : UIViewController {
     
     @IBAction func gotoLogin(_ sender: Any) {
         
-        let Register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
-        self.present(Register, animated: true, completion: nil)
+        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
+        self.present(register, animated: true, completion: nil)
     }
  
 }

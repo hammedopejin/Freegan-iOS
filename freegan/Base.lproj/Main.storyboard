@@ -529,7 +529,6 @@
                 <tapGestureRecognizer id="8de-nr-Unq">
                     <connections>
                         <action selector="seeProfile:" destination="3mQ-KB-kGi" id="b34-X1-1sS"/>
-                        <segue destination="CpY-uO-yzl" kind="presentation" identifier="goToEditPost" id="OuW-Lm-uH5"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -739,7 +738,7 @@
         <!--Edit PostVC-->
         <scene sceneID="w0H-ia-qOQ">
             <objects>
-                <viewController id="CpY-uO-yzl" customClass="EditPostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditPostVC" id="CpY-uO-yzl" customClass="EditPostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z2b-SZ-Oev">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
