@@ -29,19 +29,23 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     @IBAction func firstPostImageViewAction(_ sender: Any) {
-        showCameraLibraryOptions()
+        let flag = !(firstPostImageView.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag)
     }
     
     @IBAction func secondPostImageViewAction(_ sender: Any) {
-        showCameraLibraryOptions()
+        let flag = !(secondPostImageView.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag)
     }
     
     @IBAction func thirdPostImageViewAction(_ sender: Any) {
-        showCameraLibraryOptions()
+        let flag = !(thirdPostImageView.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag)
     }
     
     @IBAction func fourthPostImageViewAction(_ sender: Any) {
-        showCameraLibraryOptions()
+        let flag = !(fourthPostImageView.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag)
     }
     
     override func viewDidLoad() {
@@ -147,29 +151,32 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
     
     
-    func showCameraLibraryOptions(){
+    func showCameraLibraryOptions(deleteFlag: Bool){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
             self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)
-            
         }
         
         let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
             self.cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: self.imagePicker)
+        }
+        
+        let deletelAction = UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) in
             
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
-            
         }
-        
+    
         optionMenu.addAction(camera)
         optionMenu.addAction(library)
+        if deleteFlag {
+            optionMenu.addAction(deletelAction)
+        }
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
     }
-    
     
 }
