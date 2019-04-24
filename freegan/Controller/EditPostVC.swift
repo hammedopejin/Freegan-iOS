@@ -167,7 +167,8 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             }
             
         }
-    
+        
+        
     }
 
     func imagePickerController(_ picker: UIImagePickerController,
@@ -289,6 +290,17 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         self.currentPostDownloadURLs!.removeAll(where: { self.toDeletePostDownloadURLs!.contains($0) })
         
+        if self.postDescriptionText.text == self.post!.description, self.currentPostDownloadURLs == post!.imageUrl {
+            self.removeSpinner()
+            self.postDescriptionText.isHidden = false
+            self.saveBottonView.isHidden = false
+            self.firstPostImageView.isHidden = false
+            self.secondPostImageView.isHidden = false
+            self.thirdPostImageView.isHidden = false
+            self.fourthPostImageView.isHidden = false
+            return
+        }
+        
         if (self.currentPostDownloadURLs!.count) < 1 {
             self.removeSpinner()
             self.postDescriptionText.isHidden = false
@@ -300,9 +312,6 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             showToast(message: "At least one image is needed to post!")
             return
         }
-        
-        self.tempImages!.removeAll()
-        self.imageRef!.removeAll()
         
         for currentUrl in self.toDeletePostDownloadURLs! {
             let storageRef = storage.reference(forURL: currentUrl)
@@ -320,10 +329,13 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         reference.child(kIMAGEURL).setValue(self.currentPostDownloadURLs!)
         
         values.removeAll()
+        self.tempImages!.removeAll()
+        self.imageRef!.removeAll()
         self.currentPostDownloadURLs!.removeAll()
         self.toDeletePostDownloadURLs!.removeAll()
         self.removeSpinner()
         
+        self.showAlert("Success!", message: "Post successfully updated.")
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
 }
