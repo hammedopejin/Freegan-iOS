@@ -47,7 +47,6 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             
             let ref = DataService.ds.REF_POST_IMAGES.child(imgUid)
             
-            // Upload the file to the path "images/rivers.jpg"
             let _ = ref.putData(imgData, metadata: metadata) { (metadata, error) in
                 guard let metadata = metadata else {
                     
@@ -103,7 +102,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     
     func postToFirebase(imgUrl: String) {
         let date = Date()
-        let result = dateFormatterWithTime().string(from: date)
+        let time = dateFormatterWithTime().string(from: date)
         
         let postRef = DataService.ds.REF_POSTS.childByAutoId()
         let postId: String = postRef.key!
@@ -114,7 +113,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
             kIMAGEURL : [imgUrl] as AnyObject,
             kPROFILEIMAGEURL : currentUser!.userImgUrl as AnyObject,
             kUSERNAME : self.currentUser!.userName as AnyObject,
-            kPOSTDATE : result as AnyObject,
+            kPOSTDATE : time as AnyObject,
             kPOSTUSEROBJECTID : currentUser!.objectId as AnyObject
         ]
         

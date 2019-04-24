@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 
 public let firebase = Database.database().reference()
+public let storage =  Storage.storage()
 public let userDefaults = UserDefaults.standard
 
 
