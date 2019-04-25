@@ -613,16 +613,5 @@ extension FeedVC: ZoomAnimatorDelegate {
         }
         return cellFrame
     }
-    
-    
-    //    func logOut(){
-    //
-    //        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
-    //        print("HAMMED: ID removed from keychain \(keychainResult)")
-    //        try! Auth.auth().signOut()
-    //
-    //
-    //        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
-    //        self.present(register, animated: true, completion: nil)
-    //    }
+ 
 }
