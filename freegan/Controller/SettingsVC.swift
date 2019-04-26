@@ -107,13 +107,16 @@ class SettingsVC: UITableViewController {
             //show Profile photo VC
         }
         if indexPath.section == 0 && indexPath.row == 1 {
-            //show User name VC
+            //show User name VC gotoUsername
+            performSegue(withIdentifier: "gotoUsername", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 2 {
-            //show Email VC
+            //show Email VC gotoEmail
+            performSegue(withIdentifier: "gotoEmail", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 3 {
-            //show Password VC
+            //show Password VC gotoPassword
+            performSegue(withIdentifier: "gotoPassword", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 4 {
             //show Location VC

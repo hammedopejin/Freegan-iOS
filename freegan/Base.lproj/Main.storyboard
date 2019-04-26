@@ -215,7 +215,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-571" y="907"/>
+            <point key="canvasLocation" x="-571" y="891"/>
         </scene>
         <!--FeedVC-->
         <scene sceneID="oq0-RS-O4j">
@@ -312,7 +312,7 @@
                                 </connections>
                             </collectionView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="319" y="800" width="56" height="56"/>
+                                <rect key="frame" x="318" y="800" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -389,6 +389,80 @@
             </objects>
             <point key="canvasLocation" x="4354" y="135"/>
         </scene>
+        <!--Settings-->
+        <scene sceneID="5MR-na-ILJ">
+            <objects>
+                <navigationController id="H83-Jb-SgS" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" id="AJA-Hx-ck0"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="N8Q-EL-Rn0">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.31713959574699402" green="0.63212460279464722" blue="0.58823442459106445" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.31713959574699402" green="0.63212460279464722" blue="0.58823442459106445" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="rko-6R-z7h" kind="relationship" relationship="rootViewController" id="yYC-Cw-n6e"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zqk-Xh-IDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="542" y="891"/>
+        </scene>
+        <!--Update UsernameVC-->
+        <scene sceneID="zX9-th-J0u">
+            <objects>
+                <viewController id="wrF-Ds-Kxs" customClass="UpdateUsernameVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9VG-lg-8sV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uz2-kl-ZWx" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="221" width="201" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="l4d-8c-XXR"/>
+                                <state key="normal" title="UPDATE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="jQN-Hn-JKI"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hfm-AU-dI2" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="169" width="201" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="3wq-jr-wDP"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8WR-Fx-gQF">
+                                <rect key="frame" x="0.0" y="33" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.36086896060000001" green="0.73836958409999998" blue="0.67450696229999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Username" id="Esm-Fo-OyJ">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="backArrow" id="qh1-N2-AFM">
+                                            <connections>
+                                                <action selector="backToSettings:" destination="wrF-Ds-Kxs" id="csL-0K-8SK"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="BeK-vS-X87"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w9I-ua-SGs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="541" y="1592"/>
+        </scene>
         <!--PostVC-->
         <scene sceneID="XYv-hz-jWY">
             <objects>
@@ -441,7 +515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fWa-Vk-mIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2499" y="907"/>
+            <point key="canvasLocation" x="2499" y="891"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="UIk-g3-f9H">
@@ -452,7 +526,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEl-uN-sjT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4355" y="896"/>
+            <point key="canvasLocation" x="4352" y="891"/>
         </scene>
         <!--Photo Zoom View Controller-->
         <scene sceneID="332-hS-bhO">
@@ -472,7 +546,7 @@
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bubble_min.png" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-P8-VuE" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="319" y="700" width="56" height="56"/>
+                                <rect key="frame" x="318" y="700" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -869,7 +943,7 @@
                         <segue destination="GNh-BK-xVi" kind="relationship" relationship="viewControllers" id="OpN-tD-3f8"/>
                         <segue destination="nbF-pb-2lT" kind="relationship" relationship="viewControllers" id="Flb-9y-Ued"/>
                         <segue destination="Boj-D7-C0y" kind="relationship" relationship="viewControllers" id="7Yb-0d-18k"/>
-                        <segue destination="rko-6R-z7h" kind="relationship" relationship="viewControllers" id="f0z-nc-Ea9"/>
+                        <segue destination="H83-Jb-SgS" kind="relationship" relationship="viewControllers" id="yV4-qy-cSn"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3cW-B5-iBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -968,7 +1042,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="W9o-1J-Lo1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.29761052129999999" green="0.65644985440000003" blue="0.56862056260000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="XtG-6j-0Qu">
@@ -1162,10 +1236,135 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Settings" id="IVG-ke-Aca"/>
+                    <navigationItem key="navigationItem" id="C0w-eS-4qW"/>
+                    <connections>
+                        <segue destination="rcN-kW-SGK" kind="presentation" identifier="gotoEmail" id="xRf-hh-0r2"/>
+                        <segue destination="wrF-Ds-Kxs" kind="presentation" identifier="gotoUsername" id="Vdw-6d-mnH"/>
+                        <segue destination="5fc-Td-lAF" kind="presentation" identifier="gotoPassword" id="HVi-9J-i7A"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJM-f5-s6V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="542" y="907"/>
+            <point key="canvasLocation" x="1603" y="891"/>
+        </scene>
+        <!--Update EmailVC-->
+        <scene sceneID="Wbg-2h-Yi0">
+            <objects>
+                <viewController id="rcN-kW-SGK" customClass="UpdateEmailVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="smL-u4-a5E">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDb-u1-qeT" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="221" width="201" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="Otd-pv-qdM"/>
+                                <state key="normal" title="UPDATE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="zTw-UB-cAb"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aW-Lt-iHp" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="169" width="201" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="NjD-IB-UeV"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAI-5Y-YLl">
+                                <rect key="frame" x="0.0" y="33" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.36086896060000001" green="0.73836958409999998" blue="0.67450696229999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Email" id="9kJ-Gi-ZXJ">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="backArrow" id="lMr-pE-aEu">
+                                            <connections>
+                                                <action selector="backToSettings:" destination="rcN-kW-SGK" id="4Kl-f8-ec5"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="MLY-AT-Xjn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q4P-Ck-g8I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1603" y="1592"/>
+        </scene>
+        <!--Update PasswordVC-->
+        <scene sceneID="lRI-gb-Jg2">
+            <objects>
+                <viewController id="5fc-Td-lAF" customClass="UpdatePasswordVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IhY-ld-8At">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qeg-4o-tF8" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="221" width="201" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="l1z-iw-29d"/>
+                                <state key="normal" title="UPDATE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="CER-Df-bfT"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v3m-nn-4aq" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="169" width="201" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="pXC-fG-HM5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C1w-zb-d3l" customClass="FancyField" customModule="freegan" customModuleProvider="target">
+                                <rect key="frame" x="107" y="117" width="201" height="30"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <viewLayoutGuide key="safeArea" id="EP8-Hl-Mld"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Edw-55-VDc">
+                                <rect key="frame" x="0.0" y="33" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="barTintColor" red="0.36086896060000001" green="0.73836958409999998" blue="0.67450696229999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Password" id="8S8-Sd-X53">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="backArrow" id="f3a-Bc-qFz">
+                                            <connections>
+                                                <action selector="backToSettings:" destination="5fc-Td-lAF" id="chx-rs-3nL"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="JKc-ks-a5y"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xa0-Zi-9N1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2499" y="1592"/>
         </scene>
     </scenes>
     <resources>
@@ -1179,7 +1378,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qxC-P5-nN3"/>
-        <segue reference="UQs-Vz-jXm"/>
+        <segue reference="Sys-kc-tG1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
