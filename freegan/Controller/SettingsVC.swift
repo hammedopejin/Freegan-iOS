@@ -22,33 +22,62 @@ class SettingsVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 { return 3 }
-        if section == 1 { return 1 }
+        if section == 0 { return 5 }
+        if section == 1 { return 4 }
         return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 && indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell", for: indexPath)
+            cell.textLabel?.text = "Profile photo"
+            return cell
+        }
+        
+        if indexPath.row == 1 && indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
+            cell.textLabel?.text = "User name"
+            return cell
+        }
+        
+        if indexPath.row == 2 && indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "emailCell", for: indexPath)
+            cell.textLabel?.text = "Email"
+            return cell
+        }
+        
+        if indexPath.row == 3 && indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "passwordCell", for: indexPath)
+            cell.textLabel?.text = "Password"
+            return cell
+        }
+        
+        if indexPath.row == 4 && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath)
             cell.textLabel?.text = "Location"
             cell.detailTextLabel?.text = "Irvine, CA 92620"
             return cell
         }
         
-        if indexPath.row == 1 && indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "privacyCell", for: indexPath)
-            cell.textLabel?.text = "Privacy"
-            return cell
-        }
-        
-        if indexPath.row == 2 && indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "termsCell", for: indexPath)
-            cell.textLabel?.text = "Terms of Service"
-            return cell
-        }
-        
         if indexPath.row == 0 && indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "helpCell", for: indexPath)
+            cell.textLabel?.text = "Help"
+            return cell
+        }
+        
+        if indexPath.row == 1 && indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "termsCell", for: indexPath)
+            cell.textLabel?.text = "Terms and Conitions"
+            return cell
+        }
+        if indexPath.row == 2 && indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "privacyCell", for: indexPath)
+            cell.textLabel?.text = "Privacy Policy"
+            return cell
+        }
+        
+        if indexPath.row == 3 && indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
             
             return cell
@@ -75,18 +104,34 @@ class SettingsVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 && indexPath.row == 0 {
-            //show location VC
+            //show Profile photo VC
         }
-        
         if indexPath.section == 0 && indexPath.row == 1 {
-            //show privacy
+            //show User name VC
         }
-        
         if indexPath.section == 0 && indexPath.row == 2 {
-            //show terms of service
+            //show Email VC
+        }
+        if indexPath.section == 0 && indexPath.row == 3 {
+            //show Password VC
+        }
+        if indexPath.section == 0 && indexPath.row == 4 {
+            //show Location VC
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
+            //show Help
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            //show Terms and Conitions
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 2 {
+            //show Privacy Policy
+        }
+        
+        if indexPath.section == 1 && indexPath.row == 3 {
             showLogoutView()
         }
     }
