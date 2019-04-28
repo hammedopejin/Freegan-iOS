@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import Firebase
 
 class UpdateEmailVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    @IBOutlet weak var updateEmailText: FancyField!
+    
+    var user: User?
+    
+    @IBAction func updateEmailButton(_ sender: Any) {
+  
         
     }
     
@@ -19,5 +24,13 @@ class UpdateEmailVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let user = self.user {
+            self.updateEmailText.text = user.email
+        }
+    }
     
 }

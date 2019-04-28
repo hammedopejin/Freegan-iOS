@@ -10,13 +10,28 @@ import UIKit
 
 class UpdatePasswordVC: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    @IBOutlet weak var updatePasswordText1: FancyField!
+    
+    
+    @IBOutlet weak var updatePasswordText2: FancyField!
+    
+    var user: User?
+    
+    @IBAction func updatePasswordButton(_ sender: Any) {
+        
+        
     }
-
+    
+    
     @IBAction func backToSettings(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
     }
     
 }

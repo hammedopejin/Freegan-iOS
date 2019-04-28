@@ -12,9 +12,36 @@ import SwiftKeychainWrapper
 
 class SettingsVC: UITableViewController {
     
+    var currentUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+            snapshot in
+            
+            if snapshot.exists() {
+                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+               
+            }
+            
+        })
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "gotoEmail" {
+            let vc = segue.destination as! UpdateEmailVC
+            vc.user = self.currentUser
+        }  else if segue.identifier == "gotoUsername" {
+            let vc = segue.destination as! UpdateUsernameVC
+            vc.user = self.currentUser
+        }  else if segue.identifier == "gotoPassword" {
+            let vc = segue.destination as! UpdatePasswordVC
+            vc.user = self.currentUser
+        }  else if segue.identifier == "" {
+            
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -37,10 +37,6 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func backAction() {
         tabBarController?.selectedIndex = 0
-        
-//        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
-//        vc.selectedIndex = 0
-//        self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: UITableviewDataSource

@@ -28,6 +28,11 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var imageRef: [StorageReference]?
     var currentIndex = 0
     
+    @IBAction func backToPost(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
         
         if self.postDescriptionText.text == "" {
