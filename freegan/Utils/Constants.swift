@@ -20,7 +20,6 @@ public let SHADOW_GRAY: CGFloat = 120.0 / 255.0
 
 public let KEY_UID = "uid"
 
-
 //User
 public let kOBJECTID = "objectId"
 public let kUSER = "users"
@@ -36,6 +35,7 @@ public let kFULLNAME = "fullname"
 public let kUSERNAME = "userName"
 public let kAVATAR = "userImgUrl"
 public let kCURRENTUSER = "currentUser"
+public let kUSERIMAGEURL = "userImgUrl"
 
 //typeing
 public let kTYPINGPATH = "typing"

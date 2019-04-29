@@ -10,12 +10,21 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class SettingsVC: UITableViewController {
+class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @IBAction func backToProfile(_ sender: Any) {
+        tabBarController?.selectedIndex = 0
+    }
     
     var currentUser: User?
+    var imagePicker: UIImagePickerController!
+    var cam: Camera?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imagePicker = UIImagePickerController()
+        cam = Camera(delegate_: self)
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
@@ -131,18 +140,15 @@ class SettingsVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 && indexPath.row == 0 {
-            //show Profile photo VC
+            showCameraLibraryOptions()
         }
         if indexPath.section == 0 && indexPath.row == 1 {
-            //show User name VC gotoUsername
             performSegue(withIdentifier: "gotoUsername", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 2 {
-            //show Email VC gotoEmail
             performSegue(withIdentifier: "gotoEmail", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 3 {
-            //show Password VC gotoPassword
             performSegue(withIdentifier: "gotoPassword", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 4 {
@@ -193,7 +199,75 @@ class SettingsVC: UITableViewController {
         self.present(login, animated: true, completion: nil)
     }
     
-    @IBAction func backToProfile(_ sender: Any) {
-        tabBarController?.selectedIndex = 0
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            uploadPicture(img: image)
+        } else {
+            print("TAG: A valid image wasn't selected")
+        }
+        
+        imagePicker.dismiss(animated: true, completion: nil)
     }
+    
+    func showCameraLibraryOptions(){
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
+            self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)
+        }
+        
+        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
+            self.cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: self.imagePicker)
+        }
+       
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
+        }
+        
+        optionMenu.addAction(camera)
+        optionMenu.addAction(library)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func uploadPicture(img: UIImage) {
+        
+        self.showSpinner(onView: self.view)
+        
+        if let imgData = img.jpegData(compressionQuality: 0.2) {
+            
+            let imgUid = NSUUID().uuidString
+            
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            let ref = DataService.ds.REF_USER_IMAGES.child(imgUid)
+            
+            let _ = ref.putData(imgData, metadata: metadata) { (metadata, error) in
+                ref.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        
+                        return
+                    }
+                    self.postPictureToFirebase(imgUrl: downloadURL.absoluteString)
+                }
+            }
+        }
+    }
+    
+    func postPictureToFirebase(imgUrl: String) {
+        if(!(self.currentUser?.userImgUrl?.isEmpty)!){
+            if let imgUrl = self.currentUser?.userImgUrl {
+                let toReplace = storage.reference(forURL: imgUrl)
+                toReplace.delete(completion: nil)
+            }
+        }
+        
+        firebase.child(kUSER).child(currentUser!.objectId).child(kUSERIMAGEURL).setValue(imgUrl)
+        self.removeSpinner()
+        self.showError ("Success!", message: "User Picture successfully updated.")
+    }
+    
 }
