@@ -160,11 +160,15 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         }
         
         if indexPath.section == 1 && indexPath.row == 1 {
-            //show Terms and Conitions
+            let termsVC = TermsAndConitionsVC()
+            termsVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(termsVC, animated: true)
         }
         
         if indexPath.section == 1 && indexPath.row == 2 {
-            //show Privacy Policy
+            let privacyVC = PrivacyPolicyVC()
+            privacyVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(privacyVC, animated: true)
         }
         
         if indexPath.section == 1 && indexPath.row == 3 {
