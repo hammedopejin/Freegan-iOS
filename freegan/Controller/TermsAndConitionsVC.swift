@@ -25,8 +25,13 @@ class TermsAndConitionsVC: UIViewController {
         self.webView.load(URLRequest(url: url!))
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(TermsAndConitionsVC.backAction))
-        
-        self.navigationItem.title = "Terms & Condition"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let text = UITextField(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+        text.textColor = UIColor.white
+        text.text = "Terms & Condition"
+        self.navigationItem.titleView = text
     }
     
     @objc func backAction() {
