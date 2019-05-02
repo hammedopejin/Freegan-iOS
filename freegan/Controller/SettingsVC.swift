@@ -16,7 +16,7 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         tabBarController?.selectedIndex = 0
     }
     
-    var currentUser: User?
+    var currentUser: FUser?
     var imagePicker: UIImagePickerController!
     var cam: Camera?
     
@@ -30,7 +30,7 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             snapshot in
             
             if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                
             }
             
@@ -39,17 +39,9 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "gotoEmail" {
-            let vc = segue.destination as! UpdateEmailVC
-            vc.user = self.currentUser
-        }  else if segue.identifier == "gotoUsername" {
+        if segue.identifier == "gotoUsername" {
             let vc = segue.destination as! UpdateUsernameVC
             vc.user = self.currentUser
-        }  else if segue.identifier == "gotoPassword" {
-            let vc = segue.destination as! UpdatePasswordVC
-            vc.user = self.currentUser
-        }  else if segue.identifier == "" {
-            
         }
     }
     

@@ -45,7 +45,7 @@ class RecentTableViewCell: UITableViewCell {
                 
                 if snapshot.exists() {
                     let userDictionary = ((snapshot.value as! NSDictionary).allValues as Array).first
-                    let recentChatMate = User.init(_dictionary: userDictionary as! NSDictionary)
+                    let recentChatMate = FUser.init(_dictionary: userDictionary as! NSDictionary)
                     if recentChatMate.userImgUrl != "" {
                         let ref = Storage.storage().reference(forURL: recentChatMate.userImgUrl!)
                         ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in

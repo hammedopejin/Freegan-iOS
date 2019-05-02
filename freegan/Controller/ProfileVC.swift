@@ -34,8 +34,8 @@ class ProfileVC: UIViewController{
     var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 20)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
     var posts = [Post]()
-    var currentUser: User?
-    var poster: User?
+    var currentUser: FUser?
+    var poster: FUser?
     
     var profileImgUrl: String!
     var userImgUrl: String!
@@ -47,7 +47,7 @@ class ProfileVC: UIViewController{
             snapshot in
             
             if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 self.loadPosts()
             }
             
@@ -177,7 +177,7 @@ class ProfileVC: UIViewController{
             vc.delegate = self
             vc.currentIndex = self.selectedIndexPath.row
             vc.posts = self.posts
-            vc.posters = posters as! [User]
+            vc.posters = posters as! [FUser]
             vc.posterImages = self.posterImages
             vc.postImages = self.postImages
             vc.currentUser = self.currentUser

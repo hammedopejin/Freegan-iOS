@@ -11,7 +11,7 @@
 		0F0CFD8E21E6A03A0017C581 /* FancyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD8D21E6A03A0017C581 /* FancyField.swift */; };
 		0F0CFD9021E6A2450017C581 /* FancyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD8F21E6A2450017C581 /* FancyButton.swift */; };
 		0F0CFD9321E6A2C30017C581 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9221E6A2C30017C581 /* Constants.swift */; };
-		0F0CFD9621E6B0E40017C581 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9521E6B0E40017C581 /* User.swift */; };
+		0F0CFD9621E6B0E40017C581 /* FUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9521E6B0E40017C581 /* FUser.swift */; };
 		0F0CFD9821E6CF3D0017C581 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFD9721E6CF3D0017C581 /* Utilities.swift */; };
 		0F0CFDB421F19CFF0017C581 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFDB321F19CFF0017C581 /* FeedVC.swift */; };
 		0F0CFDB821F24D7F0017C581 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFDB721F24D7F0017C581 /* LogInVC.swift */; };
@@ -77,7 +77,7 @@
 		0F0CFD8D21E6A03A0017C581 /* FancyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FancyField.swift; sourceTree = "<group>"; };
 		0F0CFD8F21E6A2450017C581 /* FancyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FancyButton.swift; sourceTree = "<group>"; };
 		0F0CFD9221E6A2C30017C581 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		0F0CFD9521E6B0E40017C581 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0F0CFD9521E6B0E40017C581 /* FUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FUser.swift; sourceTree = "<group>"; };
 		0F0CFD9721E6CF3D0017C581 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0F0CFDB321F19CFF0017C581 /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		0F0CFDB721F24D7F0017C581 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		0F0CFD9421E6B0CC0017C581 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0F0CFD9521E6B0E40017C581 /* User.swift */,
+				0F0CFD9521E6B0E40017C581 /* FUser.swift */,
 				0F2D2D122246D63C00F55867 /* Recent.swift */,
 				0F0CFE1221FAD6060017C581 /* Post.swift */,
 				0F2D2D142246D6A900F55867 /* IncomingMessage.swift */,
@@ -583,7 +583,7 @@
 				0FE48C592266441500D3D1EA /* ProfileVC.swift in Sources */,
 				0F2D2D152246D6A900F55867 /* IncomingMessage.swift in Sources */,
 				0FE48C672273CA8100D3D1EA /* UpdatePasswordVC.swift in Sources */,
-				0F0CFD9621E6B0E40017C581 /* User.swift in Sources */,
+				0F0CFD9621E6B0E40017C581 /* FUser.swift in Sources */,
 				0F0CFE1321FAD6060017C581 /* Post.swift in Sources */,
 				0F2D2D102241EB8D00F55867 /* PostVC.swift in Sources */,
 				0F150B4F2277FCB500C4E402 /* PrivacyPolicyVC.swift in Sources */,
@@ -771,6 +771,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87543A78RY;
 				INFOPLIST_FILE = freegan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -789,6 +790,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 87543A78RY;
 				INFOPLIST_FILE = freegan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

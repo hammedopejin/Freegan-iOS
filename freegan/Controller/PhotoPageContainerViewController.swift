@@ -28,9 +28,9 @@ class PhotoPageContainerViewController: UIViewController {
     
     var postImages = [[UIImage]]()
     var posterImages = [UIImage]()
-    var posters = [User]()
+    var posters = [FUser]()
     var posts: [Post]!
-    var currentUser: User!
+    var currentUser: FUser!
     var currentIndex = 0
     var vertIndex = 0
     var nextIndex: Int?

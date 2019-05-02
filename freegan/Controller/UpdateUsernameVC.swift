@@ -12,7 +12,7 @@ class UpdateUsernameVC: UIViewController {
     
     @IBOutlet weak var usernameTextField: FancyField!
     @IBOutlet weak var updateUsernameButtonView: FancyButton!
-    var user: User?
+    var user: FUser?
     
     @IBAction func updateUsernameButton(_ sender: Any) {
         if self.usernameTextField.text == self.user?.userName {

@@ -30,8 +30,8 @@ class ChatViewController: JSQMessagesViewController {
     var loaded: [NSDictionary] = []
     
     var members: [String] = []
-    var withUser: User?
-    var currentUser: User?
+    var withUser: FUser?
+    var currentUser: FUser?
     var post : Post?
     var withUserImage : UIImage?
     
@@ -69,7 +69,7 @@ class ChatViewController: JSQMessagesViewController {
             snapshot in
             
             if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 self.senderDisplayName = self.currentUser?.userName
             }
         })
@@ -100,7 +100,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     @objc func seeProfile(_ sender: Any) {
-        var poster: User?
+        var poster: FUser?
         if self.post?.postUserObjectId == currentUser?.objectId {
             poster = currentUser
         } else {
@@ -379,7 +379,7 @@ class ChatViewController: JSQMessagesViewController {
         typingRef.child(chatRoomId).observe(.childChanged, with: {
             snapshot in
             
-            if snapshot.key != User.currentId() {
+            if snapshot.key != FUser.currentId() {
                 let typing = snapshot.value as! Bool
                 self.showTypingIndicator = typing
                 if typing {
@@ -406,7 +406,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func typingIndicatorSave(typing: Bool) {
-        typingRef.child(chatRoomId).updateChildValues([User.currentId() : typing])
+        typingRef.child(chatRoomId).updateChildValues([FUser.currentId() : typing])
     }
     
     //MARK:  UITextViewDelegate

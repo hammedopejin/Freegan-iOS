@@ -10,7 +10,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 
-func startChat(user1: User, user2: User, postId: String) -> String {
+func startChat(user1: FUser, user2: FUser, postId: String) -> String {
     
     let userId1 = user1.objectId as String
     let userId2 = user2.objectId as String
@@ -97,14 +97,14 @@ func creatRecentItem(userId: String, chatRoomId: String, members: [String], post
 
 func restartRecentChat(recent: NSDictionary, postId: String) {
     
-    var currentUser: User?
+    var currentUser: FUser?
     
     firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
         snapshot in
         
         if snapshot.exists() {
             
-            currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+            currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
             
             if (recent[kTYPE] as? String)! == kPRIVATE {
                 

@@ -43,9 +43,9 @@ class FeedVC: UIViewController {
     
     var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 20)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
-    var posters = Array(repeating: User(), count: 20)
+    var posters = Array(repeating: FUser(), count: 20)
     var posts = [Post]()
-    var currentUser: User?
+    var currentUser: FUser?
     var postIds = [String]()
     var askLocationFlag = false
     let PAGE_LOAD_SIZE = 10
@@ -67,7 +67,7 @@ class FeedVC: UIViewController {
             snapshot in
             
             if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 self.requestLocation()
             }
             
@@ -422,7 +422,7 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
             
             if snapshot.exists() {
                 
-                let poster = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 self.posters[indexPath.row] = poster
                 var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
                 

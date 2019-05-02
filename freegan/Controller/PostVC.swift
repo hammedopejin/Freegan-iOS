@@ -20,7 +20,7 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     var imageSelected = false
     static var useCamera = false
     var cam: Camera?
-    var currentUser: User?
+    var currentUser: FUser?
     var geoRef: GeoFire?
     
     @IBAction func postButtonTapped(_ sender: Any) {

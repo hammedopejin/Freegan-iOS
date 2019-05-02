@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 
-class User {
+class FUser {
     var objectId: String
     var pushId: String?
     
@@ -91,7 +91,7 @@ class User {
     //MARK: Register functions
     
     class func registerUserWith(email: String, firuseruid: String, userName: String) {
-        let fuser = User.init(_objectId: firuseruid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: email, _username: userName, _userimgurl: "", _loginMethod: kEMAIL)
+        let fuser = FUser.init(_objectId: firuseruid, _pushId: "", _createdAt: Date(), _updatedAt: Date(), _email: email, _username: userName, _userimgurl: "", _loginMethod: kEMAIL)
         fuser.saveUserInBackground(fuser: fuser)
     }
     
@@ -101,7 +101,7 @@ class User {
     }
     
     //MARK: Save user funcs
-    func saveUserInBackground(fuser: User, completion: @escaping (_ error: Error?) -> Void) {
+    func saveUserInBackground(fuser: FUser, completion: @escaping (_ error: Error?) -> Void) {
         
         let ref = firebase.child(kUSER).child(fuser.objectId)
         
@@ -110,13 +110,13 @@ class User {
         }
     }
     
-    func saveUserInBackground(fuser: User) {
+    func saveUserInBackground(fuser: FUser) {
         let ref = firebase.child(kUSER).child(fuser.objectId)
         ref.setValue(userDictionaryFrom(user: fuser))
     }
     
     //MARK: Fetch User funcs
-    class func fetchUser(userId: String) -> User? {
+    class func fetchUser(userId: String) -> FUser? {
         var user : NSDictionary = NSDictionary()
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: userId).observe(.value, with: {
             snapshot in
@@ -127,11 +127,11 @@ class User {
                 user = NSDictionary()
             }
         })
-        return User.init(_dictionary: user) as User
+        return FUser.init(_dictionary: user) as FUser
     }
     
     //MARK: Helper funcs
-    func userDictionaryFrom(user: User) -> NSDictionary {
+    func userDictionaryFrom(user: FUser) -> NSDictionary {
         
         let createdAt = dateFormatter().string(from: user.createdAt ?? Date())
         let updatedAt = dateFormatter().string(from: user.updatedAt ?? Date())

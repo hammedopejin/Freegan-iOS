@@ -16,7 +16,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var recents: [NSDictionary] = []
     var firstLoad: Bool?
-    var currentUser: User?
+    var currentUser: FUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
             snapshot in
 
             if snapshot.exists() {
-                self.currentUser = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 self.loadRecents()
             }
             
@@ -99,7 +99,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: User) -> Void){
+    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
             .observe(.value, with: {
@@ -107,7 +107,7 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 if snapshot.exists() {
                     
-                    let poster = User.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                     withUser(poster)
                 }
                 

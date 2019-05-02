@@ -19,8 +19,8 @@ class PhotoZoomViewController: UIViewController {
     var postImage: UIImage!
     var posterImage: UIImage!
     var post: Post?
-    var poster: User?
-    var currentUser: User?
+    var poster: FUser?
+    var currentUser: FUser?
     var index: Int = 0
     var forSelf: Bool!
     

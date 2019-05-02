@@ -49,7 +49,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 } else {
                     print("HAMMED: Successfully authenticated with Firebase")
                     if let user = user {
-                        User.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
+                        FUser.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
                         self.completeSignIn(id: user.user.uid)
                     }
                 }

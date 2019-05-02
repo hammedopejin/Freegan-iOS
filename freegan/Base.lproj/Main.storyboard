@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +49,7 @@
                                 <viewLayoutGuide key="safeArea" id="mW1-v1-Q8E"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LBv-UT-lh8">
                                 <rect key="frame" x="0.0" y="29" width="414" height="233"/>
@@ -151,7 +151,7 @@
                                 <viewLayoutGuide key="safeArea" id="8GH-nG-59I"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8d-ih-c4P">
                                 <rect key="frame" x="0.0" y="29" width="414" height="233"/>
@@ -392,7 +392,6 @@
         <!--Settings-->
         <scene sceneID="5MR-na-ILJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zqk-Xh-IDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="H83-Jb-SgS" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" id="AJA-Hx-ck0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="N8Q-EL-Rn0">
@@ -405,6 +404,7 @@
                         <segue destination="rko-6R-z7h" kind="relationship" relationship="rootViewController" id="yYC-Cw-n6e"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zqk-Xh-IDR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="542" y="891"/>
         </scene>
@@ -464,7 +464,7 @@
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="3wq-jr-wDP"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1317,7 +1317,7 @@
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="NjD-IB-UeV"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAI-5Y-YLl">
                                 <rect key="frame" x="0.0" y="33" width="414" height="44"/>
@@ -1404,7 +1404,7 @@
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="pXC-fG-HM5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C1w-zb-d3l" customClass="FancyField" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="107" y="117" width="201" height="30"/>
@@ -1413,7 +1413,7 @@
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="EP8-Hl-Mld"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1433,13 +1433,13 @@
         <image name="1" width="480" height="423"/>
         <image name="backArrow" width="25" height="25"/>
         <image name="bubble_min.png" width="48" height="35"/>
-        <image name="freegan_logo_transparent" width="245.75999450683594" height="245.75999450683594"/>
-        <image name="ic_account_circle_black_24dp" width="48" height="48"/>
-        <image name="ic_more_vert_white_24dp" width="36" height="36"/>
+        <image name="freegan_logo_transparent" width="512" height="512"/>
+        <image name="ic_account_circle_black_24dp" width="24" height="24"/>
+        <image name="ic_more_vert_white_24dp" width="18" height="18"/>
         <image name="persoicon" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qxC-P5-nN3"/>
+        <segue reference="oPw-hj-gG7"/>
         <segue reference="Sys-kc-tG1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
