@@ -22,6 +22,7 @@ class UpdateEmailVC: UIViewController {
         
         if let user = self.user {
             self.updateEmailText.text = user.email
+            self.updateEmailText.sizeToFit()
         }
     }
     

@@ -42,6 +42,7 @@ class UpdateUsernameVC: UIViewController {
         
         if let user = self.user {
             self.usernameTextField.text = user.userName
+            self.usernameTextField.sizeToFit()
         }
     }
 }

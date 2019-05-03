@@ -79,6 +79,7 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         if let post = self.post {
             self.postDescriptionText.text = post.description
+            self.postDescriptionText.sizeToFit()
             self.currentPostDownloadURLs = post.imageUrl
             self.toDeletePostDownloadURLs = [String]()
             self.tempImages = [UIImage]()
