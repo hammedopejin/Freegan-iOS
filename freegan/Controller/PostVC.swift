@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GeoFire
 
-class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class PostVC: UIViewController {
     
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDescription: FancyField!
@@ -22,6 +22,26 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
     var cam: Camera?
     var currentUser: FUser?
     var geoRef: GeoFire?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
+        imagePicker = UIImagePickerController()
+        cam = Camera(delegate_: self)
+        
+        if PostVC.useCamera{
+            cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: imagePicker)
+        } else {
+            cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: imagePicker)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.hidesBarsOnTap = true
+    }
     
     @IBAction func postButtonTapped(_ sender: Any) {
         
@@ -66,40 +86,6 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
-        imagePicker = UIImagePickerController()
-        cam = Camera(delegate_: self)
-        
-        if PostVC.useCamera{
-            cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: imagePicker)
-        } else {
-            cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: imagePicker)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        navigationController?.hidesBarsOnTap = true
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            postImage.image = image
-            imageSelected = true
-        } else {
-            print("TAG: A valid image wasn't selected")
-            
-        }
-        
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-    
     func postToFirebase(imgUrl: String) {
         let date = Date()
         let time = dateFormatterWithTime().string(from: date)
@@ -128,4 +114,21 @@ class PostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationCon
         self.navigationController?.popViewController(animated: true)
     }
     
+}
+
+extension PostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            postImage.image = image
+            imageSelected = true
+        } else {
+            print("TAG: A valid image wasn't selected")
+            
+        }
+        
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
 }

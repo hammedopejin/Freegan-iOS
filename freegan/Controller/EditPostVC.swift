@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class EditPostVC: UIViewController {
     
     @IBOutlet weak var firstPostImageView: UIImageView!
     @IBOutlet weak var secondPostImageView: UIImageView!
@@ -27,49 +27,6 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var tempImages: [UIImage]?
     var imageRef: [StorageReference]?
     var currentIndex = 0
-    
-    @IBAction func backToPost(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        
-        if self.postDescriptionText.text == "" {
-            showToast(message: "Post needs description!")
-            return
-        }
-        
-        self.postToFirebase()
-    }
-    
-    @IBAction func firstPostImageViewAction(_ sender: Any) {
-        self.currentIndex = 0
-        self.tempImageView = firstPostImageView
-        let flag = !(self.tempImageView!.image == nil)
-        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
-    }
-    
-    @IBAction func secondPostImageViewAction(_ sender: Any) {
-        self.currentIndex = 1
-        self.tempImageView = secondPostImageView
-        let flag = !(self.tempImageView!.image == nil)
-        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
-    }
-    
-    @IBAction func thirdPostImageViewAction(_ sender: Any) {
-        self.currentIndex = 2
-        self.tempImageView = thirdPostImageView
-        let flag = !(self.tempImageView!.image == nil)
-        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
-    }
-    
-    @IBAction func fourthPostImageViewAction(_ sender: Any) {
-        self.currentIndex = 3
-        self.tempImageView = fourthPostImageView
-        let flag = !(self.tempImageView!.image == nil)
-        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,21 +133,48 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         
     }
-
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    @IBAction func backToPost(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
         
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            if !(self.tempImageView!.image == nil) {
-                self.deleteImage(index: self.currentIndex)
-            }
-            self.tempImageView!.image = image
-            self.tempImages!.append(image)
-        } else {
-            print("TAG: A valid image wasn't selected")
+        if self.postDescriptionText.text == "" {
+            showToast(message: "Post needs description!")
+            return
         }
         
-        imagePicker.dismiss(animated: true, completion: nil)
+        self.postToFirebase()
+    }
+    
+    @IBAction func firstPostImageViewAction(_ sender: Any) {
+        self.currentIndex = 0
+        self.tempImageView = firstPostImageView
+        let flag = !(self.tempImageView!.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
+    }
+    
+    @IBAction func secondPostImageViewAction(_ sender: Any) {
+        self.currentIndex = 1
+        self.tempImageView = secondPostImageView
+        let flag = !(self.tempImageView!.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
+    }
+    
+    @IBAction func thirdPostImageViewAction(_ sender: Any) {
+        self.currentIndex = 2
+        self.tempImageView = thirdPostImageView
+        let flag = !(self.tempImageView!.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
+    }
+    
+    @IBAction func fourthPostImageViewAction(_ sender: Any) {
+        self.currentIndex = 3
+        self.tempImageView = fourthPostImageView
+        let flag = !(self.tempImageView!.image == nil)
+        showCameraLibraryOptions(deleteFlag: flag, index: self.currentIndex)
     }
     
     func showCameraLibraryOptions(deleteFlag: Bool, index: Int){
@@ -297,24 +281,12 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         self.currentPostDownloadURLs!.removeAll(where: { self.toDeletePostDownloadURLs!.contains($0) })
         
         if self.postDescriptionText.text == self.post!.description, self.currentPostDownloadURLs == post!.imageUrl {
-            self.removeSpinner()
-            self.postDescriptionText.isHidden = false
-            self.saveBottonView.isHidden = false
-            self.firstPostImageView.isHidden = false
-            self.secondPostImageView.isHidden = false
-            self.thirdPostImageView.isHidden = false
-            self.fourthPostImageView.isHidden = false
+            hideViews()
             return
         }
         
         if (self.currentPostDownloadURLs!.count) < 1 {
-            self.removeSpinner()
-            self.postDescriptionText.isHidden = false
-            self.saveBottonView.isHidden = false
-            self.firstPostImageView.isHidden = false
-            self.secondPostImageView.isHidden = false
-            self.thirdPostImageView.isHidden = false
-            self.fourthPostImageView.isHidden = false
+            hideViews()
             showToast(message: "At least one image is needed to post!")
             return
         }
@@ -343,5 +315,34 @@ class EditPostVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         self.showAlert("Success!", message: "Post successfully updated.")
         self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    func hideViews() {
+        self.removeSpinner()
+        self.postDescriptionText.isHidden = false
+        self.saveBottonView.isHidden = false
+        self.firstPostImageView.isHidden = false
+        self.secondPostImageView.isHidden = false
+        self.thirdPostImageView.isHidden = false
+        self.fourthPostImageView.isHidden = false
+    }
+}
+
+extension EditPostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            if !(self.tempImageView!.image == nil) {
+                self.deleteImage(index: self.currentIndex)
+            }
+            self.tempImageView!.image = image
+            self.tempImages!.append(image)
+        } else {
+            print("TAG: A valid image wasn't selected")
+        }
+        
+        imagePicker.dismiss(animated: true, completion: nil)
     }
 }

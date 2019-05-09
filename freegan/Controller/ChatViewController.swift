@@ -44,16 +44,6 @@ class ChatViewController: JSQMessagesViewController {
     var outgoingBubble: JSQMessagesBubbleImage?
     var incomingBubble: JSQMessagesBubbleImage?
     
-    override func viewWillAppear(_ animated: Bool) {
-        clearRecentCounter(chatRoomID: chatRoomId)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        clearRecentCounter(chatRoomID: chatRoomId)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         inputToolbar.contentView.leftBarButtonItem = nil
@@ -91,34 +81,13 @@ class ChatViewController: JSQMessagesViewController {
         }
     }
     
-    @objc func backAction() {
+    override func viewWillAppear(_ animated: Bool) {
         clearRecentCounter(chatRoomID: chatRoomId)
-        chatRef.child(chatRoomId).removeAllObservers()
-        typingRef.child(chatRoomId).removeAllObservers()
-        
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    @objc func seeProfile(_ sender: Any) {
-        var poster: FUser?
-        if self.post?.postUserObjectId == currentUser?.objectId {
-            poster = currentUser
-        } else {
-            poster = withUser
-        }
-        
-        guard let _ = poster else {
-            return
-        }
-        
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
-        
-        let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
-        profileVC.poster = poster
-        profileVC.hidesBottomBarWhenPushed = true
-        
-        self.navigationController?.present(vc, animated: false, completion: nil)
-        vc.selectedIndex = 2
+    override func viewWillDisappear(_ animated: Bool) {
+        clearRecentCounter(chatRoomID: chatRoomId)
     }
     
     //JSQMessages Data Source functions
@@ -233,6 +202,42 @@ class ChatViewController: JSQMessagesViewController {
         
         loadMore(maxNumber: max, minNumber: min)
         self.collectionView!.reloadData()
+    }
+    
+    //MARK:  UITextViewDelegate
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        typingIndicatorStart()
+        return true
+    }
+    
+    @objc func backAction() {
+        clearRecentCounter(chatRoomID: chatRoomId)
+        chatRef.child(chatRoomId).removeAllObservers()
+        typingRef.child(chatRoomId).removeAllObservers()
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func seeProfile(_ sender: Any) {
+        var poster: FUser?
+        if self.post?.postUserObjectId == currentUser?.objectId {
+            poster = currentUser
+        } else {
+            poster = withUser
+        }
+        
+        guard let _ = poster else {
+            return
+        }
+        
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
+        
+        let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
+        profileVC.poster = poster
+        profileVC.hidesBottomBarWhenPushed = true
+        
+        self.navigationController?.present(vc, animated: false, completion: nil)
+        vc.selectedIndex = 2
     }
     
     func sendMessage(text: String?, date: Date) {
@@ -409,9 +414,4 @@ class ChatViewController: JSQMessagesViewController {
         typingRef.child(chatRoomId).updateChildValues([FUser.currentId() : typing])
     }
     
-    //MARK:  UITextViewDelegate
-    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        typingIndicatorStart()
-        return true
-    }
 }

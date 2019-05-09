@@ -10,11 +10,7 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    @IBAction func backToProfile(_ sender: Any) {
-        tabBarController?.selectedIndex = 0
-    }
+class SettingsVC: UITableViewController {
     
     var currentUser: FUser?
     var imagePicker: UIImagePickerController!
@@ -168,6 +164,10 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         }
     }
     
+    @IBAction func backToProfile(_ sender: Any) {
+        tabBarController?.selectedIndex = 0
+    }
+    
     func showLogoutView(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -193,18 +193,6 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     
         let login = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
         self.present(login, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            uploadPicture(img: image)
-        } else {
-            print("TAG: A valid image wasn't selected")
-        }
-        
-        imagePicker.dismiss(animated: true, completion: nil)
     }
     
     func showCameraLibraryOptions(){
@@ -266,4 +254,19 @@ class SettingsVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         self.showError ("Success!", message: "User Picture successfully updated.")
     }
     
+}
+
+extension SettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            uploadPicture(img: image)
+        } else {
+            print("TAG: A valid image wasn't selected")
+        }
+        
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 
-class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecentViewController: UIViewController {
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -37,66 +37,6 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc func backAction() {
         tabBarController?.selectedIndex = 0
-    }
-    
-    //MARK: UITableviewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return recents.count
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! RecentTableViewCell
-        
-        let recent = recents[indexPath.row]
-        
-        cell.bindData(recent: recent)
-        
-        return cell
-    }
-    
-    //MARK: UITableview Delegate
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        let recent = recents[indexPath.row]
-        recents.remove(at: indexPath.row)
-        deleteRecentItem(recentID: (recent[kRECENTID] as? String)!, vc: self)
-        tableView.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        let recent = recents[indexPath.row]
-        let postId = (recent[kPOSTID] as? String)!
-        let withUserUserId = (recent[kWITHUSERUSERID] as? String)!
-        let chatRoomId = (recent[kCHATROOMID] as? String)!
-        restartRecentChat(recent: recent, postId: postId)
-        
-        self.loadWithUser(withUserUserId: withUserUserId) {(withUser) in
-            
-            self.loadPost(postId: postId){ (post) in
-                
-                let chatVC = ChatViewController()
-                
-                chatVC.withUser = withUser
-                chatVC.currentUser = self.currentUser
-                chatVC.post = post
-                chatVC.chatRoomId = chatRoomId
-                
-                chatVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(chatVC, animated: true)
-            }
-        }
-        
     }
     
     func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
@@ -151,5 +91,71 @@ class RecentViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.tableView.reloadData()
             
         })
+    }
+}
+
+//MARK: UITableviewDataSource
+extension RecentViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return recents.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! RecentTableViewCell
+        
+        let recent = recents[indexPath.row]
+        
+        cell.bindData(recent: recent)
+        
+        return cell
+    }
+}
+
+//MARK: UITableview Delegate
+extension RecentViewController:  UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        let recent = recents[indexPath.row]
+        recents.remove(at: indexPath.row)
+        deleteRecentItem(recentID: (recent[kRECENTID] as? String)!, vc: self)
+        tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let recent = recents[indexPath.row]
+        let postId = (recent[kPOSTID] as? String)!
+        let withUserUserId = (recent[kWITHUSERUSERID] as? String)!
+        let chatRoomId = (recent[kCHATROOMID] as? String)!
+        restartRecentChat(recent: recent, postId: postId)
+        
+        self.loadWithUser(withUserUserId: withUserUserId) {(withUser) in
+            
+            self.loadPost(postId: postId){ (post) in
+                
+                let chatVC = ChatViewController()
+                
+                chatVC.withUser = withUser
+                chatVC.currentUser = self.currentUser
+                chatVC.post = post
+                chatVC.chatRoomId = chatRoomId
+                
+                chatVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(chatVC, animated: true)
+            }
+        }
+        
     }
 }

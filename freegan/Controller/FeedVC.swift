@@ -17,15 +17,6 @@ class FeedVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBAction func gotoPostVC(_ sender: AnyObject) {
-        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
-            showToast(message: "Current location needed to post an item!")
-            self.requestLocationPermission()
-            return
-        }
-        self.showCameraLibraryOptions()
-    }
-    
     var selectedIndexPath: IndexPath!
     
     //These variables are used to hold any updates to the safeAreaInsets
@@ -192,6 +183,15 @@ class FeedVC: UIViewController {
         }
     }
     
+    @IBAction func gotoPostVC(_ sender: AnyObject) {
+        guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
+            showToast(message: "Current location needed to post an item!")
+            self.requestLocationPermission()
+            return
+        }
+        self.showCameraLibraryOptions()
+    }
+    
     func requestLocation(){
         
         self.locationManager.requestWhenInUseAuthorization()
@@ -346,48 +346,7 @@ class FeedVC: UIViewController {
     }
 }
 
-extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if (kind == UICollectionView.elementKindSectionHeader) {
-            let headerView: UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
-            
-            return headerView
-        }
-        
-        return UICollectionReusableView()
-        
-    }
-    
-    //MARK: - SEARCH
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(searchText.isEmpty){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        updateUserLocation(location: location)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
-            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
-                showError("No Freegan!", message: "User location needed to see posts in the area")
-            }
-        }
-        
-    }
+extension FeedVC: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -395,19 +354,6 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.posts.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numberOfCell: CGFloat
-        if UIScreen.main.bounds.size.width > 700{
-            numberOfCell = 7.3
-        }else if UIScreen.main.bounds.size.width > 500{
-            numberOfCell = 5.3
-        }else{
-           numberOfCell = 3.3
-        }
-        let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
-        return CGSize(width: cellWidth, height: 180)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -418,35 +364,35 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
             .observe(.value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
+                snapshot in
                 
-                let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.posters[indexPath.row] = poster
-                var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
-                
-                if (!(poster.userImgUrl?.isEmpty)!){
-                    ref = Storage.storage().reference(forURL: poster.userImgUrl!)
+                if snapshot.exists() {
+                    
+                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    self.posters[indexPath.row] = poster
+                    var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
+                    
+                    if (!(poster.userImgUrl?.isEmpty)!){
+                        ref = Storage.storage().reference(forURL: poster.userImgUrl!)
+                    }
+                    
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                        if error != nil {
+                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                            
+                        } else {
+                            if let imgData = data {
+                                if let img = UIImage(data: imgData) {
+                                    self.posterImages[indexPath.row] = img
+                                    FeedVC.imageCache.setObject(img, forKey: poster.userImgUrl! as NSString)
+                                }
+                            }
+                            
+                        }
+                    })
                 }
                 
-                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                    if error != nil {
-                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                        
-                    } else {
-                        if let imgData = data {
-                            if let img = UIImage(data: imgData) {
-                                self.posterImages[indexPath.row] = img
-                                FeedVC.imageCache.setObject(img, forKey: poster.userImgUrl! as NSString)
-                            }
-                        }
-                        
-                    }
-                })
-            }
-            
-        })
+            })
         
         for i in self.posts[indexPath.row].imageUrl{
             
@@ -482,6 +428,34 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
         }
         
         return cell
+    }
+}
+
+extension FeedVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if (kind == UICollectionView.elementKindSectionHeader) {
+            let headerView: UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
+            
+            return headerView
+        }
+        
+        return UICollectionReusableView()
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let numberOfCell: CGFloat
+        if UIScreen.main.bounds.size.width > 700{
+            numberOfCell = 7.3
+        }else if UIScreen.main.bounds.size.width > 500{
+            numberOfCell = 5.3
+        }else{
+           numberOfCell = 3.3
+        }
+        let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
+        return CGSize(width: cellWidth, height: 180)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -565,6 +539,40 @@ extension FeedVC: UICollectionViewDelegate, UICollectionViewDataSource, UISearch
     
 }
 
+extension FeedVC: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        updateUserLocation(location: location)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
+            if (currentUser?.latitude == nil || currentUser?.longitude == nil){
+                showError("No Freegan!", message: "User location needed to see posts in the area")
+            }
+        }
+        
+    }
+}
+
+//MARK: - SEARCH
+extension FeedVC: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if(!(searchBar.text?.isEmpty)!){
+            //reload your data source if necessary
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText.isEmpty){
+            //reload your data source if necessary
+            self.collectionView?.reloadData()
+        }
+    }
+}
 
 extension FeedVC: PhotoPageContainerViewControllerDelegate {
     

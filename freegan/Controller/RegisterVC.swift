@@ -12,6 +12,7 @@ import SwiftKeychainWrapper
 import MobileCoreServices
 
 class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet weak var emailField: FancyField!
     @IBOutlet weak var pwdField: FancyField!
     @IBOutlet weak var userNameField: FancyField!
@@ -27,13 +28,6 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
-    }
-    
-    func completeSignIn(id: String) {
-        // Load User Info/Data
-        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
-        print("HAMMED: Data saved to keychain \(keychainResult)")
-        performSegue(withIdentifier: "goToFeed", sender: nil)
     }
     
     @IBAction func registerTapped(_ sender: Any) {
@@ -61,6 +55,13 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         let logIn = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
         self.present(logIn, animated: true, completion: nil)
     }
+    
+    func completeSignIn(id: String) {
+        // Load User Info/Data
+        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
+        print("HAMMED: Data saved to keychain \(keychainResult)")
+        performSegue(withIdentifier: "goToFeed", sender: nil)
+    }
 }
 
 extension UIViewController {
@@ -83,7 +84,6 @@ extension UIViewController {
             toastLabel.removeFromSuperview()
         })
     }
-    
 }
 
 var vSpinner : UIView?
@@ -110,7 +110,6 @@ extension UIViewController {
         }
     }
 }
-
 
 extension UIViewController {
     func showError(_ title: String, message: String) {

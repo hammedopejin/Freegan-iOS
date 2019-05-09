@@ -25,13 +25,7 @@ class LogInVC : UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnTap = false
     }
-    
-    func completeSignIn(id: String) {
-        // Load User Info/Data
-        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
-        print("HAMMED: Data saved to keychain \(keychainResult)")
-        performSegue(withIdentifier: "goToFeed", sender: nil)
-    }
+ 
     @IBAction func logInTapped(_ sender: Any) {
         if emailField.text == "" || pwdField.text == "" {
             self.showToast(message : "All text fields must be entered properly!")
@@ -52,12 +46,16 @@ class LogInVC : UIViewController {
         }
     }
     
-    
-    
     @IBAction func gotoLogin(_ sender: Any) {
         
         let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
         self.present(register, animated: true, completion: nil)
     }
  
+    func completeSignIn(id: String) {
+        // Load User Info/Data
+        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
+        print("HAMMED: Data saved to keychain \(keychainResult)")
+        performSegue(withIdentifier: "goToFeed", sender: nil)
+    }
 }

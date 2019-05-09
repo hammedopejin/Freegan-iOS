@@ -65,14 +65,6 @@ class ProfileVC: UIViewController{
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
     }
     
-    @objc func backActionWithPoster() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func backActionDefault() {
-        tabBarController?.selectedIndex = 0
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -185,6 +177,13 @@ class ProfileVC: UIViewController{
         }
     }
     
+    @objc func backActionWithPoster() {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func backActionDefault() {
+        tabBarController?.selectedIndex = 0
+    }
     
     func loadPosts(){
         self.posts.removeAll()
@@ -222,7 +221,39 @@ class ProfileVC: UIViewController{
     
 }
 
-extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProfileVC: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
+        
+        var j = 0
+        
+        for i in self.posts[indexPath.row].imageUrl{
+            
+            let ref = Storage.storage().reference(forURL: i)
+            
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    
+                } else {
+                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
+                    if let imgData = data {
+                        if let img = UIImage(data: imgData) {
+                            if (j == 0){
+                                cell.imageView.image = img
+                                FeedVC.imageCache.setObject(img, forKey: i as NSString)
+                            }
+                            self.postImages[indexPath.row][j] = img
+                            j += 1
+                        }
+                    }
+                }
+            })
+        }
+        
+        return cell
+    }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -262,21 +293,21 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
             guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
                 return headerView
             }
-         
+            
             let ref = Storage.storage().reference(forURL: imgUrl)
-                
+            
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 if error != nil {
                     print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                        
+                    
                 } else {
                     print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
-                                
+                            
                             headerView.profileImage.image = img
                             FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
-                                
+                            
                         }
                     }
                 }
@@ -288,7 +319,7 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         return UICollectionReusableView()
         
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -296,6 +327,9 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.posts.count
     }
+}
+
+extension ProfileVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfCell: CGFloat
@@ -308,39 +342,6 @@ extension ProfileVC: UICollectionViewDelegate, UICollectionViewDataSource, UICol
         }
         let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
         return CGSize(width: cellWidth, height: 180)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
-        
-        var j = 0
-        
-        for i in self.posts[indexPath.row].imageUrl{
-
-            let ref = Storage.storage().reference(forURL: i)
-
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-
-                } else {
-                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
-                            if (j == 0){
-                                cell.imageView.image = img
-                                FeedVC.imageCache.setObject(img, forKey: i as NSString)
-                            }
-                            self.postImages[indexPath.row][j] = img
-                            j += 1
-                        }
-                    }
-                }
-            })
-        }
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -24,6 +24,30 @@ class PhotoZoomViewController: UIViewController {
     var index: Int = 0
     var forSelf: Bool!
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.postImageView.image = self.postImage
+        
+        if(forSelf){
+            self.posterImageView.image = UIImage(named: "ic_settings_white_24dp")
+        } else {
+            self.posterImageView.image = self.posterImage
+        }
+        
+        postDescription.text = post!.description
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.hidesBarsOnTap = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        if (self.currentUser!.objectId == self.poster!.objectId){
+            self.chatButtonImage.isHidden = true
+        }
+    }
+    
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
         
@@ -70,29 +94,6 @@ class PhotoZoomViewController: UIViewController {
             vc.selectedIndex = 2
         }
         
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.postImageView.image = self.postImage
-        
-        if(forSelf){
-            self.posterImageView.image = UIImage(named: "ic_settings_white_24dp")
-        } else {
-            self.posterImageView.image = self.posterImage
-        }
-        
-        postDescription.text = post!.description
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.hidesBarsOnTap = true
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        if (self.currentUser!.objectId == self.poster!.objectId){
-            self.chatButtonImage.isHidden = true
-        }
     }
     
 }

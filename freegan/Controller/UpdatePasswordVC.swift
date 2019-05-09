@@ -13,7 +13,6 @@ class UpdatePasswordVC: UIViewController {
 
     @IBOutlet weak var updatePasswordText1: FancyField!
     
-    
     @IBOutlet weak var updatePasswordText2: FancyField!
     
     var user: User?
@@ -22,28 +21,6 @@ class UpdatePasswordVC: UIViewController {
         super.viewDidLoad()
         
         self.user = Auth.auth().currentUser
-        
-    }
-    
-    func updateUserPassword(_ password: String) {
-       
-        guard let user = self.user else {
-            return
-        }
-        self.showSpinner(onView: self.view)
-        
-        user.updatePassword(to: password) { (completion) in
-            if (completion != nil) {
-                self.removeSpinner()
-                self.showError("Error changing password!", message: completion!.localizedDescription)
-                print(completion.debugDescription)
-            } else {
-                self.removeSpinner()
-                
-                self.showAlert("Success!", message: "Password successfully updated.")
-                self.presentingViewController?.dismiss(animated: true, completion: nil)
-            }
-        }
         
     }
     
@@ -65,5 +42,26 @@ class UpdatePasswordVC: UIViewController {
     @IBAction func backToSettings(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
+    func updateUserPassword(_ password: String) {
+        
+        guard let user = self.user else {
+            return
+        }
+        self.showSpinner(onView: self.view)
+        
+        user.updatePassword(to: password) { (completion) in
+            if (completion != nil) {
+                self.removeSpinner()
+                self.showError("Error changing password!", message: completion!.localizedDescription)
+                print(completion.debugDescription)
+            } else {
+                self.removeSpinner()
+                
+                self.showAlert("Success!", message: "Password successfully updated.")
+                self.presentingViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+    }
 }
