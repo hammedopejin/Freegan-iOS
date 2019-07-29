@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Freegan App needs your current location to function properly!</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Freegan App needs your current location to function properly!</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Freegan App needs your current location to function properly!</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -26,17 +20,23 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>App needs access to your Camera</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App needs access to Photo Library</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>App needs access to Media Library</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>App needs access to Media Library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App needs access to your Camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Freegan App needs your current location to function properly!</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Freegan App needs your current location to function properly!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Freegan App needs your current location to function properly!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to Photo Library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -45,6 +45,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

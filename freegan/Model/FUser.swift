@@ -145,37 +145,5 @@ class FUser {
         firebase.child(kUSER).removeAllObservers()
         firebase.child(kRECENT).removeAllObservers()
     }
-    
-    
-    //MARK: Update current user funcs
-    
-    //func updateUser(withValues : [String : Any], withBlock: @escaping (_ success: Bool) -> Void) {
-    //
-    //
-    //    let currentUser = User.currentUser()!
-    //
-    //    let userObject = userDictionaryFrom(user: currentUser).mutableCopy() as! NSMutableDictionary
-    //
-    //    userObject.setValuesForKeys(withValues)
-    //
-    //    let ref = firebase.child(kUSER).child(User.currentId())
-    //
-    //    ref.updateChildValues(withValues, withCompletionBlock: {
-    //        error, ref in
-    //
-    //        if error != nil {
-    //            print("couldnt update user \(String(describing: error?.localizedDescription))")
-    //            withBlock(false)
-    //            return
-    //        }
-    //
-    //        //update current user
-    //        userDefaults.setValue(userObject, forKeyPath: kCURRENTUSER)
-    //        userDefaults.synchronize()
-    //
-    //        withBlock(true)
-    //
-    //    })
-    //}
    
 }
