@@ -191,7 +191,7 @@ class SettingsVC: UITableViewController {
         print("HAMMED: ID removed from keychain \(keychainResult)")
         try! Auth.auth().signOut()
     
-        let login = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
+        let login = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
         self.present(login, animated: true, completion: nil)
     }
     

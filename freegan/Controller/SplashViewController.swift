@@ -24,17 +24,10 @@ class SplashViewController: UIViewController {
             
         } else {
             
-            let registerVC = storyboard?.instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
+            let registerVC = UIStoryboard(name: "Register", bundle: Bundle.main).instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
             appDelegate.window?.rootViewController = registerVC
             
         }
-    }
-    
-    //MARK: Helper
-    
-    func dismissTab(_ tabController: UITabBarController) {
-        tabController.dismiss(animated: true, completion: nil)
-        print("Dismissed TabBarController")
     }
     
 }

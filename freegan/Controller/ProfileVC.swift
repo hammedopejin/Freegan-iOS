@@ -157,26 +157,6 @@ class ProfileVC: UIViewController{
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowPhotoPageView" {
-            let posters = Array(repeating: poster, count: posts.count)
-            
-            let nav = self.navigationController
-            let vc = segue.destination as! PhotoPageContainerViewController
-            nav?.delegate = vc.transitionController
-            vc.transitionController.fromDelegate = self
-            vc.transitionController.toDelegate = vc
-            vc.delegate = self
-            vc.currentIndex = self.selectedIndexPath.row
-            vc.posts = self.posts
-            vc.posters = posters as! [FUser]
-            vc.posterImages = self.posterImages
-            vc.postImages = self.postImages
-            vc.currentUser = self.currentUser
-            vc.forSelf = true
-        }
-    }
-    
     @objc func backActionWithPoster() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -346,7 +326,26 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedIndexPath = indexPath
-        self.performSegue(withIdentifier: "ShowPhotoPageView", sender: self)
+        
+        let photoPageContainerViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoPageContainerViewController") as! PhotoPageContainerViewController
+        
+        let posters = Array(repeating: poster, count: posts.count)
+        let nav = self.navigationController
+        
+        nav?.delegate = photoPageContainerViewController.transitionController
+        photoPageContainerViewController.transitionController.fromDelegate = self
+        photoPageContainerViewController.transitionController.toDelegate = photoPageContainerViewController
+        photoPageContainerViewController.delegate = self
+        photoPageContainerViewController.currentIndex = self.selectedIndexPath.row
+        photoPageContainerViewController.posts = self.posts
+        photoPageContainerViewController.posters = posters as! [FUser]
+        photoPageContainerViewController.posterImages = self.posterImages
+        photoPageContainerViewController.postImages = self.postImages
+        photoPageContainerViewController.currentUser = self.currentUser
+        photoPageContainerViewController.forSelf = true
+        
+        self.navigationController?.pushViewController(photoPageContainerViewController, animated: true)
+        
     }
     
     //This function prevents the collectionView from accessing a deallocated cell. In the event
