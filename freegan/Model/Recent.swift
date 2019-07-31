@@ -200,7 +200,7 @@ func deleteRecentItem(recentID: String, vc: UIViewController) {
     firebase.child(kRECENT).child(recentID).removeValue { (error, ref) in
         
         if error != nil {
-            vc.showError("Error deleting recent item!", message: "Couldnt delete recent item: \(error!.localizedDescription)")
+            vc.showError(title: "Error deleting recent item!", message: "Couldnt delete recent item: \(error!.localizedDescription)")
         }
     }
 }

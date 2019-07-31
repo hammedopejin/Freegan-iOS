@@ -140,7 +140,8 @@ class SettingsVC: UITableViewController {
             performSegue(withIdentifier: "gotoPassword", sender: nil)
         }
         if indexPath.section == 0 && indexPath.row == 4 {
-            //show Location VC
+            let locationVC = LocationVC()
+            self.show(locationVC, sender: self)
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -251,7 +252,7 @@ class SettingsVC: UITableViewController {
         
         firebase.child(kUSER).child(currentUser!.objectId).child(kUSERIMAGEURL).setValue(imgUrl)
         self.removeSpinner()
-        self.showError ("Success!", message: "User Picture successfully updated.")
+        self.showError (title: "Success!", message: "User Picture successfully updated.")
     }
     
 }

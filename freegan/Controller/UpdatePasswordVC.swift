@@ -30,7 +30,7 @@ class UpdatePasswordVC: UIViewController {
         }
         
         if password1 != password2 {
-            self.showError("Error!", message: "Enter new password twice correctly")
+            self.showError(title: "Error!", message: "Enter new password twice correctly")
             return
         }
         
@@ -53,12 +53,12 @@ class UpdatePasswordVC: UIViewController {
         user.updatePassword(to: password) { (completion) in
             if (completion != nil) {
                 self.removeSpinner()
-                self.showError("Error changing password!", message: completion!.localizedDescription)
+                self.showError(title: "Error changing password!", message: completion!.localizedDescription)
                 print(completion.debugDescription)
             } else {
                 self.removeSpinner()
                 
-                self.showAlert("Success!", message: "Password successfully updated.")
+                self.showAlert(title: "Success!", message: "Password successfully updated.")
                 self.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         }

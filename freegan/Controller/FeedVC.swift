@@ -264,12 +264,6 @@ class FeedVC: UIViewController {
         }
     }
     
-    func updateUserLocation(location: CLLocationCoordinate2D){
-        
-        let locationData: [AnyHashable : Any] = [kLATITUDE : location.latitude, kLONGITUDE : location.longitude]
-        firebase.child(kUSER).child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).updateChildValues(locationData)
-    }
-    
     func showCameraLibraryOptions(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -298,7 +292,7 @@ class FeedVC: UIViewController {
         
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
             if(self.askLocationFlag){
-                showError("No Freegan!", message: "User location needed to see posts in the area")
+                showError(title: "No Freegan!", message: "User location needed to see posts in the area")
             }
             return
         }
@@ -549,7 +543,7 @@ extension FeedVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.restricted){
             if (currentUser?.latitude == nil || currentUser?.longitude == nil){
-                showError("No Freegan!", message: "User location needed to see posts in the area")
+                showError(title: "No Freegan!", message: "User location needed to see posts in the area")
             }
         }
         

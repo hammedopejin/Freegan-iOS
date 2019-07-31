@@ -48,7 +48,7 @@ class UpdateEmailVC: UIViewController {
         user.updateEmail(to: email) { (completion) in
             if (completion != nil) {
                 self.removeSpinner()
-                self.showError("Error changing email address!", message: completion!.localizedDescription)
+                self.showError(title: "Error changing email address!", message: completion!.localizedDescription)
                 print(completion.debugDescription)
             } else {
                 self.removeSpinner()
@@ -64,7 +64,7 @@ class UpdateEmailVC: UIViewController {
                 
                 values.removeAll()
                 
-                self.showAlert("Success!", message: "Username successfully updated.")
+                self.showAlert(title: "Success!", message: "Username successfully updated.")
                 self.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         }

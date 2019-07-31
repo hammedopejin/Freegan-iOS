@@ -25,7 +25,7 @@ class OutgoingMessage {
         
         reference.setValue(item) { (error, ref) in
             if error != nil {
-                vc.showError("Error sending message!", message: "Outgoing message error: \(String(describing: error?.localizedDescription))")
+                vc.showError(title: "Error sending message!", message: "Outgoing message error: \(String(describing: error?.localizedDescription))")
             }
         }
         updateRecents(chatRoomId: chatRoomID, lastMessage: (item[kMESSAGE] as? String)!)

@@ -313,7 +313,7 @@ class EditPostVC: UIViewController {
         self.toDeletePostDownloadURLs!.removeAll()
         self.removeSpinner()
         
-        self.showAlert("Success!", message: "Post successfully updated.")
+        self.showAlert(title: "Success!", message: "Post successfully updated.")
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     

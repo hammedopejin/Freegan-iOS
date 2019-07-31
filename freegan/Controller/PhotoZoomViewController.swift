@@ -86,12 +86,12 @@ class PhotoZoomViewController: UIViewController {
             
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
             
-            let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
+            let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
             profileVC.poster = poster
             profileVC.hidesBottomBarWhenPushed = true
             
             self.navigationController?.present(vc, animated: false, completion: nil)
-            vc.selectedIndex = 2
+            vc.selectedIndex = 1
         }
         
     }
