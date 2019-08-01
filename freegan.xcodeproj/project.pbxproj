@@ -32,6 +32,7 @@
 		0F1A144E22EF8B6900A1967D /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F1A144D22EF8B6900A1967D /* Profile.storyboard */; };
 		0F1A145022EF8DB200A1967D /* Recent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F1A144F22EF8DB200A1967D /* Recent.storyboard */; };
 		0F1A145222EF8F7E00A1967D /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F1A145122EF8F7E00A1967D /* Settings.storyboard */; };
+		0F1A145422F121CC00A1967D /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A145322F121CC00A1967D /* LocationVC.swift */; };
 		0F2D2D0A223C689600F55867 /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */; };
 		0F2D2D0C22402B6A00F55867 /* RoundEdgeImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */; };
 		0F2D2D0E2241629E00F55867 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2D2D0D2241629E00F55867 /* CircleView.swift */; };
@@ -104,6 +105,7 @@
 		0F1A144D22EF8B6900A1967D /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		0F1A144F22EF8DB200A1967D /* Recent.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recent.storyboard; sourceTree = "<group>"; };
 		0F1A145122EF8F7E00A1967D /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		0F1A145322F121CC00A1967D /* LocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
 		0F2D2D09223C689600F55867 /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
 		0F2D2D0B22402B6A00F55867 /* RoundEdgeImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundEdgeImageView.swift; sourceTree = "<group>"; };
 		0F2D2D0D2241629E00F55867 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */,
+				0F1A145322F121CC00A1967D /* LocationVC.swift */,
 				0FE48C582266441500D3D1EA /* ProfileVC.swift */,
 				0FE48C562259446600D3D1EA /* RecentViewController.swift */,
 				0F2D2D0F2241EB8D00F55867 /* PostVC.swift */,
@@ -629,6 +632,7 @@
 				0FE48C652273CA4600D3D1EA /* UpdateUsernameVC.swift in Sources */,
 				0F2D2D172246D73A00F55867 /* OutgoingMessage.swift in Sources */,
 				0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */,
+				0F1A145422F121CC00A1967D /* LocationVC.swift in Sources */,
 				0F1A144722EF769600A1967D /* ViewController+Extension.swift in Sources */,
 				0F1A144922EF793000A1967D /* SplashViewController.swift in Sources */,
 				0F181788225284B000C2C26A /* Camera.swift in Sources */,

@@ -9,12 +9,14 @@
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
+import CoreLocation
 
 class SettingsVC: UITableViewController {
     
     var currentUser: FUser?
     var imagePicker: UIImagePickerController!
     var cam: Camera?
+    var locationAddress = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,12 @@ class SettingsVC: UITableViewController {
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                if let lat = self.currentUser?.latitude, let lon = self.currentUser?.longitude {
+                    self.getAddressFromLatLong(latitude: lat, with: lon) { [unowned self] address in
+                        self.locationAddress = address ?? ""
+                        self.tableView.reloadData()
+                    }
+                }
                
             }
             
@@ -80,7 +88,8 @@ class SettingsVC: UITableViewController {
         if indexPath.row == 4 && indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath)
             cell.textLabel?.text = "Location"
-            cell.detailTextLabel?.text = "Irvine, CA 92620"
+            cell.detailTextLabel?.text = locationAddress
+            
             return cell
         }
         
@@ -253,6 +262,44 @@ class SettingsVC: UITableViewController {
         firebase.child(kUSER).child(currentUser!.objectId).child(kUSERIMAGEURL).setValue(imgUrl)
         self.removeSpinner()
         self.showError (title: "Success!", message: "User Picture successfully updated.")
+    }
+    
+    func getAddressFromLatLong(latitude: Double, with longitude: Double, completion: @escaping (String?) -> Void) {
+        
+        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
+        let lat: Double = Double("\(latitude)")!
+        let lon: Double = Double("\(longitude)")!
+        let ceo: CLGeocoder = CLGeocoder()
+        center.latitude = lat
+        center.longitude = lon
+        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
+        var addressString : String = ""
+        
+        ceo.reverseGeocodeLocation(loc, completionHandler:
+            {(placemarks, error) in
+                if (error != nil)
+                {
+                    print("reverse geodcode fail: \(error!.localizedDescription)")
+                    completion(nil)
+                }
+                let pm = placemarks! as [CLPlacemark]
+                
+                if pm.count > 0 {
+                    let pm = placemarks![0]
+                    
+                    if pm.locality != nil {
+                        addressString = addressString + pm.locality! + ", "
+                    }
+                    if pm.administrativeArea != nil {
+                        addressString = addressString + pm.administrativeArea! + " "
+                    }
+                    if pm.postalCode != nil {
+                        addressString = addressString + pm.postalCode! + " "
+                    }
+                    completion(addressString)
+                }
+        })
+        
     }
     
 }
