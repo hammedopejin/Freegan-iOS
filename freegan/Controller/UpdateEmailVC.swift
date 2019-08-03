@@ -18,34 +18,34 @@ class UpdateEmailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.user = Auth.auth().currentUser
+        user = Auth.auth().currentUser
         
-        if let user = self.user {
-            self.updateEmailText.text = user.email
-            self.updateEmailText.sizeToFit()
+        if let user = user {
+            updateEmailText.text = user.email
+            updateEmailText.sizeToFit()
         }
     }
     
     @IBAction func updateEmailButton(_ sender: Any) {
-        guard let email = self.updateEmailText.text else {
+        guard let email = updateEmailText.text else {
             return
         }
         if email != "", email.count > 0 {
-            self.updateUserEmail(email)
+            updateUserEmail(email)
         }
     }
     
     @IBAction func backToSettings(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func updateUserEmail(_ email: String) {
         
-        guard let user = self.user, user.email != self.updateEmailText.text else {
+        guard let user = user, user.email != updateEmailText.text else {
             return
         }
-        self.showSpinner(onView: self.view)
-        user.updateEmail(to: email) { (completion) in
+        showSpinner(onView: view)
+        user.updateEmail(to: email) { [unowned self] (completion) in
             if (completion != nil) {
                 self.removeSpinner()
                 self.showError(title: "Error changing email address!", message: completion!.localizedDescription)

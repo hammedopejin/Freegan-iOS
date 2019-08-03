@@ -18,33 +18,33 @@ class UpdateUsernameVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let user = self.user {
-            self.usernameTextField.text = user.userName
-            self.usernameTextField.sizeToFit()
+        if let user = user {
+            usernameTextField.text = user.userName
+            usernameTextField.sizeToFit()
         }
     }
     
     @IBAction func updateUsernameButton(_ sender: Any) {
-        if self.usernameTextField.text == self.user?.userName {
+        if usernameTextField.text == user?.userName {
             return
         }
-        if self.usernameTextField.text != "", (self.usernameTextField.text?.count)! > 0 {
-            self.showSpinner(onView: self.view)
-            self.usernameTextField.isHidden = true
-            self.updateUsernameButtonView.isHidden = true
+        if usernameTextField.text != "", (usernameTextField.text?.count)! > 0 {
+            showSpinner(onView: view)
+            usernameTextField.isHidden = true
+            updateUsernameButtonView.isHidden = true
             
-            firebase.child(kUSER).child(user!.objectId).child(kUSERNAME).setValue(self.usernameTextField.text)
+            firebase.child(kUSER).child(user!.objectId).child(kUSERNAME).setValue(usernameTextField.text)
             
-            self.removeSpinner()
+            removeSpinner()
             
-            self.showAlert(title: "Success!", message: "Username successfully updated.")
+            showAlert(title: "Success!", message: "Username successfully updated.")
             self.presentingViewController?.dismiss(animated: true, completion: nil)
             
         }
     }
     
     @IBAction func backToSettings(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
  
 }

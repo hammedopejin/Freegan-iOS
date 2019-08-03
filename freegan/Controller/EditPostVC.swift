@@ -180,15 +180,15 @@ class EditPostVC: UIViewController {
     func showCameraLibraryOptions(deleteFlag: Bool, index: Int){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
+        let camera = UIAlertAction(title: "Camera", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)
         }
         
-        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
+        let library = UIAlertAction(title: "Photo Library", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: self.imagePicker)
         }
         
-        let deletelAction = UIAlertAction(title: "Delete", style: .destructive) { (alert: UIAlertAction!) in
+        let deletelAction = UIAlertAction(title: "Delete", style: .destructive) { [unowned self] (alert: UIAlertAction!) in
             self.deleteImage(index: index)
         }
         
@@ -343,6 +343,6 @@ extension EditPostVC: UIImagePickerControllerDelegate, UINavigationControllerDel
             print("TAG: A valid image wasn't selected")
         }
         
-        imagePicker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
 }

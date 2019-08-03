@@ -41,30 +41,30 @@ class PhotoPageContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
         
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
-        self.view.addGestureRecognizer(swipeUp)
+        view.addGestureRecognizer(swipeUp)
         
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
-        self.view.addGestureRecognizer(swipeDown)
+        view.addGestureRecognizer(swipeDown)
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
-        vc.index = self.currentIndex
-        vc.postImage = self.postImages[self.currentIndex][0]
-        vc.posterImage = self.posterImages[self.currentIndex]
-        vc.post = self.posts[self.currentIndex]
-        vc.poster = self.posters[self.currentIndex]
-        vc.currentUser = self.currentUser
-        vc.forSelf = self.forSelf
+        vc.index = currentIndex
+        vc.postImage = postImages[currentIndex][0]
+        vc.posterImage = posterImages[currentIndex]
+        vc.post = posts[currentIndex]
+        vc.poster = posters[currentIndex]
+        vc.currentUser = currentUser
+        vc.forSelf = forSelf
         
         let viewControllers = [
             vc
         ]
-        self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
+        pageViewController.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,38 +80,36 @@ class PhotoPageContainerViewController: UIViewController {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
 
-                if self.vertIndex > 0 && self.posts[self.currentIndex].imageUrl.count > 1{
-                    self.vertIndex -= 1
-                    print(self.vertIndex)
-                    vc.postImage = self.postImages[self.currentIndex][self.vertIndex]
-                    vc.posterImage = self.posterImages[self.currentIndex]
-                    vc.post = self.posts[self.currentIndex]
-                    vc.poster = self.posters[self.currentIndex]
-                    vc.currentUser = self.currentUser
-                    vc.forSelf = self.forSelf
-                    vc.index = self.currentIndex
+                if vertIndex > 0 && posts[self.currentIndex].imageUrl.count > 1{
+                    vertIndex -= 1
+                    vc.postImage = postImages[currentIndex][vertIndex]
+                    vc.posterImage = posterImages[currentIndex]
+                    vc.post = posts[currentIndex]
+                    vc.poster = posters[currentIndex]
+                    vc.currentUser = currentUser
+                    vc.forSelf = forSelf
+                    vc.index = currentIndex
                     let viewControllers = [
                         vc
                     ]
-                    self.pageViewController.setViewControllers(viewControllers, direction: .reverse, animated: false, completion: nil)
+                    pageViewController.setViewControllers(viewControllers, direction: .reverse, animated: false, completion: nil)
                 }
                 
             case UISwipeGestureRecognizer.Direction.up:
                 
-                if self.posts[self.currentIndex].imageUrl.count > self.vertIndex + 1 && self.vertIndex < 5{
-                    self.vertIndex += 1
-                    print(self.vertIndex)
-                    vc.postImage = self.postImages[self.currentIndex][self.vertIndex]
-                    vc.posterImage = self.posterImages[self.currentIndex]
-                    vc.post = self.posts[self.currentIndex]
-                    vc.poster = self.posters[self.currentIndex]
-                    vc.currentUser = self.currentUser
-                    vc.forSelf = self.forSelf
-                    vc.index = self.currentIndex
+                if posts[currentIndex].imageUrl.count > vertIndex + 1 && vertIndex < 5{
+                    vertIndex += 1
+                    vc.postImage = postImages[currentIndex][vertIndex]
+                    vc.posterImage = posterImages[currentIndex]
+                    vc.post = posts[currentIndex]
+                    vc.poster = posters[currentIndex]
+                    vc.currentUser = currentUser
+                    vc.forSelf = forSelf
+                    vc.index = currentIndex
                     let viewControllers = [
                         vc
                     ]
-                    self.pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
+                    pageViewController.setViewControllers(viewControllers, direction: .forward, animated: false, completion: nil)
                 }
 
             default:
@@ -131,33 +129,31 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.postImage = self.postImages[self.currentIndex - 1][0]
-        vc.posterImage = self.posterImages[self.currentIndex - 1]
-        vc.post = self.posts[self.currentIndex - 1]
-        vc.poster = self.posters[self.currentIndex - 1]
-        vc.currentUser = self.currentUser
-        vc.forSelf = self.forSelf
+        vc.postImage = postImages[currentIndex - 1][0]
+        vc.posterImage = posterImages[currentIndex - 1]
+        vc.post = posts[currentIndex - 1]
+        vc.poster = posters[currentIndex - 1]
+        vc.currentUser = currentUser
+        vc.forSelf = forSelf
         vc.index = currentIndex - 1
-        print("current index: " + String(self.currentIndex))
         return vc
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        if currentIndex == (self.posts.count - 1) {
+        if currentIndex == (posts.count - 1) {
             return nil
         }
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(PhotoZoomViewController.self)") as! PhotoZoomViewController
         
-        vc.postImage = self.postImages[self.currentIndex + 1][0]
-        vc.posterImage = self.posterImages[self.currentIndex + 1]
-        vc.post = self.posts[self.currentIndex + 1]
-        vc.poster = self.posters[self.currentIndex + 1]
-        vc.currentUser = self.currentUser
-        vc.forSelf = self.forSelf
+        vc.postImage = postImages[currentIndex + 1][0]
+        vc.posterImage = posterImages[currentIndex + 1]
+        vc.post = posts[currentIndex + 1]
+        vc.poster = posters[currentIndex + 1]
+        vc.currentUser = currentUser
+        vc.forSelf = forSelf
         vc.index = currentIndex + 1
-        print("current index: " + String(self.currentIndex))
         return vc
     }
     
@@ -167,17 +163,17 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
             return
         }
         
-        self.nextIndex = nextVC.index
+        nextIndex = nextVC.index
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        if (completed && self.nextIndex != nil) {            
-            self.currentIndex = self.nextIndex!
-            self.delegate?.containerViewController(self, indexDidUpdate: self.currentIndex)
+        if (completed && nextIndex != nil) {
+            currentIndex = nextIndex!
+            delegate?.containerViewController(self, indexDidUpdate: currentIndex)
         }
         
-        self.nextIndex = nil
+        nextIndex = nil
     }
     
 }
@@ -191,10 +187,10 @@ extension PhotoPageContainerViewController: ZoomAnimatorDelegate {
     }
     
     func referenceImageView(for zoomAnimator: ZoomAnimator) -> UIImageView? {
-        return self.currentViewController.postImageView
+        return currentViewController.postImageView
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
-        return self.currentViewController.postImageView.convert(self.currentViewController.view.frame, to: self.currentViewController.postImageView)
+        return currentViewController.postImageView.convert(currentViewController.view.frame, to: currentViewController.postImageView)
     }
 }

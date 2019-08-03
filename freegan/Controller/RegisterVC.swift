@@ -37,11 +37,10 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         }
         if let email = emailField.text, let pwd = pwdField.text, let userName = userNameField.text {
             
-            Auth.auth().createUser(withEmail: email, password: pwd, completion: { (user, error) in
+            Auth.auth().createUser(withEmail: email, password: pwd, completion: { [unowned self] (user, error) in
                 if error != nil {
                     self.showToast(message : "Registration failed, invalid credentials")
                 } else {
-                    print("HAMMED: Successfully authenticated with Firebase")
                     if let user = user {
                         FUser.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
                         self.completeSignIn(id: user.user.uid)
@@ -57,9 +56,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     func completeSignIn(id: String) {
-        // Load User Info/Data
         let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
-        print("HAMMED: Data saved to keychain \(keychainResult)")
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
 }

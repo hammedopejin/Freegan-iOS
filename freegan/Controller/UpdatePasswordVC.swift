@@ -20,37 +20,37 @@ class UpdatePasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.user = Auth.auth().currentUser
+        user = Auth.auth().currentUser
         
     }
     
     @IBAction func updatePasswordButton(_ sender: Any) {
-        guard let password1 = self.updatePasswordText1.text, let password2 = self.updatePasswordText2.text else {
+        guard let password1 = updatePasswordText1.text, let password2 = updatePasswordText2.text else {
             return
         }
         
         if password1 != password2 {
-            self.showError(title: "Error!", message: "Enter new password twice correctly")
+            showError(title: "Error!", message: "Enter new password twice correctly")
             return
         }
         
         if password1 != "", password1.count > 0 {
-            self.updateUserPassword(password1)
+            updateUserPassword(password1)
         }
     }
     
     @IBAction func backToSettings(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func updateUserPassword(_ password: String) {
         
-        guard let user = self.user else {
+        guard let user = user else {
             return
         }
-        self.showSpinner(onView: self.view)
+        showSpinner(onView: view)
         
-        user.updatePassword(to: password) { (completion) in
+        user.updatePassword(to: password) { [unowned self] (completion) in
             if (completion != nil) {
                 self.removeSpinner()
                 self.showError(title: "Error changing password!", message: completion!.localizedDescription)

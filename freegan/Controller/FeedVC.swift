@@ -41,7 +41,7 @@ class FeedVC: UIViewController {
     var askLocationFlag = false
     let PAGE_LOAD_SIZE = 10
     let GEOGRAPHIC_RADIUS = 50.0
-    var totalLoadSize = 0;
+    var totalLoadSize = 0
   
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var profileImgUrl: String!
@@ -50,16 +50,25 @@ class FeedVC: UIViewController {
     var postVC: PostVC?
     
     let locationManager = CLLocationManager()
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createSearch()
+        setBar()
+        
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.requestLocation()
+                if (self.currentUser?.latitude == nil || self.currentUser?.longitude == nil) {
+                    self.requestLocation()
+                } else {
+                    self.checkPosts()
+                }
+                
             }
             
         })
@@ -133,7 +142,7 @@ class FeedVC: UIViewController {
             //animate the frame transition to the new orientation
             if self.viewIfLoaded?.window != nil {
                 
-                coordinator.animate(alongsideTransition: { _ in
+                coordinator.animate(alongsideTransition: { [unowned self] _ in
                     
                     //This needs to be called inside viewWillTransition() instead of viewWillLayoutSubviews()
                     //for devices running iOS 10.0 and earlier otherwise the frames for the view and the
@@ -141,7 +150,7 @@ class FeedVC: UIViewController {
                     self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
                     self.collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
                     
-                }, completion: { _ in
+                }, completion: { [unowned self] _ in
                     
                     //Invalidate the collectionViewLayout
                     self.collectionView.collectionViewLayout.invalidateLayout()
@@ -192,7 +201,28 @@ class FeedVC: UIViewController {
         self.showCameraLibraryOptions()
     }
     
-    func requestLocation(){
+    func createSearch() {
+        searchController.searchBar.placeholder = "Search"
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.tintColor = .red
+        searchController.searchBar.barStyle = .default
+        searchController.searchBar.backgroundColor = .init(red: 73/255, green: 167/255, blue: 151/255, alpha: 1.0)
+        definesPresentationContext = true
+        navigationItem.titleView = searchController.searchBar
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func setBar() {
+        
+        let logoButton = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: nil)
+        logoButton.setBackgroundImage(resizeImage(image: UIImage(named: "freegan_logo_transparent")!, targetSize: CGSize(width: 60.0, height: 60.0)), for: .normal, barMetrics: .default)
+        navigationItem.leftBarButtonItems = [logoButton]
+    }
+    
+    func requestLocation() {
         
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -291,24 +321,24 @@ class FeedVC: UIViewController {
     func checkPosts(){
         
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
-            if(self.askLocationFlag){
+            if(askLocationFlag){
                 showError(title: "No Freegan!", message: "User location needed to see posts in the area")
             }
             return
         }
         
         let geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
-        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: self.GEOGRAPHIC_RADIUS)
+        let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: GEOGRAPHIC_RADIUS)
         
         self.totalLoadSize = 0
         self.postIds.removeAll()
         self.posts.removeAll()
         
-        query.observe(.keyEntered, with: { key, location in
+        query.observe(.keyEntered, with: { [unowned self] key, location in
             self.postIds.append(key)
         })
         
-        query.observeReady {
+        query.observeReady { 
             if (self.postIds.count > 0) {
                 if (self.PAGE_LOAD_SIZE < self.postIds.count) {
                     self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: 0);
@@ -358,7 +388,7 @@ extension FeedVC: UICollectionViewDataSource {
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
             .observe(.value, with: {
-                snapshot in
+                [unowned self] snapshot in
                 
                 if snapshot.exists() {
                     
@@ -370,7 +400,7 @@ extension FeedVC: UICollectionViewDataSource {
                         ref = Storage.storage().reference(forURL: poster.userImgUrl!)
                     }
                     
-                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
                         if error != nil {
                             print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                             
@@ -392,7 +422,7 @@ extension FeedVC: UICollectionViewDataSource {
             
             let ref = Storage.storage().reference(forURL: i)
             
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
                 if error != nil {
                     print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                     
@@ -427,25 +457,13 @@ extension FeedVC: UICollectionViewDataSource {
 
 extension FeedVC: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if (kind == UICollectionView.elementKindSectionHeader) {
-            let headerView: UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
-            
-            return headerView
-        }
-        
-        return UICollectionReusableView()
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfCell: CGFloat
         if UIScreen.main.bounds.size.width > 700{
             numberOfCell = 7.3
-        }else if UIScreen.main.bounds.size.width > 500{
+        } else if UIScreen.main.bounds.size.width > 500{
             numberOfCell = 5.3
-        }else{
+        } else {
            numberOfCell = 3.3
         }
         let cellWidth = UIScreen.main.bounds.size.width / numberOfCell
@@ -453,8 +471,8 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedIndexPath = indexPath
-        self.performSegue(withIdentifier: "ShowPhotoPageView", sender: self)
+        selectedIndexPath = indexPath
+        performSegue(withIdentifier: "ShowPhotoPageView", sender: self)
     }
     
     //This function prevents the collectionView from accessing a deallocated cell. In the event
@@ -551,28 +569,23 @@ extension FeedVC: CLLocationManagerDelegate {
 }
 
 //MARK: - SEARCH
-extension FeedVC: UISearchBarDelegate {
 
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if(!(searchBar.text?.isEmpty)!){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
-        }
-    }
+extension FeedVC: UISearchResultsUpdating {
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if(searchText.isEmpty){
-            //reload your data source if necessary
-            self.collectionView?.reloadData()
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        guard let search = searchController.searchBar.text else {
+            return
         }
+        collectionView?.reloadData()
     }
 }
 
 extension FeedVC: PhotoPageContainerViewControllerDelegate {
     
     func containerViewController(_ containerViewController: PhotoPageContainerViewController, indexDidUpdate currentIndex: Int) {
-        self.selectedIndexPath = IndexPath(row: currentIndex, section: 0)
-        self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+        selectedIndexPath = IndexPath(row: currentIndex, section: 0)
+        collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
     }
 }
 
@@ -581,37 +594,38 @@ extension FeedVC: ZoomAnimatorDelegate {
     func transitionWillStartWith(zoomAnimator: ZoomAnimator) {}
     
     func transitionDidEndWith(zoomAnimator: ZoomAnimator) {
-        let cell = self.collectionView.cellForItem(at: self.selectedIndexPath) as! PhotoCollectionViewCell
+        let cell = collectionView.cellForItem(at: self.selectedIndexPath) as! PhotoCollectionViewCell
         
-        let cellFrame = self.collectionView.convert(cell.frame, to: self.view)
+        let cellFrame = collectionView.convert(cell.frame, to: self.view)
         
-        if cellFrame.minY < self.collectionView.contentInset.top {
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .top, animated: false)
-        } else if cellFrame.maxY > self.view.frame.height - self.collectionView.contentInset.bottom {
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .bottom, animated: false)
+        if cellFrame.minY < collectionView.contentInset.top {
+            collectionView.scrollToItem(at: self.selectedIndexPath, at: .top, animated: false)
+        } else if cellFrame.maxY > self.view.frame.height - collectionView.contentInset.bottom {
+            collectionView.scrollToItem(at: selectedIndexPath, at: .bottom, animated: false)
         }
     }
     
     func referenceImageView(for zoomAnimator: ZoomAnimator) -> UIImageView? {
         
         //Get a guarded reference to the cell's UIImageView
-        let referenceImageView = getImageViewFromCollectionViewCell(for: self.selectedIndexPath)
+        let referenceImageView = getImageViewFromCollectionViewCell(for: selectedIndexPath)
         
         return referenceImageView
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
         
-        self.view.layoutIfNeeded()
-        self.collectionView.layoutIfNeeded()
+        view.layoutIfNeeded()
+        collectionView.layoutIfNeeded()
         
         //Get a guarded reference to the cell's frame
-        let unconvertedFrame = getFrameFromCollectionViewCell(for: self.selectedIndexPath)
+        let unconvertedFrame = getFrameFromCollectionViewCell(for: selectedIndexPath)
         
-        let cellFrame = self.collectionView.convert(unconvertedFrame, to: self.view)
+        let cellFrame = collectionView.convert(unconvertedFrame, to: self.view)
         
-        if cellFrame.minY < self.collectionView.contentInset.top {
-            return CGRect(x: cellFrame.minX, y: self.collectionView.contentInset.top, width: cellFrame.width, height: cellFrame.height - (self.collectionView.contentInset.top - cellFrame.minY))
+        if cellFrame.minY < collectionView.contentInset.top {
+            return CGRect(x: cellFrame.minX, y: collectionView.contentInset.top,
+                          width: cellFrame.width, height: cellFrame.height - (collectionView.contentInset.top - cellFrame.minY))
         }
         return cellFrame
     }

@@ -17,6 +17,7 @@ class SettingsVC: UITableViewController {
     var imagePicker: UIImagePickerController!
     var cam: Camera?
     var locationAddress = ""
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +26,13 @@ class SettingsVC: UITableViewController {
         cam = Camera(delegate_: self)
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                 if let lat = self.currentUser?.latitude, let lon = self.currentUser?.longitude {
-                    self.getAddressFromLatLong(latitude: lat, with: lon) { [unowned self] address in
+                    self.getAddressFromLatLong(latitude: lat, with: lon) { [unowned self] address, location in
+                        self.currentLocation = location
                         self.locationAddress = address ?? ""
                         self.tableView.reloadData()
                     }
@@ -45,7 +47,7 @@ class SettingsVC: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "gotoUsername" {
             let vc = segue.destination as! UpdateUsernameVC
-            vc.user = self.currentUser
+            vc.user = currentUser
         }
     }
     
@@ -150,6 +152,7 @@ class SettingsVC: UITableViewController {
         }
         if indexPath.section == 0 && indexPath.row == 4 {
             let locationVC = LocationVC()
+            locationVC.currentLocation = currentLocation
             self.show(locationVC, sender: self)
         }
         
@@ -181,7 +184,7 @@ class SettingsVC: UITableViewController {
     func showLogoutView(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let logOut = UIAlertAction(title: "Log Out", style: .destructive){ (alert: UIAlertAction!) in
+        let logOut = UIAlertAction(title: "Log Out", style: .destructive){ [unowned self] (alert: UIAlertAction!) in
             self.logOut()
         }
         
@@ -192,7 +195,7 @@ class SettingsVC: UITableViewController {
         optionMenu.addAction(logOut)
         optionMenu.addAction(cancelAction)
         
-        self.present(optionMenu, animated: true, completion: nil)
+        present(optionMenu, animated: true, completion: nil)
     }
     
     func logOut(){
@@ -202,17 +205,17 @@ class SettingsVC: UITableViewController {
         try! Auth.auth().signOut()
     
         let login = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
-        self.present(login, animated: true, completion: nil)
+        present(login, animated: true, completion: nil)
     }
     
     func showCameraLibraryOptions(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
+        let camera = UIAlertAction(title: "Camera", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)
         }
         
-        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
+        let library = UIAlertAction(title: "Photo Library", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: self.imagePicker)
         }
        
@@ -223,12 +226,12 @@ class SettingsVC: UITableViewController {
         optionMenu.addAction(library)
         optionMenu.addAction(cancelAction)
         
-        self.present(optionMenu, animated: true, completion: nil)
+        present(optionMenu, animated: true, completion: nil)
     }
     
     func uploadPicture(img: UIImage) {
         
-        self.showSpinner(onView: self.view)
+        showSpinner(onView: view)
         
         if let imgData = img.jpegData(compressionQuality: 0.2) {
             
@@ -239,8 +242,8 @@ class SettingsVC: UITableViewController {
             
             let ref = DataService.ds.REF_USER_IMAGES.child(imgUid)
             
-            let _ = ref.putData(imgData, metadata: metadata) { (metadata, error) in
-                ref.downloadURL { (url, error) in
+            let _ = ref.putData(imgData, metadata: metadata) { [unowned self] (metadata, error) in
+                ref.downloadURL { [unowned self] (url, error) in
                     guard let downloadURL = url else {
                         
                         return
@@ -252,19 +255,19 @@ class SettingsVC: UITableViewController {
     }
     
     func postPictureToFirebase(imgUrl: String) {
-        if(!(self.currentUser?.userImgUrl?.isEmpty)!){
-            if let imgUrl = self.currentUser?.userImgUrl {
+        if(!(currentUser?.userImgUrl?.isEmpty)!){
+            if let imgUrl = currentUser?.userImgUrl {
                 let toReplace = storage.reference(forURL: imgUrl)
                 toReplace.delete(completion: nil)
             }
         }
         
         firebase.child(kUSER).child(currentUser!.objectId).child(kUSERIMAGEURL).setValue(imgUrl)
-        self.removeSpinner()
-        self.showError (title: "Success!", message: "User Picture successfully updated.")
+        removeSpinner()
+        showError (title: "Success!", message: "User Picture successfully updated.")
     }
     
-    func getAddressFromLatLong(latitude: Double, with longitude: Double, completion: @escaping (String?) -> Void) {
+    func getAddressFromLatLong(latitude: Double, with longitude: Double, completion: @escaping (String?, CLLocation?) -> Void) {
         
         var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
         let lat: Double = Double("\(latitude)")!
@@ -280,13 +283,13 @@ class SettingsVC: UITableViewController {
                 if (error != nil)
                 {
                     print("reverse geodcode fail: \(error!.localizedDescription)")
-                    completion(nil)
+                    completion(nil, nil)
                 }
                 let pm = placemarks! as [CLPlacemark]
                 
                 if pm.count > 0 {
                     let pm = placemarks![0]
-                    
+        
                     if pm.locality != nil {
                         addressString = addressString + pm.locality! + ", "
                     }
@@ -296,7 +299,11 @@ class SettingsVC: UITableViewController {
                     if pm.postalCode != nil {
                         addressString = addressString + pm.postalCode! + " "
                     }
-                    completion(addressString)
+                    if let location = pm.location {
+                        completion(addressString, location)
+                    } else {
+                        completion(addressString, nil)
+                    }
                 }
         })
         

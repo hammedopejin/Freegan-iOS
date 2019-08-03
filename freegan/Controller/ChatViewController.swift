@@ -55,8 +55,9 @@ class ChatViewController: JSQMessagesViewController {
         collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height:kJSQMessagesCollectionViewAvatarSizeDefault )
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID)
+            .queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+            [unowned self] snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -64,18 +65,18 @@ class ChatViewController: JSQMessagesViewController {
             }
         })
         
-        self.title = post?.description
+        title = post?.description
         
-        self.senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
+        senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
         
-        loadImage(imageUrl: (withUser?.userImgUrl)!){(image) in
+        loadImage(imageUrl: (withUser?.userImgUrl)!){ [unowned self] (image) in
             self.withUserImage = image
             self.loadMessegas()
         }
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
         
-        loadImage(imageUrl: (post?.imageUrl[0])!){(image) in
+        loadImage(imageUrl: (post?.imageUrl[0])!){ [unowned self] (image) in
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
             self.navigationItem.rightBarButtonItem?.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
         }
@@ -97,7 +98,7 @@ class ChatViewController: JSQMessagesViewController {
         
         let data = messages[indexPath.row]
         
-        if data.senderId == self.currentUser!.objectId {
+        if data.senderId == currentUser!.objectId {
             cell.textView?.textColor = UIColor.white
         } else {
             cell.textView?.textColor = UIColor.black
@@ -116,7 +117,7 @@ class ChatViewController: JSQMessagesViewController {
         let message = messages[indexPath.row]
         var avatar: JSQMessageAvatarImageDataSource
     
-        if message.senderId != self.currentUser!.objectId {
+        if message.senderId != currentUser!.objectId {
             if let withUserAvatar = withUserImage {
                 avatar = JSQMessagesAvatarImageFactory.avatarImage(with: withUserAvatar, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
             } else {
@@ -201,7 +202,7 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {
         
         loadMore(maxNumber: max, minNumber: min)
-        self.collectionView!.reloadData()
+        collectionView!.reloadData()
     }
     
     //MARK:  UITextViewDelegate
@@ -220,7 +221,7 @@ class ChatViewController: JSQMessagesViewController {
     
     @objc func seeProfile(_ sender: Any) {
         var poster: FUser?
-        if self.post?.postUserObjectId == currentUser?.objectId {
+        if post?.postUserObjectId == currentUser?.objectId {
             poster = currentUser
         } else {
             poster = withUser
@@ -249,9 +250,9 @@ class ChatViewController: JSQMessagesViewController {
             let encryptedText = text
 //            let encryptedText = EncryptText(chatRoomID: chatRoomId, string: text)
             
-            outgoingMessage = OutgoingMessage(message: encryptedText, senderId: self.currentUser!.objectId, senderName: self.currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: (withUser?.objectId)!, postId: (post?.postId)!)
+            outgoingMessage = OutgoingMessage(message: encryptedText, senderId: currentUser!.objectId, senderName: currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: (withUser?.objectId)!, postId: (post?.postId)!)
         }
-        self.finishSendingMessage()
+        finishSendingMessage()
         outgoingMessage!.sendMessage(chatRoomID: chatRoomId, item: outgoingMessage!.messageDictionary, vc: self)
     }
 
@@ -261,7 +262,7 @@ class ChatViewController: JSQMessagesViewController {
         
         let legitTypes = [kAUDIO, kVIDEO, kTEXT, kLOCATION, kPICTURE]
         chatRef.child(chatRoomId).observe(.childAdded, with: {
-            snapshot in
+            [unowned self] snapshot in
             //update UI
             if snapshot.exists() {
                 
@@ -281,12 +282,12 @@ class ChatViewController: JSQMessagesViewController {
         })
         
         chatRef.child(chatRoomId).observe(.childChanged, with: {
-            snapshot in
+            [unowned self] snapshot in
             self.updateMessage(item: snapshot.value as! NSDictionary)
         })
         
         chatRef.child(chatRoomId).observeSingleEvent(of: .value, with: {
-            snapshot in
+            [unowned self] snapshot in
             self.insertMessages()
             self.finishReceivingMessage(animated: false)
             self.initialLoadComplete = true
@@ -298,7 +299,7 @@ class ChatViewController: JSQMessagesViewController {
             let temp = objects[index]
             if item[kMESSAGEID] as! String == temp[kMESSAGEID] as! String {
                 objects[index] = item
-                self.collectionView!.reloadData()
+                collectionView!.reloadData()
             }
         }
     }
@@ -311,11 +312,11 @@ class ChatViewController: JSQMessagesViewController {
         }
         for i in min ..< max {
             let item = loaded[i]
-            self.insertMessage(item: item)
+            insertMessage(item: item)
             loadCount += 1
         }
         
-        self.showLoadEarlierMessagesHeader = (loadCount != loaded.count)
+        showLoadEarlierMessagesHeader = (loadCount != loaded.count)
     }
     
     
@@ -329,15 +330,15 @@ class ChatViewController: JSQMessagesViewController {
         }
         for i in (min ... max).reversed() {
             let item = loaded[i]
-            self.insertNewMessage(item: item)
+            insertNewMessage(item: item)
             loadCount += 1
         }
-        self.showLoadEarlierMessagesHeader = (loadCount != loaded.count)
+        showLoadEarlierMessagesHeader = (loadCount != loaded.count)
     }
     
     func insertNewMessage(item: NSDictionary) -> Bool {
         
-        let incomingMessage = IncomingMessage(collectionView_: self.collectionView!)
+        let incomingMessage = IncomingMessage(collectionView_: collectionView!)
         let message = incomingMessage.createMessage(dictionary: item, chatRoomID: chatRoomId)
         
         objects.insert(item, at: 0)
@@ -351,7 +352,7 @@ class ChatViewController: JSQMessagesViewController {
         if ((item[kSENDERID] as! String) != KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!) {
             updateChatStatus(chat: item, chatRoomId: chatRoomId)
         }
-        let incomingMessage = IncomingMessage(collectionView_: self.collectionView!)
+        let incomingMessage = IncomingMessage(collectionView_: collectionView!)
         let message = incomingMessage.createMessage(dictionary: item, chatRoomID: chatRoomId)
         
         objects.append(item)
@@ -362,7 +363,7 @@ class ChatViewController: JSQMessagesViewController {
     
     func incoming(item: NSDictionary) -> Bool {
         
-        if self.currentUser!.objectId == item[kSENDERID] as! String {
+        if currentUser!.objectId == item[kSENDERID] as! String {
             return false
         } else {
             return true
@@ -382,7 +383,7 @@ class ChatViewController: JSQMessagesViewController {
     func createTypingObservers() {
         
         typingRef.child(chatRoomId).observe(.childChanged, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             if snapshot.key != FUser.currentId() {
                 let typing = snapshot.value as! Bool
@@ -399,7 +400,7 @@ class ChatViewController: JSQMessagesViewController {
         typingCounter += 1
         typingIndicatorSave(typing: true)
         
-        self.perform(#selector(ChatViewController.typingIndicatorStop), with: nil, afterDelay: 2.0)
+        perform(#selector(ChatViewController.typingIndicatorStop), with: nil, afterDelay: 2.0)
     }
     
     @objc func typingIndicatorStop() {

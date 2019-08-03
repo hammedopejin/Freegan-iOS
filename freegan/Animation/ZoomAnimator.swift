@@ -28,16 +28,16 @@ class ZoomAnimator: NSObject {
         let containerView = transitionContext.containerView
         
         guard let toVC = transitionContext.viewController(forKey: .to),
-            let fromReferenceImageView = self.fromDelegate?.referenceImageView(for: self),
-            let toReferenceImageView = self.toDelegate?.referenceImageView(for: self),
-            let fromReferenceImageViewFrame = self.fromDelegate?.referenceImageViewFrameInTransitioningView(for: self),
-            let toReferenceImageViewFrame = self.toDelegate?.referenceImageViewFrameInTransitioningView(for: self)
+            let fromReferenceImageView = fromDelegate?.referenceImageView(for: self),
+            let toReferenceImageView = toDelegate?.referenceImageView(for: self),
+            let fromReferenceImageViewFrame = fromDelegate?.referenceImageViewFrameInTransitioningView(for: self),
+            let toReferenceImageViewFrame = toDelegate?.referenceImageViewFrameInTransitioningView(for: self)
             else {
                 return
         }
         
-        self.fromDelegate?.transitionWillStartWith(zoomAnimator: self)
-        self.toDelegate?.transitionWillStartWith(zoomAnimator: self)
+        fromDelegate?.transitionWillStartWith(zoomAnimator: self)
+        toDelegate?.transitionWillStartWith(zoomAnimator: self)
         
         toVC.view.alpha = 0
         toReferenceImageView.isHidden = true
@@ -45,7 +45,7 @@ class ZoomAnimator: NSObject {
         
         let referenceImage = fromReferenceImageView.image!
         
-        if self.transitionImageView == nil {
+        if transitionImageView == nil {
             let transitionImageView = UIImageView(image: referenceImage)
             transitionImageView.contentMode = .scaleToFill
             transitionImageView.clipsToBounds = true
@@ -67,7 +67,7 @@ class ZoomAnimator: NSObject {
                         self.transitionImageView?.frame = finalTransitionSize
                         toVC.view.alpha = 1.0
         },
-                       completion: { completed in
+                       completion: { [unowned self] completed in
                         
                         self.transitionImageView?.removeFromSuperview()
                         toReferenceImageView.isHidden = false
@@ -86,22 +86,22 @@ class ZoomAnimator: NSObject {
         
         guard let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
             let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
-            let fromReferenceImageView = self.fromDelegate?.referenceImageView(for: self),
-            let toReferenceImageView = self.toDelegate?.referenceImageView(for: self),
-            let fromReferenceImageViewFrame = self.fromDelegate?.referenceImageViewFrameInTransitioningView(for: self),
-            let toReferenceImageViewFrame = self.toDelegate?.referenceImageViewFrameInTransitioningView(for: self)
+            let fromReferenceImageView = fromDelegate?.referenceImageView(for: self),
+            let toReferenceImageView = toDelegate?.referenceImageView(for: self),
+            let fromReferenceImageViewFrame = fromDelegate?.referenceImageViewFrameInTransitioningView(for: self),
+            let toReferenceImageViewFrame = toDelegate?.referenceImageViewFrameInTransitioningView(for: self)
             else {
                 return
         }
         
-        self.fromDelegate?.transitionWillStartWith(zoomAnimator: self)
-        self.toDelegate?.transitionWillStartWith(zoomAnimator: self)
+        fromDelegate?.transitionWillStartWith(zoomAnimator: self)
+        toDelegate?.transitionWillStartWith(zoomAnimator: self)
         
         toReferenceImageView.isHidden = true
         
         let referenceImage = fromReferenceImageView.image!
         
-        if self.transitionImageView == nil {
+        if transitionImageView == nil {
             let transitionImageView = UIImageView(image: referenceImage)
             transitionImageView.contentMode = .scaleToFill
             transitionImageView.clipsToBounds = true
@@ -121,7 +121,7 @@ class ZoomAnimator: NSObject {
                        animations: {
                         fromVC.view.alpha = 0
                         self.transitionImageView?.frame = finalTransitionSize
-        }, completion: { completed in
+        }, completion: { [unowned self] completed in
             
             self.transitionImageView?.removeFromSuperview()
             toReferenceImageView.isHidden = false
@@ -138,7 +138,7 @@ class ZoomAnimator: NSObject {
 
 extension ZoomAnimator: UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        if self.isPresenting {
+        if isPresenting {
             return 0.5
         } else {
             return 0.25
@@ -146,7 +146,7 @@ extension ZoomAnimator: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        if self.isPresenting {
+        if isPresenting {
             animateZoomInTransition(using: transitionContext)
         } else {
             animateZoomOutTransition(using: transitionContext)

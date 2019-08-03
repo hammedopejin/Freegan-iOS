@@ -22,7 +22,7 @@ class RecentViewController: UIViewController {
         super.viewDidLoad()
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
+            [unowned self] snapshot in
 
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -65,7 +65,7 @@ class RecentViewController: UIViewController {
     func loadRecents() {
         
         firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)).observe(.value, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             self.recents.removeAll()
             

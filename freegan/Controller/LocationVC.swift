@@ -13,6 +13,7 @@ import Firebase
 class LocationVC: UIViewController {
     
     var locationTableView: UITableView!
+    var currentLocation: CLLocation?
     lazy var searchCompleter: MKLocalSearchCompleter = {
         let sc = MKLocalSearchCompleter()
         sc.delegate = self
@@ -96,6 +97,10 @@ extension LocationVC: UISearchResultsUpdating {
         
         guard let search = searchController.searchBar.text else {
             return
+        }
+        if let location = currentLocation {
+            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: location.distance(from: location), longitudinalMeters: location.distance(from: location))
+            searchCompleter.region = region
         }
         searchCompleter.queryFragment = search
     }

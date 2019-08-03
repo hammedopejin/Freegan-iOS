@@ -28,12 +28,12 @@ class PhotoZoomViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.postImageView.image = self.postImage
+        postImageView.image = postImage
         
         if(forSelf){
-            self.posterImageView.image = UIImage(named: "ic_settings_white_24dp")
+            posterImageView.image = UIImage(named: "ic_settings_white_24dp")
         } else {
-            self.posterImageView.image = self.posterImage
+            posterImageView.image = posterImage
         }
         
         postDescription.text = post!.description
@@ -43,20 +43,20 @@ class PhotoZoomViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.hidesBarsOnTap = true
         navigationController?.setNavigationBarHidden(true, animated: false)
-        if (self.currentUser!.objectId == self.poster!.objectId){
-            self.chatButtonImage.isHidden = true
+        if (currentUser!.objectId == poster!.objectId){
+            chatButtonImage.isHidden = true
         }
     }
     
     @IBAction func startChat(_ sender: Any) {
         let chatVC = ChatViewController()
         
-        if (self.currentUser!.objectId != self.poster!.objectId){
+        if (currentUser!.objectId != poster!.objectId){
             
-            chatVC.withUser = self.poster
-            chatVC.currentUser = self.currentUser
-            chatVC.post = self.post
-            chatVC.chatRoomId = freegan.startChat(user1: self.currentUser!, user2: self.poster!, postId: self.post!.postId)
+            chatVC.withUser = poster
+            chatVC.currentUser = currentUser
+            chatVC.post = post
+            chatVC.chatRoomId = freegan.startChat(user1: currentUser!, user2: poster!, postId: post!.postId)
             
             chatVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(chatVC, animated: true)
@@ -65,8 +65,8 @@ class PhotoZoomViewController: UIViewController {
     
     @IBAction func seeProfile(_ sender: Any) {
         
-        if(forSelf){
-            guard let post = self.post else{
+        if(forSelf) {
+            guard let post = post else {
                 return
             }
             
@@ -74,13 +74,13 @@ class PhotoZoomViewController: UIViewController {
                 let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
                 editPostVC.post = post
                 
-                self.present(editPostVC, animated: true, completion: nil)
+                present(editPostVC, animated: true, completion: nil)
             } else {
                 
             }
             
         } else {
-            guard let poster = self.poster else {
+            guard let poster = poster else {
                 return
             }
             

@@ -33,10 +33,9 @@ class LogInVC : UIViewController {
         }
         
         if let email = emailField.text, let pwd = pwdField.text {
-            Auth.auth().signIn(withEmail: email, password: pwd, completion: { (user, error) in
+            Auth.auth().signIn(withEmail: email, password: pwd, completion: { [unowned self] (user, error) in
                 if error == nil {
                     if let user = user {
-                        print("HAMMED: Email user authenticated with Firebase")
                         self.completeSignIn(id: user.user.uid)
                     }
                 } else {
@@ -53,9 +52,7 @@ class LogInVC : UIViewController {
     }
  
     func completeSignIn(id: String) {
-        // Load User Info/Data
         let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
-        print("HAMMED: Data saved to keychain \(keychainResult)")
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
 }
