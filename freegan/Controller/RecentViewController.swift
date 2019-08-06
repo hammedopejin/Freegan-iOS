@@ -77,7 +77,9 @@ class RecentViewController: UIViewController {
                     
                     let currentRecent = recent as! NSDictionary
                     
-                    self.recents.append(currentRecent)
+                    if !((currentRecent[kLASTMESSAGE] as? String)!.isEmpty) {
+                        self.recents.append(currentRecent)
+                    }
                     
                     firebase.child(kRECENT).queryOrdered(byChild: kCHATROOMID).queryEqual(toValue: currentRecent[kCHATROOMID]).observe(.value, with: {
                         snapshot in
