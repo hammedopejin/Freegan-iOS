@@ -36,6 +36,7 @@ class FeedVC: UIViewController {
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
     var posters = Array(repeating: FUser(), count: 20)
     var posts = [Post]()
+    var filteredPosts = [Post]()
     var currentUser: FUser?
     var postIds = [String]()
     var askLocationFlag = false
@@ -173,22 +174,22 @@ class FeedVC: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowPhotoPageView" {
-            let nav = self.navigationController
+            let nav = navigationController
             let vc = segue.destination as! PhotoPageContainerViewController
             nav?.delegate = vc.transitionController
             vc.transitionController.fromDelegate = self
             vc.transitionController.toDelegate = vc
             vc.delegate = self
-            vc.currentIndex = self.selectedIndexPath.row
-            vc.posts = self.posts
-            vc.posters = self.posters
-            vc.postImages = self.postImages
-            vc.posterImages = self.posterImages
-            vc.currentUser = self.currentUser
+            vc.currentIndex = selectedIndexPath.row
+            vc.posts = isFiltering() ? filteredPosts : posts
+            vc.posters = posters
+            vc.postImages = postImages
+            vc.posterImages = posterImages
+            vc.currentUser = currentUser
             vc.forSelf = false
         } else if segue.identifier == "goToPost" {
             let vc = segue.destination as! PostVC
-            vc.currentUser = self.currentUser
+            vc.currentUser = currentUser
         }
     }
     
@@ -257,7 +258,7 @@ class FeedVC: UIViewController {
         }
         
         if (self.askLocationFlag){
-            self.checkPosts()
+            checkPosts()
         }
     }
     
@@ -330,15 +331,15 @@ class FeedVC: UIViewController {
         let geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
         let query = geoRef.query(at: CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), withRadius: GEOGRAPHIC_RADIUS)
         
-        self.totalLoadSize = 0
-        self.postIds.removeAll()
-        self.posts.removeAll()
+        totalLoadSize = 0
+        postIds.removeAll()
+        posts.removeAll()
         
         query.observe(.keyEntered, with: { [unowned self] key, location in
             self.postIds.append(key)
         })
         
-        query.observeReady { 
+        query.observeReady { [unowned self] in
             if (self.postIds.count > 0) {
                 if (self.PAGE_LOAD_SIZE < self.postIds.count) {
                     self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: 0);
@@ -354,12 +355,12 @@ class FeedVC: UIViewController {
     func loadPosts(page_load_size: Int, offset: Int){
         
         var maxBoundary = page_load_size + offset;
-        if (maxBoundary > self.postIds.count) {
-            maxBoundary = self.postIds.count;
+        if (maxBoundary > postIds.count) {
+            maxBoundary = postIds.count;
         }
         
         for i in offset..<maxBoundary {
-            DataService.ds.REF_POSTS.child(self.postIds[i]).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { [unowned self] (snapshot) in
                 let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
                 self.posts.append(post)
                 
@@ -377,16 +378,17 @@ extension FeedVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.posts.count
+        return isFiltering() ? filteredPosts.count : posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(PhotoCollectionViewCell.self)", for: indexPath) as! PhotoCollectionViewCell
         
+        let fetchedPosts = isFiltering() ? filteredPosts : posts
         var j = 0
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.posts[indexPath.row].postUserObjectId)
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: fetchedPosts[indexPath.row].postUserObjectId)
             .observe(.value, with: {
                 [unowned self] snapshot in
                 
@@ -418,7 +420,7 @@ extension FeedVC: UICollectionViewDataSource {
                 
             })
         
-        for i in self.posts[indexPath.row].imageUrl{
+        for i in fetchedPosts[indexPath.row].imageUrl{
             
             let ref = Storage.storage().reference(forURL: i)
             
@@ -445,9 +447,9 @@ extension FeedVC: UICollectionViewDataSource {
         let totalItemsCount = collectionView.numberOfItems(inSection: 0)
         
         if indexPath.row >= self.totalLoadSize - 3 {
-            if (self.PAGE_LOAD_SIZE < self.postIds.count) {
-                self.loadPosts(page_load_size: self.PAGE_LOAD_SIZE, offset: totalItemsCount);
-                self.totalLoadSize += PAGE_LOAD_SIZE;
+            if (PAGE_LOAD_SIZE < postIds.count) {
+                loadPosts(page_load_size: PAGE_LOAD_SIZE, offset: totalItemsCount);
+                totalLoadSize += PAGE_LOAD_SIZE;
             }
         }
         
@@ -577,7 +579,18 @@ extension FeedVC: UISearchResultsUpdating {
         guard let search = searchController.searchBar.text else {
             return
         }
-        collectionView?.reloadData()
+        filterFreegans(by: search)
+    }
+    
+    //MARK: Helper func
+    
+    func isFiltering() -> Bool {
+        return !searchController.searchBar.text!.isEmpty && searchController.isActive
+    }
+    
+    func filterFreegans(by search: String) {
+        filteredPosts = posts.filter({$0.description.lowercased().contains(search.lowercased())})
+        collectionView.reloadData()
     }
 }
 
@@ -593,17 +606,7 @@ extension FeedVC: ZoomAnimatorDelegate {
     
     func transitionWillStartWith(zoomAnimator: ZoomAnimator) {}
     
-    func transitionDidEndWith(zoomAnimator: ZoomAnimator) {
-        let cell = collectionView.cellForItem(at: self.selectedIndexPath) as! PhotoCollectionViewCell
-        
-        let cellFrame = collectionView.convert(cell.frame, to: self.view)
-        
-        if cellFrame.minY < collectionView.contentInset.top {
-            collectionView.scrollToItem(at: self.selectedIndexPath, at: .top, animated: false)
-        } else if cellFrame.maxY > self.view.frame.height - collectionView.contentInset.bottom {
-            collectionView.scrollToItem(at: selectedIndexPath, at: .bottom, animated: false)
-        }
-    }
+    func transitionDidEndWith(zoomAnimator: ZoomAnimator) {}
     
     func referenceImageView(for zoomAnimator: ZoomAnimator) -> UIImageView? {
         
