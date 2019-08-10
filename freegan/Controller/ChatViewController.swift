@@ -30,10 +30,11 @@ class ChatViewController: JSQMessagesViewController {
     var loaded: [NSDictionary] = []
     
     var members: [String] = []
-    var withUser: FUser?
+    var withUser: FUser!
     var currentUser: FUser?
     var post : Post?
     var withUserImage : UIImage?
+    //var blockedUsersList: [String] = []
     
     var chatRoomId: String!
     
@@ -77,9 +78,18 @@ class ChatViewController: JSQMessagesViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
         
         loadImage(imageUrl: (post?.imageUrl[0])!){ [unowned self] (image) in
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
-            self.navigationItem.rightBarButtonItem?.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
+            let postImageButton  = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
+            postImageButton.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
+            
+            let settingsButton = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ChatViewController.showUserOptions))
+            
+            self.navigationItem.rightBarButtonItems = [settingsButton, postImageButton]
         }
+        
+        self.loadWithUser(withUserUserId: withUser.objectId) {(withUser) in
+            self.withUser = withUser
+        }
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -231,14 +241,66 @@ class ChatViewController: JSQMessagesViewController {
             return
         }
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
-        
-        let profileVC = vc.viewControllers![2].children[0] as! ProfileVC
+        let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
         profileVC.poster = poster
-        profileVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(profileVC, animated: true)
+    }
+    
+    @objc func showUserOptions(){
+        var blockedUsersList = self.withUser.blockedUsersList
         
-        self.navigationController?.present(vc, animated: false, completion: nil)
-        vc.selectedIndex = 2
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let report = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
+            
+        }
+        
+        let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
+            
+            blockedUsersList.append(self.currentUser!.objectId)
+            firebase.child(kUSER).child(self.withUser.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList]) { [unowned self] (_,_) in
+                
+            }
+        }
+        
+        let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
+            
+            firebase.child(kUSER).child(self.withUser.objectId).child(kBLOCKEDUSERSLIST).child("\(blockedUsersList.index(of: self.currentUser!.objectId)!)").removeValue() { [unowned self] (_,_) in
+                blockedUsersList.remove(at: blockedUsersList.index(of:self.currentUser!.objectId)!)
+            }
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
+            
+        }
+        
+        optionMenu.addAction(report)
+        
+        if (withUser.blockedUsersList.contains(currentUser!.objectId)) {
+            optionMenu.addAction(unBlock)
+        } else {
+            optionMenu.addAction(block)
+        }
+        
+        optionMenu.addAction(cancelAction)
+        
+        present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
+        
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
+            .observe(.value, with: {
+                snapshot in
+                
+                if snapshot.exists() {
+                    
+                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    withUser(poster)
+                }
+                
+            })
     }
     
     func sendMessage(text: String?, date: Date) {

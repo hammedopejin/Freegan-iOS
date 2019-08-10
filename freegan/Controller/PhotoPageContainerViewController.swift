@@ -34,7 +34,6 @@ class PhotoPageContainerViewController: UIViewController {
     var currentIndex = 0
     var vertIndex = 0
     var nextIndex: Int?
-    var forSelf: Bool!
     
     var transitionController = ZoomTransitionController()
     
@@ -58,8 +57,12 @@ class PhotoPageContainerViewController: UIViewController {
         vc.posterImage = posterImages[currentIndex]
         vc.post = posts[currentIndex]
         vc.poster = posters[currentIndex]
+        if posters[currentIndex].objectId == currentUser.objectId {
+            vc.forSelf = true
+        } else {
+            vc.forSelf = false
+        }
         vc.currentUser = currentUser
-        vc.forSelf = forSelf
         
         let viewControllers = [
             vc
@@ -87,7 +90,11 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.post = posts[currentIndex]
                     vc.poster = posters[currentIndex]
                     vc.currentUser = currentUser
-                    vc.forSelf = forSelf
+                    if posters[currentIndex].objectId == currentUser.objectId {
+                        vc.forSelf = true
+                    } else {
+                        vc.forSelf = false
+                    }
                     vc.index = currentIndex
                     let viewControllers = [
                         vc
@@ -104,7 +111,11 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.post = posts[currentIndex]
                     vc.poster = posters[currentIndex]
                     vc.currentUser = currentUser
-                    vc.forSelf = forSelf
+                    if posters[currentIndex].objectId == currentUser.objectId {
+                        vc.forSelf = true
+                    } else {
+                        vc.forSelf = false
+                    }
                     vc.index = currentIndex
                     let viewControllers = [
                         vc
@@ -134,7 +145,11 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.post = posts[currentIndex - 1]
         vc.poster = posters[currentIndex - 1]
         vc.currentUser = currentUser
-        vc.forSelf = forSelf
+        if posters[currentIndex - 1].objectId == currentUser.objectId {
+            vc.forSelf = true
+        } else {
+            vc.forSelf = false
+        }
         vc.index = currentIndex - 1
         return vc
     }
@@ -152,7 +167,11 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.post = posts[currentIndex + 1]
         vc.poster = posters[currentIndex + 1]
         vc.currentUser = currentUser
-        vc.forSelf = forSelf
+        if posters[currentIndex + 1].objectId == currentUser.objectId {
+            vc.forSelf = true
+        } else {
+            vc.forSelf = false
+        }
         vc.index = currentIndex + 1
         return vc
     }

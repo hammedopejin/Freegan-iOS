@@ -76,7 +76,7 @@ class FUser {
         
         status = _dictionary[kSTATUS] as? String
         
-        if let blockedUserList = _dictionary[kBLOCKEDUSERS] {
+        if let blockedUserList = _dictionary[kBLOCKEDUSERSLIST] {
             
             blockedUsersList = blockedUserList as! [String]
             

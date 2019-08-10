@@ -76,21 +76,22 @@ public let kSENDERNAME = "senderName"
 public let kTHUMBNAIL = "thumbnail"
 
 //posts
-public let kPOST = "posts";
-public let kLIKE = "likes";
-public let kPOSTUSEROBJECTID = "postUserObjectId";
-public let kPOSTID = "postId";
-public let kPOSTER = "poster";
-public let kPOSTERNAME = "posterName";
-public let kPROFILEIMAGEURL = "profileImgUrl";
-public let kIMAGEURL = "imageUrl";
-public let kPOSTDATE = "postDate";
-public let kDESCRIPTION = "description";
-public let kPOSTLOCATION = "posts_location";
+public let kPOST = "posts"
+public let kLIKE = "likes"
+public let kPOSTUSEROBJECTID = "postUserObjectId"
+public let kPOSTID = "postId"
+public let kPOSTER = "poster"
+public let kPOSTERNAME = "posterName"
+public let kPROFILEIMAGEURL = "profileImgUrl"
+public let kIMAGEURL = "imageUrl"
+public let kPOSTDATE = "postDate"
+public let kDESCRIPTION = "description"
+public let kPOSTLOCATION = "posts_location"
 
 //blockedUsers
 public let kBLOCKEDUSERS = "blockedUsers"
 public let kBLOCKEDUSERID = "blockedUserId"
+public let kBLOCKEDUSERSLIST = "blockedUsersList"
 
 //message types
 public let kPICTURE = "picture"

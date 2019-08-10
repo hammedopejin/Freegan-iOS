@@ -35,7 +35,7 @@ class ProfileVC: UIViewController{
     var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
     var posts = [Post]()
     var currentUser: FUser?
-    var poster: FUser?
+    var poster: FUser!
     
     var profileImgUrl: String!
     var userImgUrl: String!
@@ -56,13 +56,15 @@ class ProfileVC: UIViewController{
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
         self.collectionView.frame = self.view.bounds
-        
         if let _ = self.poster {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
             return
         }
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,7 +160,7 @@ class ProfileVC: UIViewController{
     }
     
     @objc func backActionWithPoster() {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func backActionDefault() {
@@ -166,11 +168,11 @@ class ProfileVC: UIViewController{
     }
     
     func loadPosts(){
-        self.posts.removeAll()
+        posts.removeAll()
         
-        guard let poster = self.poster else {
+        guard let poster = poster else {
             self.poster = self.currentUser
-            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { [unowned self] (snapshot) in
                 if snapshot.exists() {
                 
                     let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -185,7 +187,7 @@ class ProfileVC: UIViewController{
             return
         }
         
-        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { (snapshot) in
+        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { [unowned self] (snapshot) in
             if snapshot.exists() {
                 
                 let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -342,7 +344,6 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         photoPageContainerViewController.posterImages = self.posterImages
         photoPageContainerViewController.postImages = self.postImages
         photoPageContainerViewController.currentUser = self.currentUser
-        photoPageContainerViewController.forSelf = true
         
         self.navigationController?.pushViewController(photoPageContainerViewController, animated: true)
         

@@ -21,7 +21,7 @@ class RecentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
             [unowned self] snapshot in
 
             if snapshot.exists() {
@@ -42,7 +42,7 @@ class RecentViewController: UIViewController {
     func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
-            .observe(.value, with: {
+            .observeSingleEvent(of: .value, with: {
                 snapshot in
                 
                 if snapshot.exists() {

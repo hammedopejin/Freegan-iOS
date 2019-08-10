@@ -70,10 +70,9 @@ class PhotoZoomViewController: UIViewController {
                 return
             }
             
-            if post.postUserObjectId == currentUser?.objectId{
+            if post.postUserObjectId == currentUser?.objectId {
                 let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
                 editPostVC.post = post
-                
                 present(editPostVC, animated: true, completion: nil)
             } else {
                 
@@ -84,14 +83,9 @@ class PhotoZoomViewController: UIViewController {
                 return
             }
             
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
-            
             let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
             profileVC.poster = poster
-            profileVC.hidesBottomBarWhenPushed = true
-            
-            self.navigationController?.present(vc, animated: false, completion: nil)
-            vc.selectedIndex = 1
+            self.navigationController?.pushViewController(profileVC, animated: true)
         }
         
     }
