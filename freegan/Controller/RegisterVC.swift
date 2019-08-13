@@ -51,12 +51,12 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     @IBAction func gotoLogin(_ sender: Any) {
-        let logIn = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
+        let logIn = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
         self.present(logIn, animated: true, completion: nil)
     }
     
     func completeSignIn(id: String) {
-        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
+        let _ = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
 }

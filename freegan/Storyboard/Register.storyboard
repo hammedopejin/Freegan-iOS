@@ -111,7 +111,7 @@
                         <outlet property="emailField" destination="dRb-LU-2rn" id="DHk-nx-RFG"/>
                         <outlet property="pwdField" destination="h4x-Jj-GxO" id="dS8-sa-I6v"/>
                         <outlet property="userNameField" destination="s0D-ru-ubv" id="Mky-Jx-gvD"/>
-                        <segue destination="l81-3A-Ld8" kind="show" id="6QH-LS-0j1"/>
+                        <segue destination="l81-3A-Ld8" kind="show" identifier="goToFeed" id="6QH-LS-0j1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CUT-ub-SrS" sceneMemberID="firstResponder"/>
@@ -204,7 +204,7 @@
                     <connections>
                         <outlet property="emailField" destination="6GK-13-VUp" id="hqT-MG-oCb"/>
                         <outlet property="pwdField" destination="1fz-0f-xL6" id="haF-lx-reg"/>
-                        <segue destination="l81-3A-Ld8" kind="show" id="Fqq-FJ-u4Q"/>
+                        <segue destination="l81-3A-Ld8" kind="show" identifier="goToFeed" id="Fqq-FJ-u4Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z3q-W9-v0q" sceneMemberID="firstResponder"/>

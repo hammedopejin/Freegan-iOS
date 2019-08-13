@@ -47,12 +47,12 @@ class LogInVC : UIViewController {
     
     @IBAction func gotoLogin(_ sender: Any) {
         
-        let register = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
+        let register = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
         self.present(register, animated: true, completion: nil)
     }
  
     func completeSignIn(id: String) {
-        let keychainResult = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
+        let _ = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
         performSegue(withIdentifier: "goToFeed", sender: nil)
     }
 }

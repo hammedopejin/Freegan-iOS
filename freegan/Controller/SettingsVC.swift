@@ -184,6 +184,11 @@ class SettingsVC: UITableViewController {
     func showLogoutView(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        // This lines is for the popover you need to show in iPad
+        optionMenu.popoverPresentationController?.sourceView = view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = []
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
         let logOut = UIAlertAction(title: "Log Out", style: .destructive){ [unowned self] (alert: UIAlertAction!) in
             self.logOut()
         }
@@ -210,6 +215,11 @@ class SettingsVC: UITableViewController {
     
     func showCameraLibraryOptions(){
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // This lines is for the popover you need to show in iPad
+        optionMenu.popoverPresentationController?.sourceView = view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = []
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         
         let camera = UIAlertAction(title: "Camera", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)
