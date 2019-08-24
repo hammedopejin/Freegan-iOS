@@ -58,12 +58,15 @@ class ProfileVC: UIViewController{
         self.collectionView.frame = self.view.bounds
         if let _ = self.poster {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
+            
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
+            
             return
         }
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
         
     }
     
@@ -159,12 +162,66 @@ class ProfileVC: UIViewController{
         }
     }
     
+    @objc func showUserOptions(){
+        var blockedUsersList = poster.blockedUsersList
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // This lines is for the popover you need to show in iPad
+        optionMenu.popoverPresentationController?.sourceView = view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = []
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
+        let report = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
+            
+        }
+        
+        let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
+            
+            blockedUsersList.append(self.currentUser!.objectId)
+            firebase.child(kUSER).child(self.poster.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList]) { (_,_) in
+                
+            }
+        }
+        
+        let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
+            
+            firebase.child(kUSER).child(self.poster.objectId).child(kBLOCKEDUSERSLIST).child("\(blockedUsersList.index(of: self.currentUser!.objectId)!)").removeValue() { [unowned self] (_,_) in
+                blockedUsersList.remove(at: blockedUsersList.index(of:self.currentUser!.objectId)!)
+            }
+            
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
+            
+        }
+        
+        optionMenu.addAction(report)
+        
+        if (poster.blockedUsersList.contains(currentUser!.objectId)) {
+            optionMenu.addAction(unBlock)
+        } else {
+            optionMenu.addAction(block)
+        }
+        
+        optionMenu.addAction(cancelAction)
+        
+        present(optionMenu, animated: true, completion: nil)
+    }
+    
     @objc func backActionWithPoster() {
         navigationController?.popViewController(animated: true)
     }
     
     @objc func backActionDefault() {
         tabBarController?.selectedIndex = 0
+    }
+    
+    @objc func goToSettings() {
+    
+        let settingsVC = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "BaseVC") as! UITabBarController
+        settingsVC.selectedIndex = 3
+        tabBarController?.present(settingsVC, animated: true, completion: nil)
     }
     
     func loadPosts(){

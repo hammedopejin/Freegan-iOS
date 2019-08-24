@@ -193,7 +193,7 @@ class SettingsVC: UITableViewController {
             self.logOut()
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (alert: UIAlertAction!) in
             
         }
         
@@ -229,7 +229,7 @@ class SettingsVC: UITableViewController {
             self.cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: self.imagePicker)
         }
        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
         }
         
         optionMenu.addAction(camera)

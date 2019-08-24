@@ -118,7 +118,7 @@
         <!--Settings-->
         <scene sceneID="UUt-86-t7T">
             <objects>
-                <tableViewController id="BhU-aW-Cev" customClass="SettingsVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsVC" id="BhU-aW-Cev" customClass="SettingsVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="6P0-di-CL2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
