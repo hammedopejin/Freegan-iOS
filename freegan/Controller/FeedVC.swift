@@ -59,8 +59,8 @@ class FeedVC: UIViewController {
         createSearch()
         setBar()
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            [unowned self] snapshot in
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
+            snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -364,7 +364,7 @@ class FeedVC: UIViewController {
         }
         
         for i in offset..<maxBoundary {
-            DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { [unowned self] (snapshot) in
+            DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { (snapshot) in
                 let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
                 self.posts.append(post)
                 
@@ -393,8 +393,8 @@ extension FeedVC: UICollectionViewDataSource {
         var j = 0
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: fetchedPosts[indexPath.row].postUserObjectId)
-            .observe(.value, with: {
-                [unowned self] snapshot in
+            .observeSingleEvent(of: .value, with: {
+                snapshot in
                 
                 if snapshot.exists() {
                     

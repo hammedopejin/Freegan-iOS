@@ -53,7 +53,7 @@ class PhotoZoomViewController: UIViewController {
         
         if (currentUser!.objectId != poster!.objectId){
             
-            chatVC.withUser = poster
+            chatVC.withUserUserId = poster!.objectId
             chatVC.currentUser = currentUser
             chatVC.post = post
             chatVC.chatRoomId = freegan.startChat(user1: currentUser!, user2: poster!, postId: post!.postId)

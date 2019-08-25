@@ -36,6 +36,8 @@ class ProfileVC: UIViewController{
     var posts = [Post]()
     var currentUser: FUser?
     var poster: FUser!
+    var posterUserId: String!
+    var blockedUsersList: [String] = []
     
     var profileImgUrl: String!
     var userImgUrl: String!
@@ -44,29 +46,46 @@ class ProfileVC: UIViewController{
         super.viewDidLoad()
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            [unowned self] snapshot in
+            snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.loadPosts()
+                
+                //Manually set the collectionView frame to the size of the view bounds
+                //(this is required to support iOS 10 devices and earlier)
+                self.collectionView.frame = self.view.bounds
+                
+                guard let posterUserId = self.posterUserId else {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                    
+                    self.loadPosts()
+                    return
+                }
+                
+                if self.currentUser!.objectId != posterUserId {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
+                    
+                    self.loadWithUser(withUserUserId: self.posterUserId) { (poster) in
+                        self.poster = poster
+                    }
+                    
+                    self.loadPosts()
+                    
+                } else {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                    
+                    self.loadPosts()
+                }
+    
             }
             
         })
-        
-        //Manually set the collectionView frame to the size of the view bounds
-        //(this is required to support iOS 10 devices and earlier)
-        self.collectionView.frame = self.view.bounds
-        if let _ = self.poster {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
-            
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
-            
-            return
-        }
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
         
     }
     
@@ -74,6 +93,12 @@ class ProfileVC: UIViewController{
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnTap = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let _ = poster {
+           firebase.child(kUSER).child(self.poster.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList])
+        }
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -163,7 +188,6 @@ class ProfileVC: UIViewController{
     }
     
     @objc func showUserOptions(){
-        var blockedUsersList = poster.blockedUsersList
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -177,19 +201,11 @@ class ProfileVC: UIViewController{
         }
         
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
-            
-            blockedUsersList.append(self.currentUser!.objectId)
-            firebase.child(kUSER).child(self.poster.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList]) { (_,_) in
-                
-            }
+            self.blockedUsersList.append(self.currentUser!.objectId)
         }
         
         let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
-            
-            firebase.child(kUSER).child(self.poster.objectId).child(kBLOCKEDUSERSLIST).child("\(blockedUsersList.index(of: self.currentUser!.objectId)!)").removeValue() { [unowned self] (_,_) in
-                blockedUsersList.remove(at: blockedUsersList.index(of:self.currentUser!.objectId)!)
-            }
-            
+            self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser!.objectId)!)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
@@ -198,7 +214,7 @@ class ProfileVC: UIViewController{
         
         optionMenu.addAction(report)
         
-        if (poster.blockedUsersList.contains(currentUser!.objectId)) {
+        if (blockedUsersList.contains(currentUser!.objectId)) {
             optionMenu.addAction(unBlock)
         } else {
             optionMenu.addAction(block)
@@ -229,7 +245,7 @@ class ProfileVC: UIViewController{
         
         guard let poster = poster else {
             self.poster = self.currentUser
-            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { [unowned self] (snapshot) in
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { (snapshot) in
                 if snapshot.exists() {
                 
                     let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -244,7 +260,7 @@ class ProfileVC: UIViewController{
             return
         }
         
-        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { [unowned self] (snapshot) in
+        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { (snapshot) in
             if snapshot.exists() {
                 
                 let postData = snapshot.value as! Dictionary<String, AnyObject>

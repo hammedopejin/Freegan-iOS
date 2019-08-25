@@ -31,10 +31,11 @@ class ChatViewController: JSQMessagesViewController {
     
     var members: [String] = []
     var withUser: FUser!
+    var withUserUserId: String!
+    var blockedUsersList: [String] = []
     var currentUser: FUser?
     var post : Post?
     var withUserImage : UIImage?
-    //var blockedUsersList: [String] = []
     
     var chatRoomId: String!
     
@@ -57,8 +58,8 @@ class ChatViewController: JSQMessagesViewController {
         collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID)
-            .queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            [unowned self] snapshot in
+            .queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
+            snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -70,9 +71,13 @@ class ChatViewController: JSQMessagesViewController {
         
         senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
         
-        loadImage(imageUrl: (withUser?.userImgUrl)!){ [unowned self] (image) in
-            self.withUserImage = image
-            self.loadMessegas()
+        loadWithUser(withUserUserId: withUserUserId) { (withUser) in
+            self.withUser = withUser
+            self.blockedUsersList = self.withUser.blockedUsersList
+            loadImage(imageUrl: (withUser.userImgUrl)!){ [unowned self] (image) in
+                self.withUserImage = image
+                self.loadMessegas()
+            }
         }
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
@@ -85,10 +90,6 @@ class ChatViewController: JSQMessagesViewController {
             
             self.navigationItem.rightBarButtonItems = [settingsButton, postImageButton]
         }
-        
-        self.loadWithUser(withUserUserId: withUser.objectId) {(withUser) in
-            self.withUser = withUser
-        }
     
     }
     
@@ -99,6 +100,7 @@ class ChatViewController: JSQMessagesViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         clearRecentCounter(chatRoomID: chatRoomId)
+        firebase.child(kUSER).child(self.withUser.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList])
     }
     
     //JSQMessages Data Source functions
@@ -242,12 +244,11 @@ class ChatViewController: JSQMessagesViewController {
         }
         
         let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
-        profileVC.poster = poster
+        profileVC.posterUserId = poster?.objectId
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
     @objc func showUserOptions(){
-        var blockedUsersList = self.withUser.blockedUsersList
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -261,19 +262,11 @@ class ChatViewController: JSQMessagesViewController {
         }
         
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
-            
-            blockedUsersList.append(self.currentUser!.objectId)
-            firebase.child(kUSER).child(self.withUser.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList]) { (_,_) in
-                
-            }
+            self.blockedUsersList.append(self.currentUser!.objectId)
         }
         
         let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
-            
-            firebase.child(kUSER).child(self.withUser.objectId).child(kBLOCKEDUSERSLIST).child("\(blockedUsersList.index(of: self.currentUser!.objectId)!)").removeValue() { [unowned self] (_,_) in
-                blockedUsersList.remove(at: blockedUsersList.index(of:self.currentUser!.objectId)!)
-            }
-            
+            self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser!.objectId)!)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
@@ -282,7 +275,7 @@ class ChatViewController: JSQMessagesViewController {
         
         optionMenu.addAction(report)
         
-        if (withUser.blockedUsersList.contains(currentUser!.objectId)) {
+        if (blockedUsersList.contains(currentUser!.objectId)) {
             optionMenu.addAction(unBlock)
         } else {
             optionMenu.addAction(block)
@@ -291,21 +284,6 @@ class ChatViewController: JSQMessagesViewController {
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)
-    }
-    
-    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
-        
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
-            .observe(.value, with: {
-                snapshot in
-                
-                if snapshot.exists() {
-                    
-                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    withUser(poster)
-                }
-                
-            })
     }
     
     func sendMessage(text: String?, date: Date) {
@@ -329,7 +307,7 @@ class ChatViewController: JSQMessagesViewController {
         
         let legitTypes = [kAUDIO, kVIDEO, kTEXT, kLOCATION, kPICTURE]
         chatRef.child(chatRoomId).observe(.childAdded, with: {
-            [unowned self] snapshot in
+            snapshot in
             //update UI
             if snapshot.exists() {
                 
@@ -349,12 +327,12 @@ class ChatViewController: JSQMessagesViewController {
         })
         
         chatRef.child(chatRoomId).observe(.childChanged, with: {
-            [unowned self] snapshot in
+            snapshot in
             self.updateMessage(item: snapshot.value as! NSDictionary)
         })
         
         chatRef.child(chatRoomId).observeSingleEvent(of: .value, with: {
-            [unowned self] snapshot in
+            snapshot in
             self.insertMessages()
             self.finishReceivingMessage(animated: false)
             self.initialLoadComplete = true
@@ -450,7 +428,7 @@ class ChatViewController: JSQMessagesViewController {
     func createTypingObservers() {
         
         typingRef.child(chatRoomId).observe(.childChanged, with: {
-            [unowned self] snapshot in
+            snapshot in
             
             if snapshot.key != FUser.currentId() {
                 let typing = snapshot.value as! Bool

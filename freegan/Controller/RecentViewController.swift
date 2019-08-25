@@ -22,7 +22,7 @@ class RecentViewController: UIViewController {
         super.viewDidLoad()
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
-            [unowned self] snapshot in
+            snapshot in
 
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -39,24 +39,9 @@ class RecentViewController: UIViewController {
         tabBarController?.selectedIndex = 0
     }
     
-    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
-        
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
-            .observeSingleEvent(of: .value, with: {
-                snapshot in
-                
-                if snapshot.exists() {
-                    
-                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    withUser(poster)
-                }
-                
-            })
-    }
-    
     func loadPost(postId: String, post: @escaping(_ post: Post) -> Void){
         
-        DataService.ds.REF_POSTS.child(postId).observe(.value, with: { (snapshot) in
+        DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
             let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
             post(currentPost)
         })
@@ -65,7 +50,7 @@ class RecentViewController: UIViewController {
     func loadRecents() {
         
         firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)).observe(.value, with: {
-            [unowned self] snapshot in
+            snapshot in
             
             self.recents.removeAll()
             
@@ -81,17 +66,12 @@ class RecentViewController: UIViewController {
                         self.recents.append(currentRecent)
                     }
                     
-                    firebase.child(kRECENT).queryOrdered(byChild: kCHATROOMID).queryEqual(toValue: currentRecent[kCHATROOMID]).observe(.value, with: {
+                    firebase.child(kRECENT).queryOrdered(byChild: kCHATROOMID).queryEqual(toValue: currentRecent[kCHATROOMID]).observeSingleEvent(of: .value, with: {
                         snapshot in
-                        
                     })
-                    
                 }
-                
             }
-            
             self.tableView.reloadData()
-            
         })
     }
 }
@@ -121,7 +101,6 @@ extension RecentViewController: UITableViewDataSource {
 extension RecentViewController:  UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        
         return true
     }
     
@@ -143,13 +122,12 @@ extension RecentViewController:  UITableViewDelegate {
         let chatRoomId = (recent[kCHATROOMID] as? String)!
         restartRecentChat(recent: recent, postId: postId)
         
-        self.loadWithUser(withUserUserId: withUserUserId) {(withUser) in
+        loadWithUser(withUserUserId: withUserUserId) { (withUser) in
             
             self.loadPost(postId: postId){ (post) in
                 
                 let chatVC = ChatViewController()
-                
-                chatVC.withUser = withUser
+                chatVC.withUserUserId = withUser.objectId
                 chatVC.currentUser = self.currentUser
                 chatVC.post = post
                 chatVC.chatRoomId = chatRoomId

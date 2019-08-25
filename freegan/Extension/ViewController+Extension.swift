@@ -25,6 +25,21 @@ extension UIViewController {
         firebase.child(kUSER).child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).updateChildValues(locationData)
     }
     
+    func loadWithUser(withUserUserId: String, withUser: @escaping(_ withUser: FUser) -> Void){
+        
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserUserId)
+            .observeSingleEvent(of: .value, with: {
+                snapshot in
+                
+                if snapshot.exists() {
+                    
+                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    withUser(poster)
+                }
+                
+            })
+    }
+    
     func showError(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
