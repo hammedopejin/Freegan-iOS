@@ -34,7 +34,7 @@ class ChatViewController: JSQMessagesViewController {
     var withUserUserId: String!
     var blockedUsersList: [String] = []
     var currentUser: FUser?
-    var post : Post?
+    var post : Post!
     var withUserImage : UIImage?
     
     var chatRoomId: String!
@@ -48,49 +48,7 @@ class ChatViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        inputToolbar.contentView.leftBarButtonItem = nil
-        
-        outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
-        
-        incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
-        
-        collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height:kJSQMessagesCollectionViewAvatarSizeDefault )
-        collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
-        
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID)
-            .queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
-                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                self.senderDisplayName = self.currentUser?.userName
-            }
-        })
-        
-        title = post?.description
-        
-        senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
-        
-        loadWithUser(withUserUserId: withUserUserId) { (withUser) in
-            self.withUser = withUser
-            self.blockedUsersList = self.withUser.blockedUsersList
-            loadImage(imageUrl: (withUser.userImgUrl)!){ [unowned self] (image) in
-                self.withUserImage = image
-                self.loadMessegas()
-            }
-        }
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
-        
-        loadImage(imageUrl: (post?.imageUrl[0])!){ [unowned self] (image) in
-            let postImageButton  = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
-            postImageButton.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
-            
-            let settingsButton = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ChatViewController.showUserOptions))
-            
-            self.navigationItem.rightBarButtonItems = [settingsButton, postImageButton]
-        }
-    
+        setUpChat()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -232,7 +190,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     @objc func seeProfile(_ sender: Any) {
-        var poster: FUser?
+        var poster: FUser!
         if post?.postUserObjectId == currentUser?.objectId {
             poster = currentUser
         } else {
@@ -244,7 +202,7 @@ class ChatViewController: JSQMessagesViewController {
         }
         
         let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
-        profileVC.posterUserId = poster?.objectId
+        profileVC.posterUserId = poster.objectId
         self.navigationController?.pushViewController(profileVC, animated: true)
     }
     
@@ -284,6 +242,67 @@ class ChatViewController: JSQMessagesViewController {
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func setUpChat() {
+        
+        inputToolbar.contentView.leftBarButtonItem = nil
+        
+        outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
+        
+        incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+        
+        collectionView?.collectionViewLayout.incomingAvatarViewSize = CGSize(width: kJSQMessagesCollectionViewAvatarSizeDefault, height:kJSQMessagesCollectionViewAvatarSizeDefault )
+        collectionView?.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID)
+            .queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
+                snapshot in
+                
+                if snapshot.exists() {
+                    self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    self.senderDisplayName = self.currentUser?.userName
+                }
+            })
+        
+        title = post?.description
+        
+        senderId = (KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
+        
+        loadWithUser(withUserUserId: withUserUserId) { (withUser) in
+            self.withUser = withUser
+            self.blockedUsersList = self.withUser.blockedUsersList
+            loadImage(imageUrl: (withUser.userImgUrl)!){ [unowned self] (image) in
+                self.withUserImage = image
+                self.loadMessegas()
+            }
+            
+            firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: self.withUserUserId).observe(.value, with: {
+                snapshot in
+                
+                if snapshot.exists() {
+                    self.withUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    if (self.currentUser!.blockedUsersList.contains(self.withUser.objectId) || self.withUser!.blockedUsersList.contains(self.currentUser!.objectId)) {
+                        //TODO implement blocking option
+                        self.inputToolbar.isHidden = true
+                    } else {
+                        self.inputToolbar.isHidden = false
+                    }
+                    self.collectionView.reloadData()
+                }
+            })
+        }
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ChatViewController.backAction))
+        
+        loadImage(imageUrl: (post?.imageUrl[0])!){ [unowned self] (image) in
+            let postImageButton  = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: #selector(ChatViewController.seeProfile))
+            postImageButton.setBackgroundImage(resizeImage(image: image, targetSize: CGSize(width: 100.0, height: 40.0)), for: .normal, barMetrics: .default)
+            
+            let settingsButton = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ChatViewController.showUserOptions))
+            
+            self.navigationItem.rightBarButtonItems = [settingsButton, postImageButton]
+        }
     }
     
     func sendMessage(text: String?, date: Date) {

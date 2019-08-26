@@ -45,47 +45,7 @@ class ProfileVC: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
-                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                
-                //Manually set the collectionView frame to the size of the view bounds
-                //(this is required to support iOS 10 devices and earlier)
-                self.collectionView.frame = self.view.bounds
-                
-                guard let posterUserId = self.posterUserId else {
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
-                    
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
-                    
-                    self.loadPosts()
-                    return
-                }
-                
-                if self.currentUser!.objectId != posterUserId {
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
-                    
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
-                    
-                    self.loadWithUser(withUserUserId: self.posterUserId) { (poster) in
-                        self.poster = poster
-                    }
-                    
-                    self.loadPosts()
-                    
-                } else {
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
-                    
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
-                    
-                    self.loadPosts()
-                }
-    
-            }
-            
-        })
+        setUpProfile()
         
     }
     
@@ -230,7 +190,11 @@ class ProfileVC: UIViewController{
     }
     
     @objc func backActionDefault() {
-        tabBarController?.selectedIndex = 0
+        if let _ = self.posterUserId {
+            navigationController?.popViewController(animated: true)
+        } else {
+            tabBarController?.selectedIndex = 0
+        }
     }
     
     @objc func goToSettings() {
@@ -244,8 +208,8 @@ class ProfileVC: UIViewController{
         posts.removeAll()
         
         guard let poster = poster else {
-            self.poster = self.currentUser
-            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.poster!.objectId).observe(.value, with: { (snapshot) in
+            
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.currentUser!.objectId).observe(.value, with: { (snapshot) in
                 if snapshot.exists() {
                 
                     let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -271,6 +235,50 @@ class ProfileVC: UIViewController{
                 }
                 self.collectionView.reloadData()
             }
+        })
+    }
+    
+    func setUpProfile() {
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+            snapshot in
+            
+            if snapshot.exists() {
+                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                
+                //Manually set the collectionView frame to the size of the view bounds
+                //(this is required to support iOS 10 devices and earlier)
+                self.collectionView.frame = self.view.bounds
+                
+                guard let posterUserId = self.posterUserId else {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                    
+                    self.loadPosts()
+                    return
+                }
+                
+                if self.currentUser!.objectId != posterUserId {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
+                    
+                    self.loadWithUser(withUserUserId: self.posterUserId) { (poster) in
+                        self.poster = poster
+                        self.blockedUsersList = self.poster.blockedUsersList
+                    }
+                    
+                    self.loadPosts()
+                    
+                } else {
+                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                    
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                    
+                    self.loadPosts()
+                }
+            }
+            
         })
     }
     

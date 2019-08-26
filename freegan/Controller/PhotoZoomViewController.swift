@@ -65,7 +65,7 @@ class PhotoZoomViewController: UIViewController {
     
     @IBAction func seeProfile(_ sender: Any) {
         
-        if(forSelf) {
+        if (forSelf) {
             guard let post = post else {
                 return
             }
@@ -74,8 +74,6 @@ class PhotoZoomViewController: UIViewController {
                 let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
                 editPostVC.post = post
                 present(editPostVC, animated: true, completion: nil)
-            } else {
-                
             }
             
         } else {
@@ -84,7 +82,7 @@ class PhotoZoomViewController: UIViewController {
             }
             
             let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
-            profileVC.poster = poster
+            profileVC.posterUserId = poster.objectId
             self.navigationController?.pushViewController(profileVC, animated: true)
         }
         
