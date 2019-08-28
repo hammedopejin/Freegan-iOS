@@ -45,6 +45,7 @@ class ChatViewController: JSQMessagesViewController {
     
     var outgoingBubble: JSQMessagesBubbleImage?
     var incomingBubble: JSQMessagesBubbleImage?
+    var blockedButton: UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -221,10 +222,17 @@ class ChatViewController: JSQMessagesViewController {
         
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.blockedUsersList.append(self.currentUser!.objectId)
+            self.inputToolbar.isHidden = true
+            self.blockedButton = self.showBlockedUserMessage()
+            self.view.addSubview(self.blockedButton!)
         }
         
         let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
             self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser!.objectId)!)
+            self.inputToolbar.isHidden = false
+            if let button = self.blockedButton {
+                button.removeFromSuperview()
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
@@ -242,6 +250,23 @@ class ChatViewController: JSQMessagesViewController {
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func showBlockedUserMessage() -> UIButton {
+        
+        let buttonX = 0
+        let buttonY = Int(UIScreen.main.bounds.size.height - 50)
+        let buttonWidth = Int(UIScreen.main.bounds.size.width)
+        let buttonHeight = 50
+        
+        let button = UIButton(type: .system)
+        button.setTitle("   Chat blocked by participant!", for: .normal)
+        button.tintColor = .lightGray
+        button.backgroundColor = .white
+        button.setImage(UIImage(named: "ic_block_red_400_24dp"), for: .normal)
+        button.frame = CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight)
+        
+        return button
     }
     
     func setUpChat() {
@@ -281,14 +306,19 @@ class ChatViewController: JSQMessagesViewController {
                 snapshot in
                 
                 if snapshot.exists() {
-                    self.withUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    if (self.currentUser!.blockedUsersList.contains(self.withUser.objectId) || self.withUser!.blockedUsersList.contains(self.currentUser!.objectId)) {
-                        //TODO implement blocking option
+                    let chatMate = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    
+                    if (self.currentUser!.blockedUsersList.contains(chatMate.objectId) || chatMate.blockedUsersList.contains(self.currentUser!.objectId)) {
                         self.inputToolbar.isHidden = true
+                        self.blockedButton = self.showBlockedUserMessage()
+                        self.view.addSubview(self.blockedButton!)
                     } else {
                         self.inputToolbar.isHidden = false
+                        if let button = self.blockedButton {
+                            button.removeFromSuperview()
+                        }
                     }
-                    self.collectionView.reloadData()
+                    
                 }
             })
         }
