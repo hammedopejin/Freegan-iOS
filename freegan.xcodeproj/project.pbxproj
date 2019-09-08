@@ -127,6 +127,7 @@
 		0F3FC48021E57E1E006BAC83 /* freeganUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freeganUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freeganUITests.swift; sourceTree = "<group>"; };
 		0F3FC48621E57E1E006BAC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F62D81C231873C0007E5BB9 /* freegan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = freegan.entitlements; sourceTree = "<group>"; };
 		0FE48C5422593AE000D3D1EA /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		0FE48C562259446600D3D1EA /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		0FE48C582266441500D3D1EA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -300,6 +301,7 @@
 		0F3FC46321E57E1B006BAC83 /* freegan */ = {
 			isa = PBXGroup;
 			children = (
+				0F62D81C231873C0007E5BB9 /* freegan.entitlements */,
 				0F0CFE0A21FACEAC0017C581 /* Animation */,
 				0F0CFD9421E6B0CC0017C581 /* Model */,
 				0F0CFD8C21E6A01E0017C581 /* View */,
@@ -429,6 +431,11 @@
 				TargetAttributes = {
 					0F3FC46021E57E1B006BAC83 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					0F3FC47421E57E1E006BAC83 = {
 						CreatedOnToolsVersion = 10.1;
@@ -814,6 +821,7 @@
 			baseConfigurationReference = EFC41019163179983BC7B4BB /* Pods-freegan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = freegan/freegan.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 87543A78RY;
 				INFOPLIST_FILE = freegan/Info.plist;
@@ -821,7 +829,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.planetpeopleplatform.freegan;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planetpeopleplatform.freegan-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -833,6 +841,7 @@
 			baseConfigurationReference = F4A75571943FFAF5DADEBFF3 /* Pods-freegan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = freegan/freegan.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 87543A78RY;
 				INFOPLIST_FILE = freegan/Info.plist;
@@ -840,7 +849,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.planetpeopleplatform.freegan;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planetpeopleplatform.freegan-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
