@@ -8,10 +8,10 @@
 
 import UIKit
 import Firebase
-import UserNotifications
+import FirebaseMessaging
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     var window: UIWindow?
 
@@ -19,20 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
         Database.database().isPersistenceEnabled = true
-        registerForPushNotifications()
         
         // Check if launched from notification
         let notificationOption = launchOptions?[.remoteNotification]
-        
-        // 1
+
         if let notification = notificationOption as? [String: AnyObject],
             let aps = notification["aps"] as? [String: AnyObject] {
             
-            // 2
             //NewMessage.makeNewNotification(aps)
             
-            // 3
             (window?.rootViewController as? UITabBarController)?.selectedIndex = 1
         }
         
@@ -61,60 +58,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current()
-            .requestAuthorization(options: [.alert, .sound, .badge]) {
-                [weak self] granted, error in
-                
-                print("Permission granted: \(granted)")
-                guard granted else { return }
-                self?.getNotificationSettings()
-        }
-    }
-    
-    func getNotificationSettings() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("Notification settings: \(settings)")
-            guard settings.authorizationStatus == .authorized else { return }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
-            }
-        }
-    }
-    
-    func application(
-        _ application: UIApplication,
-        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-        ) {
-        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
-        let token = tokenParts.joined()
-        print("Device Token: \(token)")
-        // Forward the token to your provider, using a custom method.
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
         
+        let dataDict:[String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
 //        self.enableRemoteNotificationFeatures()
-//        self.forwardTokenToServer(token: deviceToken)
     }
     
     func application(
-        _ application: UIApplication,
-        didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        _ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        
         print("Failed to register: \(error)")
         
-//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
 //        self.disableRemoteNotificationFeatures()
     }
     
     func application(
-        _ application: UIApplication,
-        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-        fetchCompletionHandler completionHandler:
-        @escaping (UIBackgroundFetchResult) -> Void
-        ) {
+        _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
         guard let aps = userInfo["aps"] as? [String: AnyObject] else {
             completionHandler(.failed)
             return
         }
+        // Print full message.
+        print(userInfo)
+        
         //NewMessage.makeNewNotification(aps)
+        
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
+        // TODO: Handle data of notification
+        
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        completionHandler(UIBackgroundFetchResult.newData)
     }
 
 }

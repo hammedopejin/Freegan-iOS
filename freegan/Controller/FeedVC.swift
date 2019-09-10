@@ -12,6 +12,7 @@ import SwiftKeychainWrapper
 import MapKit
 import CoreLocation
 import GeoFire
+import UserNotifications
 
 class FeedVC: UIViewController {
     
@@ -64,6 +65,7 @@ class FeedVC: UIViewController {
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                self.registerForPushNotifications()
                 if (self.currentUser?.latitude == nil || self.currentUser?.longitude == nil) {
                     self.requestLocation()
                 } else {
@@ -291,6 +293,27 @@ class FeedVC: UIViewController {
         case .restricted, .denied:
             self.present(alertController, animated: true, completion: nil)
             break
+        }
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) {
+                [weak self] granted, error in
+                
+                print("Permission granted: \(granted)")
+                guard granted else { return }
+                self?.getNotificationSettings()
+        }
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
         }
     }
     

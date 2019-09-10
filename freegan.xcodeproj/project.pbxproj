@@ -22,7 +22,6 @@
 		0F0CFE0E21FACF060017C581 /* ZoomTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE0D21FACF060017C581 /* ZoomTransitionController.swift */; };
 		0F0CFE1121FAD5660017C581 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1021FAD5660017C581 /* DataService.swift */; };
 		0F0CFE1321FAD6060017C581 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1221FAD6060017C581 /* Post.swift */; };
-		0F0CFE1521FD14AA0017C581 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */; };
 		0F150B4D2277F66B00C4E402 /* TermsAndConitionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F150B4C2277F66B00C4E402 /* TermsAndConitionsVC.swift */; };
 		0F150B4F2277FCB500C4E402 /* PrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F150B4E2277FCB500C4E402 /* PrivacyPolicyVC.swift */; };
 		0F181788225284B000C2C26A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F181787225284B000C2C26A /* Camera.swift */; };
@@ -47,6 +46,7 @@
 		0F3FC46F21E57E1D006BAC83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F3FC46D21E57E1D006BAC83 /* LaunchScreen.storyboard */; };
 		0F3FC47A21E57E1E006BAC83 /* freeganTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC47921E57E1E006BAC83 /* freeganTests.swift */; };
 		0F3FC48521E57E1E006BAC83 /* freeganUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */; };
+		0F62D8222328117B007E5BB9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F62D8212328117B007E5BB9 /* GoogleService-Info.plist */; };
 		0FE48C5522593AE000D3D1EA /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C5422593AE000D3D1EA /* RecentTableViewCell.swift */; };
 		0FE48C572259446600D3D1EA /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C562259446600D3D1EA /* RecentViewController.swift */; };
 		0FE48C592266441500D3D1EA /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE48C582266441500D3D1EA /* ProfileVC.swift */; };
@@ -95,7 +95,6 @@
 		0F0CFE0D21FACF060017C581 /* ZoomTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomTransitionController.swift; sourceTree = "<group>"; };
 		0F0CFE1021FAD5660017C581 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		0F0CFE1221FAD6060017C581 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F150B4C2277F66B00C4E402 /* TermsAndConitionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConitionsVC.swift; sourceTree = "<group>"; };
 		0F150B4E2277FCB500C4E402 /* PrivacyPolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVC.swift; sourceTree = "<group>"; };
 		0F181787225284B000C2C26A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
@@ -128,6 +127,7 @@
 		0F3FC48421E57E1E006BAC83 /* freeganUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freeganUITests.swift; sourceTree = "<group>"; };
 		0F3FC48621E57E1E006BAC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F62D81C231873C0007E5BB9 /* freegan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = freegan.entitlements; sourceTree = "<group>"; };
+		0F62D8212328117B007E5BB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0FE48C5422593AE000D3D1EA /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		0FE48C562259446600D3D1EA /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		0FE48C582266441500D3D1EA /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 				0F1A144A22EF7E6F00A1967D /* Storyboard */,
 				0F3FC46421E57E1B006BAC83 /* AppDelegate.swift */,
 				0F3FC47021E57E1D006BAC83 /* Info.plist */,
-				0F0CFE1421FD14AA0017C581 /* GoogleService-Info.plist */,
+				0F62D8212328117B007E5BB9 /* GoogleService-Info.plist */,
 			);
 			path = freegan;
 			sourceTree = "<group>";
@@ -432,6 +432,12 @@
 					0F3FC46021E57E1B006BAC83 = {
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -473,10 +479,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F1A144E22EF8B6900A1967D /* Profile.storyboard in Resources */,
+				0F62D8222328117B007E5BB9 /* GoogleService-Info.plist in Resources */,
 				0F1A145022EF8DB200A1967D /* Recent.storyboard in Resources */,
 				0F3FC46F21E57E1D006BAC83 /* LaunchScreen.storyboard in Resources */,
 				0F1A145222EF8F7E00A1967D /* Settings.storyboard in Resources */,
-				0F0CFE1521FD14AA0017C581 /* GoogleService-Info.plist in Resources */,
 				0F3FC46C21E57E1D006BAC83 /* Assets.xcassets in Resources */,
 				0F3FC46A21E57E1B006BAC83 /* Main.storyboard in Resources */,
 				0F1A144C22EF7EBF00A1967D /* Register.storyboard in Resources */,
@@ -535,6 +541,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -547,6 +554,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
