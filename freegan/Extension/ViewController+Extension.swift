@@ -33,8 +33,8 @@ extension UIViewController {
                 
                 if snapshot.exists() {
                     
-                    let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    withUser(poster)
+                    let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    withUser(user)
                 }
                 
             })

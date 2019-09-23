@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseMessaging
+import SwiftKeychainWrapper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
@@ -21,17 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Database.database().isPersistenceEnabled = true
-        
-        // Check if launched from notification
-        let notificationOption = launchOptions?[.remoteNotification]
-
-        if let notification = notificationOption as? [String: AnyObject],
-            let aps = notification["aps"] as? [String: AnyObject] {
-            
-            //NewMessage.makeNewNotification(aps)
-            
-            (window?.rootViewController as? UITabBarController)?.selectedIndex = 1
-        }
         
         return true
     }
@@ -59,42 +49,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-//        self.enableRemoteNotificationFeatures()
+        
+        firebase.child(kUSER)
+            .child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
+            .child(kINSTANCEID)
+            .setValue(fcmToken)
     }
     
     func application(
         _ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         
-        print("Failed to register: \(error)")
-        
         print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
-//        self.disableRemoteNotificationFeatures()
     }
     
     func application(
         _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
-        guard let aps = userInfo["aps"] as? [String: AnyObject] else {
+
+        guard let _ = userInfo["aps"] as? [String: AnyObject] else {
             completionHandler(.failed)
             return
         }
-        // Print full message.
-        print(userInfo)
-        
-        //NewMessage.makeNewNotification(aps)
-        
-        // If you are receiving a notification message while your app is in the background,
-        // this callback will not be fired till the user taps on the notification launching the application.
-        // TODO: Handle data of notification
-        
-        // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
-        
+
+        guard let data = userInfo["data"] as? [String: AnyObject] else {
+            completionHandler(UIBackgroundFetchResult.newData)
+            return
+        }
+
+        guard let withUserUserId = data[kSENDERID] as? String, let postId = data[kPOSTID] as? String,
+            let chatRoomId = data[kCHATROOMID] as? String else {
+            completionHandler(UIBackgroundFetchResult.newData)
+            return
+        }
+
+        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
+            .observeSingleEvent(of: .value, with: {
+                snapshot in
+
+                if snapshot.exists() {
+
+                    let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    let chatVC = ChatViewController()
+                    chatVC.withUserUserId = withUserUserId
+                    chatVC.currentUser = user
+
+                    DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                        chatVC.post = post
+                        chatVC.chatRoomId = chatRoomId
+                        chatVC.hidesBottomBarWhenPushed = true
+                        let bar = self.window?.rootViewController as? UITabBarController
+                        bar?.selectedIndex = 2
+                        let recentVC = bar?.selectedViewController! as! UINavigationController
+                        recentVC.pushViewController(chatVC, animated: true)
+                    })
+                }
+
+            })
+
         completionHandler(UIBackgroundFetchResult.newData)
     }
 

@@ -56,7 +56,6 @@ func imageFromData(pictureData: String, withBlock: (_ image: UIImage?) -> Void) 
     withBlock(image)
 }
 
-
 func loadImage(imageUrl: String, image: @escaping(_ image: UIImage) -> Void){
     let ref = Storage.storage().reference(forURL: imageUrl)
     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in

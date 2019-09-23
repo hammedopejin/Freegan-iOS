@@ -37,6 +37,9 @@ public let kAVATAR = "userImgUrl"
 public let kCURRENTUSER = "currentUser"
 public let kUSERIMAGEURL = "userImgUrl"
 
+//FirebaseMessagingService
+public let kINSTANCEID = "instanceId"
+
 //typeing
 public let kTYPINGPATH = "typing"
 

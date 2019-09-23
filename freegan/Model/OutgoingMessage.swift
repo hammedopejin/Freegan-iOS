@@ -20,8 +20,8 @@ class OutgoingMessage {
     func sendMessage(chatRoomID: String, item: NSMutableDictionary, vc: UIViewController) {
         
         let reference = ref.child(chatRoomID).childByAutoId()
-        item[kMESSAGEID] = reference.key
-        item[kCHATROOMID] = chatRoomID
+        item["messageId"] = reference.key
+        item["chatRoomId"] = chatRoomID
         
         reference.setValue(item) { (error, ref) in
             if error != nil {
