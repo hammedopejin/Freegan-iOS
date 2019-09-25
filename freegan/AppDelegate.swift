@@ -12,16 +12,16 @@ import FirebaseMessaging
 import SwiftKeychainWrapper
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        Messaging.messaging().delegate = self
         Database.database().isPersistenceEnabled = true
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
         
         return true
     }
@@ -67,49 +67,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     func application(
         _ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        let state = UIApplication.shared.applicationState
+        if (state != .active) {
+            guard let _ = userInfo["aps"] as? [String: AnyObject] else {
+                completionHandler(.failed)
+                return
+            }
 
-        guard let _ = userInfo["aps"] as? [String: AnyObject] else {
-            completionHandler(.failed)
-            return
-        }
+            guard let data = userInfo["data"] as? [String: AnyObject] else {
+                completionHandler(UIBackgroundFetchResult.newData)
+                return
+            }
 
-        guard let data = userInfo["data"] as? [String: AnyObject] else {
+            guard let withUserUserId = data[kSENDERID] as? String, let postId = data[kPOSTID] as? String,
+                let chatRoomId = data[kCHATROOMID] as? String else {
+                completionHandler(UIBackgroundFetchResult.newData)
+                return
+            }
+
+            firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
+                .observeSingleEvent(of: .value, with: {
+                    snapshot in
+
+                    if snapshot.exists() {
+
+                        let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                        let chatVC = ChatViewController()
+                        chatVC.withUserUserId = withUserUserId
+                        chatVC.currentUser = user
+
+                        DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+                            let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                            chatVC.post = post
+                            chatVC.chatRoomId = chatRoomId
+                            chatVC.hidesBottomBarWhenPushed = true
+                            let bar = self.window?.rootViewController as? UITabBarController
+                            bar?.selectedIndex = 2
+                            let recentVC = bar?.selectedViewController! as! UINavigationController
+                            recentVC.pushViewController(chatVC, animated: true)
+                        })
+                    }
+
+                })
+
             completionHandler(UIBackgroundFetchResult.newData)
-            return
-        }
-
-        guard let withUserUserId = data[kSENDERID] as? String, let postId = data[kPOSTID] as? String,
-            let chatRoomId = data[kCHATROOMID] as? String else {
+        } else {
             completionHandler(UIBackgroundFetchResult.newData)
-            return
         }
-
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
-            .observeSingleEvent(of: .value, with: {
-                snapshot in
-
-                if snapshot.exists() {
-
-                    let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    let chatVC = ChatViewController()
-                    chatVC.withUserUserId = withUserUserId
-                    chatVC.currentUser = user
-
-                    DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
-                        let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                        chatVC.post = post
-                        chatVC.chatRoomId = chatRoomId
-                        chatVC.hidesBottomBarWhenPushed = true
-                        let bar = self.window?.rootViewController as? UITabBarController
-                        bar?.selectedIndex = 2
-                        let recentVC = bar?.selectedViewController! as! UINavigationController
-                        recentVC.pushViewController(chatVC, animated: true)
-                    })
+    }
+    
+    // This method will be called when app received push notifications in foreground
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        if let viewControllers = window?.rootViewController?.children[2].children {
+            for viewController in viewControllers {
+                if viewController.isKind(of: ChatViewController.self) {
+                    completionHandler([])
+                    return
                 }
-
-            })
-
-        completionHandler(UIBackgroundFetchResult.newData)
+            }
+        }
+        completionHandler([.alert, .badge, .sound])
     }
 
 }
