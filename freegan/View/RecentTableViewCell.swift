@@ -52,7 +52,6 @@ class RecentTableViewCell: UITableViewCell {
                             if error != nil {
                                 print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                             } else {
-                                print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                                 if let imgData = data {
                                     if let img = UIImage(data: imgData) {
                                         self.avatarImageView.image = img
@@ -72,7 +71,6 @@ class RecentTableViewCell: UITableViewCell {
                     if error != nil {
                         print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                     } else {
-                        print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                         if let imgData = data {
                             if let img = UIImage(data: imgData) {
                                 self.postImageView.image = img

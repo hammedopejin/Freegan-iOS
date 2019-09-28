@@ -44,9 +44,7 @@ class ProfileVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpProfile()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -239,6 +237,7 @@ class ProfileVC: UIViewController{
     }
     
     func setUpProfile() {
+        
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
             snapshot in
             
@@ -266,9 +265,8 @@ class ProfileVC: UIViewController{
                     self.loadWithUser(withUserUserId: self.posterUserId) { (poster) in
                         self.poster = poster
                         self.blockedUsersList = self.poster.blockedUsersList
+                        self.loadPosts()
                     }
-                    
-                    self.loadPosts()
                     
                 } else {
                     self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
@@ -300,7 +298,6 @@ extension ProfileVC: UICollectionViewDataSource{
                     print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                     
                 } else {
-                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
                             if (j == 0){
@@ -323,10 +320,11 @@ extension ProfileVC: UICollectionViewDataSource{
         if (kind == UICollectionView.elementKindSectionHeader) {
             let headerView: ProfileCollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath) as! ProfileCollectionReusableView
             
-            guard let user = self.poster else {
-                headerView.profileName.text = self.currentUser?.userName
+            if let user = self.poster {
                 
-                guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else{
+                headerView.profileName.text = user.userName
+                print("collectionView Called poster userName: \(user.userName)")
+                guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
                     return headerView
                 }
                 
@@ -337,7 +335,6 @@ extension ProfileVC: UICollectionViewDataSource{
                         print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                         
                     } else {
-                        print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                         if let imgData = data {
                             if let img = UIImage(data: imgData) {
                                 
@@ -350,33 +347,40 @@ extension ProfileVC: UICollectionViewDataSource{
                 })
                 
                 return headerView
-            }
-            
-            headerView.profileName.text = user.userName
-            guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
-                return headerView
-            }
-            
-            let ref = Storage.storage().reference(forURL: imgUrl)
-            
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                
+            } else {
+                
+                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+                    snapshot in
                     
-                } else {
-                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
-                    if let imgData = data {
-                        if let img = UIImage(data: imgData) {
+                    if snapshot.exists() {
+                        self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                        
+                        headerView.profileName.text = self.currentUser?.userName
+                        if let imgUrl = self.currentUser?.userImgUrl {
+                            let ref = Storage.storage().reference(forURL: imgUrl)
                             
-                            headerView.profileImage.image = img
-                            FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
-                            
+                            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                                if error != nil {
+                                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                                    
+                                } else {
+                                    if let imgData = data {
+                                        if let img = UIImage(data: imgData) {
+                                            
+                                            headerView.profileImage.image = img
+                                            FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
+                                            
+                                        }
+                                    }
+                                }
+                            })
                         }
                     }
-                }
-            })
-            
-            return headerView
+                })
+                
+                return headerView
+            }
         }
         
         return UICollectionReusableView()

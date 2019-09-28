@@ -456,7 +456,6 @@ extension FeedVC: UICollectionViewDataSource {
                     print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
                     
                 } else {
-                    print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
                             if (j == 0){

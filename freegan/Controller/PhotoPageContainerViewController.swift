@@ -70,11 +70,6 @@ class PhotoPageContainerViewController: UIViewController {
         pageViewController.setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @objc
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {

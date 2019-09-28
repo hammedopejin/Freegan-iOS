@@ -26,6 +26,9 @@ class PostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
         imagePicker = UIImagePickerController()
         cam = Camera(delegate_: self)
@@ -41,10 +44,15 @@ class PostVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.hidesBarsOnTap = true
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     @IBAction func postButtonTapped(_ sender: Any) {
-        
         guard let img = postImage.image, imageSelected == true else {
             showToast(message: "An image must be selected!")
             return
@@ -112,6 +120,20 @@ class PostVC: UIViewController {
         postImage.image = UIImage(named: "1")
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
 }
