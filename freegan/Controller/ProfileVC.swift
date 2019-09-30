@@ -47,6 +47,17 @@ class ProfileVC: UIViewController{
         setUpProfile()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let posterUserId = self.posterUserId {
+            self.loadWithUser(withUserUserId: posterUserId) { (poster) in
+                self.poster = poster
+                self.blockedUsersList = poster.blockedUsersList
+                self.loadPosts()
+            }
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -54,8 +65,8 @@ class ProfileVC: UIViewController{
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        if let _ = poster {
-           firebase.child(kUSER).child(self.poster.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList])
+        if let poster = poster {
+            firebase.child(kUSER).child(poster.objectId).updateChildValues([kBLOCKEDUSERSLIST : blockedUsersList])
         }
     }
     
@@ -145,7 +156,7 @@ class ProfileVC: UIViewController{
         }
     }
     
-    @objc func showUserOptions(){
+    @objc func showUserOptions() {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -258,15 +269,10 @@ class ProfileVC: UIViewController{
                 }
                 
                 if self.currentUser!.objectId != posterUserId {
+                    
                     self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
                     
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
-                    
-                    self.loadWithUser(withUserUserId: self.posterUserId) { (poster) in
-                        self.poster = poster
-                        self.blockedUsersList = self.poster.blockedUsersList
-                        self.loadPosts()
-                    }
                     
                 } else {
                     self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
@@ -323,7 +329,6 @@ extension ProfileVC: UICollectionViewDataSource{
             if let user = self.poster {
                 
                 headerView.profileName.text = user.userName
-                print("collectionView Called poster userName: \(user.userName)")
                 guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
                     return headerView
                 }
@@ -416,7 +421,13 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         
         let photoPageContainerViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoPageContainerViewController") as! PhotoPageContainerViewController
         
-        let posters = Array(repeating: poster, count: posts.count)
+        var posters: Array<FUser>!
+        poster.blockedUsersList = blockedUsersList
+        if let user = poster {
+            posters = Array(repeating: user, count: posts.count)
+        } else {
+            posters = Array(repeating: currentUser!, count: posts.count)
+        }
         let nav = self.navigationController
         
         nav?.delegate = photoPageContainerViewController.transitionController
@@ -425,7 +436,8 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         photoPageContainerViewController.delegate = self
         photoPageContainerViewController.currentIndex = self.selectedIndexPath.row
         photoPageContainerViewController.posts = self.posts
-        photoPageContainerViewController.posters = posters as! [FUser]
+        photoPageContainerViewController.fromProfileFlag = true
+        photoPageContainerViewController.posters = posters
         photoPageContainerViewController.posterImages = self.posterImages
         photoPageContainerViewController.postImages = self.postImages
         photoPageContainerViewController.currentUser = self.currentUser

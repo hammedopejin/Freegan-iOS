@@ -60,6 +60,13 @@ class FeedVC: UIViewController {
         createSearch()
         setBar()
         
+        //Manually set the collectionView frame to the size of the view bounds
+        //(this is required to support iOS 10 devices and earlier)
+        self.collectionView.frame = self.view.bounds
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
             snapshot in
             
@@ -75,11 +82,6 @@ class FeedVC: UIViewController {
             }
             
         })
-        
-        //Manually set the collectionView frame to the size of the view bounds
-        //(this is required to support iOS 10 devices and earlier)
-        self.collectionView.frame = self.view.bounds
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

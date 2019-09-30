@@ -34,6 +34,7 @@ class PhotoPageContainerViewController: UIViewController {
     var currentIndex = 0
     var vertIndex = 0
     var nextIndex: Int?
+    var fromProfileFlag = false
     
     var transitionController = ZoomTransitionController()
     
@@ -57,11 +58,13 @@ class PhotoPageContainerViewController: UIViewController {
         vc.posterImage = posterImages[currentIndex]
         vc.post = posts[currentIndex]
         vc.poster = posters[currentIndex]
+        vc.blockedUsersList = posters[currentIndex].blockedUsersList
         if posters[currentIndex].objectId == currentUser.objectId {
             vc.forSelf = true
         } else {
             vc.forSelf = false
         }
+        vc.fromProfileFlag = fromProfileFlag
         vc.currentUser = currentUser
         
         let viewControllers = [
@@ -84,6 +87,7 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.posterImage = posterImages[currentIndex]
                     vc.post = posts[currentIndex]
                     vc.poster = posters[currentIndex]
+                    vc.blockedUsersList = posters[currentIndex].blockedUsersList
                     vc.currentUser = currentUser
                     if posters[currentIndex].objectId == currentUser.objectId {
                         vc.forSelf = true
@@ -105,6 +109,7 @@ class PhotoPageContainerViewController: UIViewController {
                     vc.posterImage = posterImages[currentIndex]
                     vc.post = posts[currentIndex]
                     vc.poster = posters[currentIndex]
+                    vc.blockedUsersList = posters[currentIndex].blockedUsersList
                     vc.currentUser = currentUser
                     if posters[currentIndex].objectId == currentUser.objectId {
                         vc.forSelf = true
@@ -139,6 +144,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.posterImage = posterImages[currentIndex - 1]
         vc.post = posts[currentIndex - 1]
         vc.poster = posters[currentIndex - 1]
+        vc.blockedUsersList = posters[currentIndex - 1].blockedUsersList
         vc.currentUser = currentUser
         if posters[currentIndex - 1].objectId == currentUser.objectId {
             vc.forSelf = true
@@ -161,6 +167,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         vc.posterImage = posterImages[currentIndex + 1]
         vc.post = posts[currentIndex + 1]
         vc.poster = posters[currentIndex + 1]
+        vc.blockedUsersList = posters[currentIndex + 1].blockedUsersList
         vc.currentUser = currentUser
         if posters[currentIndex + 1].objectId == currentUser.objectId {
             vc.forSelf = true
