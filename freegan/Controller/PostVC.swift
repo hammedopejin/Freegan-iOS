@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GeoFire
 
-class PostVC: UIViewController {
+class PostVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postDescription: FancyField!
@@ -26,6 +26,7 @@ class PostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        postDescription.delegate = self
         geoRef = GeoFire(firebaseRef: firebase.child(kPOSTLOCATION))
         imagePicker = UIImagePickerController()
         cam = Camera(delegate_: self)
@@ -119,6 +120,13 @@ class PostVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "\n" {
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }
 
 extension PostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

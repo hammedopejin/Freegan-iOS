@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class EditPostVC: UIViewController {
+class EditPostVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var firstPostImageView: UIImageView!
     @IBOutlet weak var secondPostImageView: UIImageView!
@@ -30,6 +30,9 @@ class EditPostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        postDescriptionText.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         imagePicker = UIImagePickerController()
         cam = Camera(delegate_: self)
@@ -130,7 +133,6 @@ class EditPostVC: UIViewController {
             }
             
         }
-        
         
     }
     
@@ -330,6 +332,28 @@ class EditPostVC: UIViewController {
         self.secondPostImageView.isHidden = false
         self.thirdPostImageView.isHidden = false
         self.fourthPostImageView.isHidden = false
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "\n" {
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 }
 

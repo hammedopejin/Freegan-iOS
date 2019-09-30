@@ -22,8 +22,8 @@ class PhotoZoomViewController: UIViewController {
     var poster: FUser?
     var currentUser: FUser?
     var index: Int = 0
-    var forSelf: Bool!
-    var fromProfileFlag: Bool!
+    var forSelf = false
+    var fromProfileFlag = false
     var fromChatFlag = false
     var blockedUsersList: [String] = []
     

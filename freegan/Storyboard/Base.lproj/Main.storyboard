@@ -325,10 +325,10 @@
                                         <rect key="frame" x="0.0" y="76" width="418" height="821"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jw-sJ-5zu">
-                                                <rect key="frame" x="0.0" y="40" width="400" height="120"/>
+                                                <rect key="frame" x="0.0" y="40" width="418" height="120"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="w0M-rp-57H">
-                                                        <rect key="frame" x="20.666666666666657" y="20" width="359" height="80"/>
+                                                        <rect key="frame" x="29.666666666666657" y="20" width="359" height="80"/>
                                                         <subviews>
                                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-PG-Nvu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -379,11 +379,10 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="w0M-rp-57H" firstAttribute="top" secondItem="0jw-sJ-5zu" secondAttribute="top" constant="20" id="Aku-tE-sW8"/>
-                                                    <constraint firstAttribute="width" constant="400" id="AvR-Ya-RFU"/>
-                                                    <constraint firstAttribute="trailing" secondItem="w0M-rp-57H" secondAttribute="trailing" constant="21" id="CaZ-00-88q"/>
-                                                    <constraint firstItem="w0M-rp-57H" firstAttribute="centerY" secondItem="0jw-sJ-5zu" secondAttribute="centerY" id="D5l-4v-K24"/>
-                                                    <constraint firstItem="w0M-rp-57H" firstAttribute="centerX" secondItem="0jw-sJ-5zu" secondAttribute="centerX" id="LOI-2S-kg0"/>
+                                                    <constraint firstItem="w0M-rp-57H" firstAttribute="centerY" secondItem="0jw-sJ-5zu" secondAttribute="centerY" id="Aur-Jf-KnU"/>
+                                                    <constraint firstAttribute="trailing" secondItem="w0M-rp-57H" secondAttribute="trailing" constant="29.333333333333371" id="KQF-PK-4q5"/>
                                                     <constraint firstAttribute="bottom" secondItem="w0M-rp-57H" secondAttribute="bottom" constant="20" id="Ue3-HR-BRA"/>
+                                                    <constraint firstItem="w0M-rp-57H" firstAttribute="leading" secondItem="0jw-sJ-5zu" secondAttribute="leading" constant="29.666666666666657" id="hof-kZ-PUF"/>
                                                     <constraint firstAttribute="height" constant="120" id="y2k-Ei-q9o"/>
                                                 </constraints>
                                             </scrollView>
