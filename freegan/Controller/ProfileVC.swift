@@ -422,8 +422,8 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         let photoPageContainerViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoPageContainerViewController") as! PhotoPageContainerViewController
         
         var posters: Array<FUser>!
-        poster.blockedUsersList = blockedUsersList
         if let user = poster {
+            poster.blockedUsersList = blockedUsersList
             posters = Array(repeating: user, count: posts.count)
         } else {
             posters = Array(repeating: currentUser!, count: posts.count)

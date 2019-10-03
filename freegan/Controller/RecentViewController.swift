@@ -42,8 +42,10 @@ class RecentViewController: UIViewController {
     func loadPost(postId: String, post: @escaping(_ post: Post) -> Void){
         
         DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
-            let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-            post(currentPost)
+            if snapshot.exists() {
+                let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                post(currentPost)
+            }
         })
     }
     

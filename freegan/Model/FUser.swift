@@ -120,7 +120,7 @@ class FUser {
         var user : NSDictionary = NSDictionary()
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: userId).observe(.value, with: {
             snapshot in
-            print(snapshot)
+            
             if snapshot.exists() {
                 user = ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary
             } else {

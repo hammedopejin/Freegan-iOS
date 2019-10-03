@@ -11,7 +11,7 @@ import Firebase
 import SwiftKeychainWrapper
 import MobileCoreServices
 
-class LogInVC : UIViewController {
+class LogInVC : UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailField: FancyField!
     @IBOutlet weak var pwdField: FancyField!
@@ -20,6 +20,9 @@ class LogInVC : UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        emailField.delegate =  self
+        pwdField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +59,14 @@ class LogInVC : UIViewController {
     func completeSignIn(id: String) {
         let _ = KeychainWrapper.defaultKeychainWrapper.set(id, forKey: KEY_UID)
         performSegue(withIdentifier: "goToFeed", sender: nil)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "\n" {
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

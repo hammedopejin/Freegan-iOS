@@ -29,9 +29,5 @@ class OutgoingMessage {
             }
         }
         updateRecents(chatRoomId: chatRoomID, lastMessage: (item[kMESSAGE] as? String)!)
-        
-        //send push notification
-        //        let decryptedString = DecryptText(chatRoomID: chatRoomID, string: (item[kMESSAGES] as? String)!)
-        //sendPushNotification1(chatRoomID: chatRoomID, message: decryptedString)
     }
 }

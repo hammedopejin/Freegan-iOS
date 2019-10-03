@@ -59,6 +59,17 @@ extension UIViewController {
         
     }
     
+    func showAlertWithEscaping(title: String, message: String, completion: @escaping (_ vc: UIViewController) -> Void) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        present(alert, animated: true) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                completion(self)
+            }
+        }
+        
+    }
+    
     func showToast(message : String) {
         
         let toastLabel = UILabel(frame: CGRect(x: view.frame.size.width/2 - 175, y: view.frame.size.height - 200, width: 350, height: 35))

@@ -377,14 +377,18 @@ class ChatViewController: JSQMessagesViewController {
         
         chatRef.child(chatRoomId).observe(.childChanged, with: {
             snapshot in
-            self.updateMessage(item: snapshot.value as! NSDictionary)
+            if snapshot.exists() {
+                self.updateMessage(item: snapshot.value as! NSDictionary)
+            }
         })
         
         chatRef.child(chatRoomId).observeSingleEvent(of: .value, with: {
             snapshot in
-            self.insertMessages()
-            self.finishReceivingMessage(animated: false)
-            self.initialLoadComplete = true
+            if snapshot.exists() {
+                self.insertMessages()
+                self.finishReceivingMessage(animated: false)
+                self.initialLoadComplete = true
+            }
         })
     }
     
@@ -479,11 +483,13 @@ class ChatViewController: JSQMessagesViewController {
         typingRef.child(chatRoomId).observe(.childChanged, with: {
             snapshot in
             
-            if snapshot.key != FUser.currentId() {
-                let typing = snapshot.value as! Bool
-                self.showTypingIndicator = typing
-                if typing {
-                    self.scrollToBottom(animated: true)
+            if snapshot.exists() {
+                if snapshot.key != FUser.currentId() {
+                    let typing = snapshot.value as! Bool
+                    self.showTypingIndicator = typing
+                    if typing {
+                        self.scrollToBottom(animated: true)
+                    }
                 }
             }
         })

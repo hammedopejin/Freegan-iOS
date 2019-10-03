@@ -65,20 +65,23 @@ class RecentTableViewCell: UITableViewCell {
             })
             
             DataService.ds.REF_POSTS.child(postId).observe(.value, with: { (snapshot) in
-                let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                let ref = Storage.storage().reference(forURL: currentPost.imageUrl[0])
-                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                    if error != nil {
-                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
-                    } else {
-                        if let imgData = data {
-                            if let img = UIImage(data: imgData) {
-                                self.postImageView.image = img
-                                FeedVC.imageCache.setObject(img, forKey: currentPost.imageUrl[0] as NSString)
+                
+                if snapshot.exists() {
+                    let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                    let ref = Storage.storage().reference(forURL: currentPost.imageUrl[0])
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                        if error != nil {
+                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                        } else {
+                            if let imgData = data {
+                                if let img = UIImage(data: imgData) {
+                                    self.postImageView.image = img
+                                    FeedVC.imageCache.setObject(img, forKey: currentPost.imageUrl[0] as NSString)
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
             })
             
         }

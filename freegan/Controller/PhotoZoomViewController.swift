@@ -100,10 +100,9 @@ class PhotoZoomViewController: UIViewController {
                 showUserOptions()
                 return
             }
-            if post.postUserObjectId == currentUser?.objectId {
-                let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
-                editPostVC.post = post
-                present(editPostVC, animated: true, completion: nil)
+            
+            if post.postUserObjectId == currentUser!.objectId {
+                showDeleteOrEditOptions(post.postId)
             }
             
         } else {
@@ -119,6 +118,32 @@ class PhotoZoomViewController: UIViewController {
         
     }
     
+    func showDeleteOrEditOptions(_ postId: String) {
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        optionMenu.popoverPresentationController?.sourceView = view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = []
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
+        let editPostAction = UIAlertAction(title: "Edit Post", style: .default) { [unowned self] (alert: UIAlertAction!) in
+            let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
+            editPostVC.post = self.post
+            self.present(editPostVC, animated: true, completion: nil)
+        }
+        
+        let deletePostAction = UIAlertAction(title: "Delete Post", style: .destructive) { [unowned self] (alert: UIAlertAction!) in
+            self.deletePostAlert(postId: postId)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        optionMenu.addAction(editPostAction)
+        optionMenu.addAction(deletePostAction)
+        optionMenu.addAction(cancelAction)
+        
+        present(optionMenu, animated: true, completion: nil)
+    }
+    
     func showUserOptions() {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -128,33 +153,94 @@ class PhotoZoomViewController: UIViewController {
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         
-        let report = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
+        let reportUserAction = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
             
         }
         
-        let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
+        let blockUserAction = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.blockedUsersList.append(self.currentUser!.objectId)
         }
         
-        let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
+        let unBlockUserAction = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
             self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser!.objectId)!)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
-            
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         
-        optionMenu.addAction(report)
+        optionMenu.addAction(reportUserAction)
         
         if (blockedUsersList.contains(currentUser!.objectId)) {
-            optionMenu.addAction(unBlock)
+            optionMenu.addAction(unBlockUserAction)
         } else {
-            optionMenu.addAction(block)
+            optionMenu.addAction(blockUserAction)
         }
         
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)
+    }
+    
+    func deletePostAlert(postId: String) {
+        
+        let deleteAlert = UIAlertController(title: "ATTENTION!!!", message: "Are you sure you want to delete?", preferredStyle: .alert)
+        
+        let deleteAction =  UIAlertAction(title: "Delete Post", style: .destructive){ [unowned self] (alert: UIAlertAction!) in
+            self.deletePost(postId: postId)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        deleteAlert.addAction(deleteAction)
+        deleteAlert.addAction(cancelAction)
+    
+        present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    func deletePost(postId: String) {
+        
+        firebase.child(kPOST).child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists() {
+                
+                self.showSpinner(onView: self.view)
+                
+                let postData = snapshot.value as! Dictionary<String, AnyObject>
+     
+                let post = Post(postId: postData.keys.first!, postData: postData)
+                
+                for i in post.imageUrl {
+                    let toDelete = storage.reference(forURL: i)
+                    toDelete.delete(completion: nil)
+                }
+                firebase.child(kPOST).child(postId).removeValue()
+                firebase.child(kPOSTLOCATION).child(postId).removeValue()
+                
+                firebase.child(kRECENT).queryOrdered(byChild: kPOSTID).queryEqual(toValue: postId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    if snapshot.exists() {
+                        let recents = snapshot.value as! Dictionary<String, AnyObject>
+                        
+                        for i in recents.keys {
+                            firebase.child(kRECENT).child(i).removeValue()
+                        }
+                        self.removeSpinner()
+                        self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
+                            view in
+                            view.dismiss(animated: true, completion: nil)
+                            self.parent?.parent?.navigationController?.popViewController(animated: true)
+                        }
+                    } else {
+                        self.removeSpinner()
+                        self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
+                            view in
+                            view.dismiss(animated: true, completion: nil)
+                            self.parent?.parent?.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                })
+  
+            }
+        })
+        
     }
     
 }

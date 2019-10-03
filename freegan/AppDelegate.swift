@@ -98,14 +98,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                         chatVC.currentUser = user
 
                         DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
-                            let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                            chatVC.post = post
-                            chatVC.chatRoomId = chatRoomId
-                            chatVC.hidesBottomBarWhenPushed = true
-                            let bar = self.window?.rootViewController as? UITabBarController
-                            bar?.selectedIndex = 2
-                            let recentVC = bar?.selectedViewController! as! UINavigationController
-                            recentVC.pushViewController(chatVC, animated: true)
+                            if snapshot.exists() {
+                                let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                                chatVC.post = post
+                                chatVC.chatRoomId = chatRoomId
+                                chatVC.hidesBottomBarWhenPushed = true
+                                let bar = self.window?.rootViewController as? UITabBarController
+                                bar?.selectedIndex = 2
+                                let recentVC = bar?.selectedViewController! as! UINavigationController
+                                recentVC.pushViewController(chatVC, animated: true)
+                            }
                         })
                     }
 

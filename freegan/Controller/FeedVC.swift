@@ -390,10 +390,12 @@ class FeedVC: UIViewController {
         
         for i in offset..<maxBoundary {
             DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { (snapshot) in
-                let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                self.posts.append(post)
-                
-                self.collectionView.reloadData()
+                if snapshot.exists() {
+                    let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                    self.posts.append(post)
+                    
+                    self.collectionView.reloadData()
+                }
             })
         }
 

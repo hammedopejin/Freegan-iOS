@@ -94,6 +94,7 @@ class PhotoPageContainerViewController: UIViewController {
                     } else {
                         vc.forSelf = false
                     }
+                    vc.fromProfileFlag = fromProfileFlag
                     vc.index = currentIndex
                     let viewControllers = [
                         vc
@@ -116,6 +117,7 @@ class PhotoPageContainerViewController: UIViewController {
                     } else {
                         vc.forSelf = false
                     }
+                    vc.fromProfileFlag = fromProfileFlag
                     vc.index = currentIndex
                     let viewControllers = [
                         vc
@@ -151,6 +153,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         } else {
             vc.forSelf = false
         }
+        vc.fromProfileFlag = fromProfileFlag
         vc.index = currentIndex - 1
         return vc
     }
@@ -174,6 +177,7 @@ extension PhotoPageContainerViewController: UIPageViewControllerDelegate, UIPage
         } else {
             vc.forSelf = false
         }
+        vc.fromProfileFlag = fromProfileFlag
         vc.index = currentIndex + 1
         return vc
     }
