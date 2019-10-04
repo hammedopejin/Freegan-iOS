@@ -223,7 +223,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bubble_min.png" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-P8-VuE" customClass="CircleView" customModule="freegan" customModuleProvider="target">
+                            <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_chat_bubble_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-P8-VuE" customClass="CircleView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="318" y="701" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -551,8 +551,8 @@
     <resources>
         <image name="1" width="480" height="423"/>
         <image name="backArrow" width="33.333332061767578" height="33.333332061767578"/>
-        <image name="bubble_min.png" width="48" height="35"/>
         <image name="freegan_logo_transparent" width="512" height="512"/>
+        <image name="ic_chat_bubble_white_24dp" width="32" height="32"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
