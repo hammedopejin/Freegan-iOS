@@ -272,6 +272,10 @@ class ChatViewController: JSQMessagesViewController {
     func setUpChat() {
         
         inputToolbar.contentView.leftBarButtonItem = nil
+        let sendButton = UIButton(frame: .zero)
+        let sendImage = UIImage(named: "ic_send_grey_24dp")
+        sendButton.setImage(sendImage, for: .normal)
+        inputToolbar.contentView.rightBarButtonItem = sendButton
         
         outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
         
