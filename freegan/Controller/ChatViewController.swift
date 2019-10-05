@@ -223,6 +223,7 @@ class ChatViewController: JSQMessagesViewController {
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.blockedUsersList.append(self.currentUser!.objectId)
             self.inputToolbar.isHidden = true
+            self.view.endEditing(true)
             self.blockedButton = self.showBlockedUserMessage()
             self.view.addSubview(self.blockedButton!)
         }
