@@ -128,6 +128,16 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        lockOrientation(.portrait, andRotateTo: .portrait)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        lockOrientation(.all)
+    }
+    
     @IBAction func backToPost(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

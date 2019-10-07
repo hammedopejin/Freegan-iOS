@@ -28,6 +28,23 @@ func dateFormatterWithTime() -> DateFormatter {
     return dateFormatter
 }
 
+//Lock orientation
+func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
+    
+    if let delegate = UIApplication.shared.delegate as? AppDelegate {
+        delegate.orientationLock = orientation
+    }
+}
+
+// OPTIONAL Added method to adjust lock and rotate to the desired orientation
+func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation:UIInterfaceOrientation) {
+    
+    lockOrientation(orientation)
+    
+    UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+    UINavigationController.attemptRotationToDeviceOrientation()
+}
+
 func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
     
     let imageView: UIImageView = UIImageView(image: image)
