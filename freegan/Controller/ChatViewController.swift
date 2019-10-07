@@ -5,7 +5,6 @@
 //  Created by Hammed opejin on 3/23/19.
 //  Copyright © 2019 Hammed opejin. All rights reserved.
 //
-
 import UIKit
 import JSQMessagesViewController
 import Firebase
@@ -54,6 +53,7 @@ class ChatViewController: JSQMessagesViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         clearRecentCounter(chatRoomID: chatRoomId)
+        navigationController?.hidesBarsOnTap = false
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -84,10 +84,10 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-    
+        
         let message = messages[indexPath.row]
         var avatar: JSQMessageAvatarImageDataSource
-    
+        
         if message.senderId != currentUser!.objectId {
             if let withUserAvatar = withUserImage {
                 avatar = JSQMessagesAvatarImageFactory.avatarImage(with: withUserAvatar, diameter: UInt(kJSQMessagesCollectionViewAvatarSizeDefault))
@@ -111,7 +111,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
-    
+        
         if messages[indexPath.item].senderId == senderId {
             return outgoingBubble
         } else {
@@ -343,18 +343,17 @@ class ChatViewController: JSQMessagesViewController {
     func sendMessage(text: String?, date: Date) {
         
         var outgoingMessage: OutgoingMessage?
-        
-        //text message
+     
         if let text = text {
             let encryptedText = text
-//            let encryptedText = EncryptText(chatRoomID: chatRoomId, string: text)
+            //            let encryptedText = EncryptText(chatRoomID: chatRoomId, string: text)
             
             outgoingMessage = OutgoingMessage(message: encryptedText, senderId: currentUser!.objectId, senderName: currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: (withUser?.objectId)!, postId: (post?.postId)!)
         }
-        finishSendingMessage()
         outgoingMessage!.sendMessage(chatRoomID: chatRoomId, item: outgoingMessage!.messageDictionary, vc: self)
+        finishSendingMessage()
     }
-
+    
     
     func loadMessegas() {
         //createTypingObservers()
@@ -362,9 +361,8 @@ class ChatViewController: JSQMessagesViewController {
         let legitTypes = [kAUDIO, kVIDEO, kTEXT, kLOCATION, kPICTURE]
         chatRef.child(chatRoomId).observe(.childAdded, with: {
             snapshot in
-            //update UI
+    
             if snapshot.exists() {
-                
                 let item = (snapshot.value as? NSDictionary)!
                 
                 if let type = item[kTYPE] as? String {
@@ -389,11 +387,11 @@ class ChatViewController: JSQMessagesViewController {
         
         chatRef.child(chatRoomId).observeSingleEvent(of: .value, with: {
             snapshot in
-            if snapshot.exists() {
-                self.insertMessages()
-                self.finishReceivingMessage(animated: false)
-                self.initialLoadComplete = true
-            }
+            
+            self.insertMessages()
+            self.finishReceivingMessage(animated: false)
+            self.initialLoadComplete = true
+            
         })
     }
     

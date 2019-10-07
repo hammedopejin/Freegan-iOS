@@ -136,7 +136,7 @@ class FUser {
         let createdAt = dateFormatter().string(from: user.createdAt ?? Date())
         let updatedAt = dateFormatter().string(from: user.updatedAt ?? Date())
         
-        return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.userName, user.userImgUrl], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kUSERNAME as NSCopying, kAVATAR as NSCopying])
+        return NSDictionary(objects: [user.objectId,  createdAt, updatedAt, user.email, user.loginMethod, user.pushId!, user.userName, user.userImgUrl!], forKeys: [kOBJECTID as NSCopying, kCREATEDAT as NSCopying, kUPDATEDAT as NSCopying, kEMAIL as NSCopying, kLOGINMETHOD as NSCopying, kPUSHID as NSCopying, kUSERNAME as NSCopying, kAVATAR as NSCopying])
         
     }
     

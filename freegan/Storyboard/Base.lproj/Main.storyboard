@@ -58,7 +58,7 @@
                                     <outlet property="delegate" destination="VKv-Lz-4jQ" id="6FX-NH-adF"/>
                                 </connections>
                             </collectionView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
                                 <rect key="frame" x="318" y="719" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -241,16 +241,21 @@
                                     <outletCollection property="gestureRecognizers" destination="8de-nr-Unq" appends="YES" id="toX-5v-gnb"/>
                                 </connections>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="24" translatesAutoresizingMaskIntoConstraints="NO" id="bxq-Il-U8e">
-                                <rect key="frame" x="20" y="784" width="374" height="33"/>
+                            <textView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4I-BU-3GB">
+                                <rect key="frame" x="20" y="784" width="374" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <viewLayoutGuide key="safeArea" id="3j1-on-eV5"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <viewLayoutGuide key="safeArea" id="qAw-gP-JVz"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -266,7 +271,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chatButtonImage" destination="GfL-P8-VuE" id="7dv-rH-4Si"/>
-                        <outlet property="postDescription" destination="bxq-Il-U8e" id="xtr-eA-NTq"/>
+                        <outlet property="postDescription" destination="A4I-BU-3GB" id="hwb-sk-6Ue"/>
                         <outlet property="postImageView" destination="bBy-a6-GDh" id="8NC-V2-TsR"/>
                         <outlet property="posterImageView" destination="uMn-I6-W42" id="6y7-v7-7yi"/>
                     </connections>
@@ -283,7 +288,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3674" y="133"/>
+            <point key="canvasLocation" x="3673.913043478261" y="132.58928571428572"/>
         </scene>
         <!--Freegan-->
         <scene sceneID="kKT-Qs-IN4">

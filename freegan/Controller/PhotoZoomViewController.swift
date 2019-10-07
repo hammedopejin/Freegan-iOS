@@ -12,8 +12,8 @@ class PhotoZoomViewController: UIViewController {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var posterImageView: CircleView!
-    @IBOutlet weak var postDescription: UITextField!
     @IBOutlet weak var chatButtonImage: CircleView!
+    @IBOutlet weak var postDescription: UITextView!
     
     
     var postImage: UIImage!

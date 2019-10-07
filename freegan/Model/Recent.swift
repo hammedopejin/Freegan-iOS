@@ -80,7 +80,7 @@ func creatRecentItem(userId: String, chatRoomId: String, members: [String], post
     let date = dateFormatterWithTime().string(from: Date())
     
     
-    let recent = [kRECENTID: recentId, kUSERID: userId, kCHATROOMID: chatRoomId, kMEMBERS: members, kPOSTID: postId, kWITHUSERUSERNAME: withUserUsername, kWITHUSERUSERID: withUserUserId, kLASTMESSAGE: "", kCOUNTER: 0, kDATE: date, kTYPE: type] as [String : Any]
+    let recent = [kRECENTID: recentId!, kUSERID: userId, kCHATROOMID: chatRoomId, kMEMBERS: members, kPOSTID: postId, kWITHUSERUSERNAME: withUserUsername, kWITHUSERUSERID: withUserUserId, kLASTMESSAGE: "", kCOUNTER: 0, kDATE: date, kTYPE: type] as [String : Any]
     
     
     refernce.setValue(recent) { (error, ref) in
