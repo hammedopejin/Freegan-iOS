@@ -216,8 +216,12 @@ class ChatViewController: JSQMessagesViewController {
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         
-        let report = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
-            
+        let report = UIAlertAction(title: "Report User", style: .default){ [unowned self](alert: UIAlertAction!) in
+            let reportVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ReportUserVC")
+                as! ReportUserVC
+            reportVC.poster = self.withUser
+            reportVC.currentUser = self.currentUser
+            self.navigationController?.pushViewController(reportVC, animated: true)
         }
         
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in

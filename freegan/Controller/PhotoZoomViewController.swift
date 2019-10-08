@@ -224,14 +224,14 @@ class PhotoZoomViewController: UIViewController {
                         }
                         self.removeSpinner()
                         self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
-                            view in
+                            [unowned self] view in
                             view.dismiss(animated: true, completion: nil)
                             self.parent?.parent?.navigationController?.popViewController(animated: true)
                         }
                     } else {
                         self.removeSpinner()
                         self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
-                            view in
+                            [unowned self] view in
                             view.dismiss(animated: true, completion: nil)
                             self.parent?.parent?.navigationController?.popViewController(animated: true)
                         }

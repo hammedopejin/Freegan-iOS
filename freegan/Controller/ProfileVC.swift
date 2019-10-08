@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class ProfileVC: UIViewController{
+class ProfileVC: UIViewController {
     
    
     @IBOutlet weak var collectionView: UICollectionView!
@@ -31,8 +31,8 @@ class ProfileVC: UIViewController{
     
     let firebaseUser = DataService.ds.REF_USER_CURRENT
     
-    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "1"), count: 4), count: 20)
-    var posterImages = Array(repeating: #imageLiteral(resourceName: "1"), count: 20)
+    var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "freegan_logo"), count: 4), count: 20)
+    var posterImages = Array(repeating: #imageLiteral(resourceName: "freegan_logo"), count: 20)
     var posts = [Post]()
     var currentUser: FUser?
     var poster: FUser!
@@ -165,7 +165,13 @@ class ProfileVC: UIViewController{
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
         optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
         
-        let report = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
+        let report = UIAlertAction(title: "Report User", style: .default){ [unowned self] (alert: UIAlertAction!) in
+            
+            let reportVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ReportUserVC")
+                as! ReportUserVC
+            reportVC.poster = self.poster
+            reportVC.currentUser = self.currentUser
+            self.navigationController?.pushViewController(reportVC, animated: true)
             
         }
         

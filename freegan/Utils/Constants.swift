@@ -90,6 +90,7 @@ public let kIMAGEURL = "imageUrl"
 public let kPOSTDATE = "postDate"
 public let kDESCRIPTION = "description"
 public let kPOSTLOCATION = "posts_location"
+public let kPOSTERID = "posterId"
 
 //blockedUsers
 public let kBLOCKEDUSERS = "blockedUsers"
@@ -102,6 +103,10 @@ public let kTEXT = "text"
 public let kVIDEO = "video"
 public let kAUDIO = "audio"
 public let kLOCATION = "location"
+
+//Report
+public let kREPORTMESSAGE = "reportMessages"
+public let kREPORTDATE = "reportDate"
 
 //coordinates
 public let kLATITUDE = "latitude"

@@ -60,9 +60,10 @@ class PostVC: UIViewController, UITextFieldDelegate {
             return
         }
         
+        self.view.endEditing(true)
         postButtonView.isHidden = true
         postDescription.isHidden = true
-        self.showSpinner(onView: self.view)
+        showSpinner(onView: view)
         
         if let imgData = img.jpegData(compressionQuality: 0.2) {
             
@@ -117,7 +118,12 @@ class PostVC: UIViewController, UITextFieldDelegate {
         imageSelected = false
         postImage.image = UIImage(named: "1")
         
-        self.navigationController?.popViewController(animated: true)
+        self.showAlertWithEscaping(title: "Success!", message: "Item successfully posted.") {
+            [unowned self] view in
+            view.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+        }
+       
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

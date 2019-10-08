@@ -24,6 +24,7 @@
 		0F0CFE1321FAD6060017C581 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0CFE1221FAD6060017C581 /* Post.swift */; };
 		0F150B4D2277F66B00C4E402 /* TermsAndConitionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F150B4C2277F66B00C4E402 /* TermsAndConitionsVC.swift */; };
 		0F150B4F2277FCB500C4E402 /* PrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F150B4E2277FCB500C4E402 /* PrivacyPolicyVC.swift */; };
+		0F1690C9234D032700692D14 /* ReportUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1690C8234D032700692D14 /* ReportUserVC.swift */; };
 		0F181788225284B000C2C26A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F181787225284B000C2C26A /* Camera.swift */; };
 		0F1A144722EF769600A1967D /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A144622EF769600A1967D /* ViewController+Extension.swift */; };
 		0F1A144922EF793000A1967D /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A144822EF793000A1967D /* SplashViewController.swift */; };
@@ -97,6 +98,7 @@
 		0F0CFE1221FAD6060017C581 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0F150B4C2277F66B00C4E402 /* TermsAndConitionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndConitionsVC.swift; sourceTree = "<group>"; };
 		0F150B4E2277FCB500C4E402 /* PrivacyPolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVC.swift; sourceTree = "<group>"; };
+		0F1690C8234D032700692D14 /* ReportUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportUserVC.swift; sourceTree = "<group>"; };
 		0F181787225284B000C2C26A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		0F1A144622EF769600A1967D /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		0F1A144822EF793000A1967D /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				0F0CFD8A21E69CC20017C581 /* RegisterVC.swift */,
 				0F1A145322F121CC00A1967D /* LocationVC.swift */,
 				0FE48C582266441500D3D1EA /* ProfileVC.swift */,
+				0F1690C8234D032700692D14 /* ReportUserVC.swift */,
 				0FE48C562259446600D3D1EA /* RecentViewController.swift */,
 				0F2D2D0F2241EB8D00F55867 /* PostVC.swift */,
 				0FE48C5E226D183300D3D1EA /* EditPostVC.swift */,
@@ -648,6 +651,7 @@
 				0F2D2D172246D73A00F55867 /* OutgoingMessage.swift in Sources */,
 				0F0CFE0721FACDFD0017C581 /* PhotoZoomViewController.swift in Sources */,
 				0F1A145422F121CC00A1967D /* LocationVC.swift in Sources */,
+				0F1690C9234D032700692D14 /* ReportUserVC.swift in Sources */,
 				0F1A144722EF769600A1967D /* ViewController+Extension.swift in Sources */,
 				0F1A144922EF793000A1967D /* SplashViewController.swift in Sources */,
 				0F181788225284B000C2C26A /* Camera.swift in Sources */,
