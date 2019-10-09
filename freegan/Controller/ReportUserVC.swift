@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class ReportUserVC: UIViewController {
+class ReportUserVC: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var sendButtonView: FancyButton!
@@ -21,7 +21,7 @@ class ReportUserVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        descriptionTextView.delegate = self
     }
     
     @IBAction func sendButtonTapped(_ sender: Any) {
@@ -37,6 +37,14 @@ class ReportUserVC: UIViewController {
         
         postToFirebase(message: description)
         
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     func postToFirebase(message: String) {
