@@ -40,9 +40,8 @@ public class IncomingMessage {
         let userId = item[kSENDERID] as? String
         
         let date = dateFormatterWithTime().date(from: (item[kDATE] as? String)!)
-        let decryptedText =  (item[kMESSAGE] as? String)!
         
-//      let decryptedText = DecryptText(chatRoomID: chatRoomId, string: (item[kMESSAGES] as? String)!)
+        let decryptedText = decrypt(encryptedText : (item[kMESSAGE] as? String)!, password: chatRoomId)
         
         return JSQMessage(senderId: userId, senderDisplayName: name, date: date, text: decryptedText)
     }

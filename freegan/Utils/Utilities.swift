@@ -45,6 +45,20 @@ func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rota
     UINavigationController.attemptRotationToDeviceOrientation()
 }
 
+func encrypt(plainText : String, password: String) -> String {
+    let data: Data = plainText.data(using: .utf8)!
+    let encryptedString : String = String(data: data, encoding: .utf8)!
+    return encryptedString
+}
+
+func decrypt(encryptedText : String, password: String) -> String {
+    if let data = encryptedText.data(using: .utf8) {
+        return String(data: data, encoding: .utf8) ?? ""
+    } else {
+        return encryptedText
+    }
+}
+
 func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
     
     let imageView: UIImageView = UIImageView(image: image)

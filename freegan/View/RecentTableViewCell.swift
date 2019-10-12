@@ -18,11 +18,6 @@ class RecentTableViewCell: UITableViewCell {
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -88,9 +83,7 @@ class RecentTableViewCell: UITableViewCell {
         
         nameLabel.text = recent[kWITHUSERUSERNAME] as? String
         
-//        lastMessageLabel.text = DecryptText(chatRoomID: (recent[kCHATROOMID] as? String)!, string: (recent[kLASTMESSAGE] as? String)!)
-        
-        lastMessageLabel.text = recent[kLASTMESSAGE] as? String
+        lastMessageLabel.text = decrypt(encryptedText: recent[kLASTMESSAGE] as? String ?? "", password: recent[kCHATROOMID] as? String ?? "")
         
         counterLabel.text = ""
         

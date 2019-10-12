@@ -82,16 +82,10 @@ func creatRecentItem(userId: String, chatRoomId: String, members: [String], post
     
     let recent = [kRECENTID: recentId!, kUSERID: userId, kCHATROOMID: chatRoomId, kMEMBERS: members, kPOSTID: postId, kWITHUSERUSERNAME: withUserUsername, kWITHUSERUSERID: withUserUserId, kLASTMESSAGE: "", kCOUNTER: 0, kDATE: date, kTYPE: type] as [String : Any]
     
-    
     refernce.setValue(recent) { (error, ref) in
         
-        print("created")
-        
         if error != nil {
-            
-            // ProgressHUD.showError("Couldnt create recent: \(error!.localizedDescription)")
         }
-        
     }
 }
 
@@ -154,7 +148,6 @@ func updateRecentItem(recent: NSDictionary, lastMessage: String) {
         (error, ref) -> Void in
         
         if error != nil {
-            // ProgressHUD.showError("Couldnt update recent: \(error!.localizedDescription)")
         }
         
     }
@@ -189,7 +182,6 @@ func clearRecentCounterItem(recent: NSDictionary) {
         
         if error != nil {
             
-            //  ProgressHUD.showError("Couldnt celar recent counter \(error!.localizedDescription)")
         }
     }
     
@@ -240,8 +232,6 @@ func deleteChatroom(chatRoomID: String) {
     firebase.child(kMESSAGE).child(chatRoomID).removeValue { (error, ref) in
         
         if error != nil {
-            
-            //ProgressHUD.showError("Couldnt delete chatroom: \(error!.localizedDescription)")
         }
     }
 }

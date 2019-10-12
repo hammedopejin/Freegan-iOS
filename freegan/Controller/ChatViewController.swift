@@ -349,8 +349,8 @@ class ChatViewController: JSQMessagesViewController {
         var outgoingMessage: OutgoingMessage?
      
         if let text = text {
-            let encryptedText = text
-            //            let encryptedText = EncryptText(chatRoomID: chatRoomId, string: text)
+            
+            let encryptedText = encrypt(plainText: text, password: chatRoomId)
             
             outgoingMessage = OutgoingMessage(message: encryptedText, senderId: currentUser!.objectId, senderName: currentUser!.userName, date: date, status: kDELIVERED, type: kTEXT, receiverId: (withUser?.objectId)!, postId: (post?.postId)!)
         }
