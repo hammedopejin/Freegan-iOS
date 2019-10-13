@@ -54,7 +54,6 @@ class UpdatePasswordVC: UIViewController {
             if (completion != nil) {
                 self.removeSpinner()
                 self.showError(title: "Error changing password!", message: completion!.localizedDescription)
-                print(completion.debugDescription)
             } else {
                 self.removeSpinner()
                 

@@ -25,6 +25,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         Database.database().isPersistenceEnabled = true
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
+                    
+        firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
+            snapshot in
+            if snapshot.exists() {
+                let sorted = ((snapshot.value as! NSDictionary).allValues as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)])
+                
+                var counter = 0
+                var resultCounter = 0
+                for recent in sorted {
+                    
+                    let currentRecent = recent as! NSDictionary
+                    
+                    let tempCount = currentRecent[kCOUNTER] as! Int
+                    
+                    resultCounter += 1
+                    counter += tempCount
+              
+                    if (resultCounter == sorted.count) {
+                        UIApplication.shared.applicationIconBadgeNumber = counter
+                    }
+                }
+            }
+        })
         
         return true
     }
@@ -96,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
                 .observeSingleEvent(of: .value, with: {
                     snapshot in
-
+                    
                     if snapshot.exists() {
 
                         let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)

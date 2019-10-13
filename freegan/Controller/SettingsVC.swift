@@ -206,7 +206,6 @@ class SettingsVC: UITableViewController {
     func logOut(){
     
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
-        print("HAMMED: ID removed from keychain \(keychainResult)")
         try! Auth.auth().signOut()
     
         let login = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
@@ -292,7 +291,6 @@ class SettingsVC: UITableViewController {
             {(placemarks, error) in
                 if (error != nil)
                 {
-                    print("reverse geodcode fail: \(error!.localizedDescription)")
                     completion(nil, nil)
                 }
                 let pm = placemarks! as [CLPlacemark]
@@ -329,7 +327,7 @@ extension SettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDel
         if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             uploadPicture(img: image)
         } else {
-            print("TAG: A valid image wasn't selected")
+            print("MARK: A valid image wasn't selected")
         }
         
         imagePicker.dismiss(animated: true, completion: nil)

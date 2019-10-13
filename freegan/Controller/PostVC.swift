@@ -144,7 +144,7 @@ extension PostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             postImage.image = image
             imageSelected = true
         } else {
-            print("TAG: A valid image wasn't selected")
+            print("MARK: A valid image wasn't selected")
             
         }
         

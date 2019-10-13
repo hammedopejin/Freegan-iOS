@@ -91,9 +91,8 @@ func loadImage(imageUrl: String, image: @escaping(_ image: UIImage) -> Void){
     let ref = Storage.storage().reference(forURL: imageUrl)
     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
         if error != nil {
-            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+            print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
         } else {
-            print("HAMMED: Image downloaded from Firebase storage, goood newwwws")
             if let imgData = data {
                 if let img = UIImage(data: imgData) {
                     image(img)

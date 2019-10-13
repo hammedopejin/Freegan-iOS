@@ -49,7 +49,6 @@ class UpdateEmailVC: UIViewController {
             if (completion != nil) {
                 self.removeSpinner()
                 self.showError(title: "Error changing email address!", message: completion!.localizedDescription)
-                print(completion.debugDescription)
             } else {
                 self.removeSpinner()
                 

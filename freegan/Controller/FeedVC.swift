@@ -207,16 +207,13 @@ class FeedVC: UIViewController {
     
     func createSearch() {
         searchController.searchBar.placeholder = "Search"
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .red
-        searchController.searchBar.barStyle = .default
         searchController.searchBar.backgroundColor = .init(red: 73/255, green: 167/255, blue: 151/255, alpha: 1.0)
         definesPresentationContext = true
         navigationItem.titleView = searchController.searchBar
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationController?.navigationBar.tintColor = .white
     }
     
     func setBar() {
@@ -303,7 +300,6 @@ class FeedVC: UIViewController {
             .requestAuthorization(options: [.alert, .sound, .badge]) {
                 [weak self] granted, error in
                 
-                print("Permission granted: \(granted)")
                 guard granted else { return }
                 self?.getNotificationSettings()
         }
@@ -311,7 +307,7 @@ class FeedVC: UIViewController {
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("Notification settings: \(settings)")
+        
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
@@ -435,7 +431,7 @@ extension FeedVC: UICollectionViewDataSource {
                     
                     ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
                         if error != nil {
-                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                            print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                             
                         } else {
                             if let imgData = data {
@@ -457,7 +453,7 @@ extension FeedVC: UICollectionViewDataSource {
             
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
                 if error != nil {
-                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                     
                 } else {
                     if let imgData = data {

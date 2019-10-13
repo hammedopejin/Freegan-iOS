@@ -48,7 +48,7 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
             
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 if error != nil {
-                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                 } else {
                     if let imgData = data {
                         if let img = UIImage(data: imgData) {
@@ -67,7 +67,7 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
                     ref = Storage.storage().reference(forURL: secondImageUrl)
                     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                         if error != nil {
-                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                            print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                         } else {
                             if let imgData = data {
                                 if let img = UIImage(data: imgData) {
@@ -88,7 +88,7 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
                     ref = Storage.storage().reference(forURL: thirdImageUrl)
                     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                         if error != nil {
-                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                            print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                         } else {
                             if let imgData = data {
                                 if let img = UIImage(data: imgData) {
@@ -109,7 +109,7 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
                     ref = Storage.storage().reference(forURL: fourthImageUrl)
                     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                         if error != nil {
-                            print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                            print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                         } else {
                             if let imgData = data {
                                 if let img = UIImage(data: imgData) {
@@ -245,7 +245,6 @@ class EditPostVC: UIViewController, UITextFieldDelegate {
                         
                             self.currentPostDownloadURLs!.append(downloadURL.absoluteString)
                             if finalI == (self.tempImages!.count - 1) {
-                                print(finalI == (self.tempImages!.count - 1))
                                 self.postIt()
                             }
                         }
@@ -371,7 +370,7 @@ extension EditPostVC: UIImagePickerControllerDelegate, UINavigationControllerDel
             self.tempImageView!.image = image
             self.tempImages!.append(image)
         } else {
-            print("TAG: A valid image wasn't selected")
+            print("MARK: A valid image wasn't selected")
         }
         
         picker.dismiss(animated: true, completion: nil)

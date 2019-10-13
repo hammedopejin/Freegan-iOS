@@ -307,7 +307,7 @@ extension ProfileVC: UICollectionViewDataSource{
             
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 if error != nil {
-                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                    print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                     
                 } else {
                     if let imgData = data {
@@ -343,7 +343,7 @@ extension ProfileVC: UICollectionViewDataSource{
                 
                 ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                     if error != nil {
-                        print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                        print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                         
                     } else {
                         if let imgData = data {
@@ -373,7 +373,7 @@ extension ProfileVC: UICollectionViewDataSource{
                             
                             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                                 if error != nil {
-                                    print("HAMMED: Unable to download image from Firebase storage \(error.debugDescription)")
+                                    print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                                     
                                 } else {
                                     if let imgData = data {
