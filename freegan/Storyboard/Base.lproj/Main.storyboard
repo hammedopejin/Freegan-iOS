@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R7F-fa-S1S">
-    <device id="retina6_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R7F-fa-S1S">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -150,20 +148,21 @@
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4R2-TC-Xf8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="111" y="128" width="192" height="30"/>
+                                <rect key="frame" x="111" y="128" width="192" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-3E-m3Q" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="111" y="168" width="192" height="30"/>
+                                <rect key="frame" x="111" y="172" width="192" height="30"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="POST">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="gfj-I7-lz0"/>
+                                    <action selector="postBtnTapped:" destination="S0g-5w-CYb" eventType="touchUpInside" id="lF5-Bc-1i3"/>
+                                    <action selector="postButtonTapped:" destination="S0g-5w-CYb" eventType="touchUpOutside" id="jZA-ki-KWj"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -290,13 +289,14 @@
             </objects>
             <point key="canvasLocation" x="3673.913043478261" y="132.58928571428572"/>
         </scene>
-        <!--Freegan-->
+        <!--Freegans-->
         <scene sceneID="kKT-Qs-IN4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GNh-BK-xVi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Freegan" id="yy1-VK-nsz"/>
+                    <tabBarItem key="tabBarItem" title="Freegans" image="staroflife" catalog="system" id="Ltm-Mr-Dfe"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="JzM-rb-37F"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="01q-sa-dPS">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
@@ -409,7 +409,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9WZ-dN-vPK" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="670" width="378" height="30"/>
+                                <rect key="frame" x="20" y="666" width="378" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -558,6 +558,7 @@
         <image name="freegan_logo" width="512" height="512"/>
         <image name="freegan_logo_transparent" width="512" height="512"/>
         <image name="ic_chat_bubble_white_24dp" width="32" height="32"/>
+        <image name="staroflife" catalog="system" width="62" height="64"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

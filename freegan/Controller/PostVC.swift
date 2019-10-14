@@ -36,6 +36,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
         } else {
             cam!.presentPhotoLibrary(target: self, canEdit: true, imagePicker: imagePicker)
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +51,50 @@ class PostVC: UIViewController, UITextFieldDelegate {
         tabBarController?.tabBar.isHidden = false
     }
     
-    @IBAction func postButtonTapped(_ sender: Any) {
+    
+    @IBAction func postButtonTapped(_ sender: UIButton) {
+        guard let img = postImage.image, imageSelected == true else {
+            showToast(message: "An image must be selected!")
+            return
+        }
+        guard let description = postDescription.text, description != "" else {
+            showToast(message: "Item must have description!")
+            return
+        }
+        
+        self.view.endEditing(true)
+        postButtonView.isHidden = true
+        postDescription.isHidden = true
+        showSpinner(onView: view)
+        
+        if let imgData = img.jpegData(compressionQuality: 0.2) {
+            
+            let imgUid = NSUUID().uuidString
+            
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            let ref = DataService.ds.REF_POST_IMAGES.child(imgUid)
+            
+            let _ = ref.putData(imgData, metadata: metadata) { (metadata, error) in
+                guard let metadata = metadata else {
+                    
+                    return
+                }
+                // Metadata contains file metadata such as size, content-type.
+                let _ = metadata.size
+                // You can also access to download URL after upload.
+                ref.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        
+                        return
+                    }
+                    self.postToFirebase(imgUrl: downloadURL.absoluteString)
+                }
+            }
+        }
+    }
+    @IBAction func postBtnTapped(_ sender: Any) {
         guard let img = postImage.image, imageSelected == true else {
             showToast(message: "An image must be selected!")
             return

@@ -178,14 +178,14 @@ class ChatViewController: JSQMessagesViewController {
     
     //MARK:  UITextViewDelegate
     override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        typingIndicatorStart()
+        //typingIndicatorStart()
         return true
     }
     
     @objc func backAction() {
         clearRecentCounter(chatRoomID: chatRoomId)
         chatRef.child(chatRoomId).removeAllObservers()
-        typingRef.child(chatRoomId).removeAllObservers()
+        //typingRef.child(chatRoomId).removeAllObservers()
         
         self.navigationController?.popViewController(animated: true)
     }

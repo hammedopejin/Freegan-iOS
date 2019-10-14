@@ -255,41 +255,44 @@ class ProfileVC: UIViewController {
     
     func setUpProfile() {
         
-        firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
-            
-            if snapshot.exists() {
-                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+        if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
+        
+            firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: currentUserId).observe(.value, with: {
+                snapshot in
                 
-                //Manually set the collectionView frame to the size of the view bounds
-                //(this is required to support iOS 10 devices and earlier)
-                self.collectionView.frame = self.view.bounds
-                
-                guard let posterUserId = self.posterUserId else {
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                if snapshot.exists() {
+                    self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                     
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                    //Manually set the collectionView frame to the size of the view bounds
+                    //(this is required to support iOS 10 devices and earlier)
+                    self.collectionView.frame = self.view.bounds
                     
-                    self.loadPosts()
-                    return
+                    guard let posterUserId = self.posterUserId else {
+                        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                        
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                        
+                        self.loadPosts()
+                        return
+                    }
+                    
+                    if self.currentUser!.objectId != posterUserId {
+                        
+                        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
+                        
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
+                        
+                    } else {
+                        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
+                        
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
+                        
+                        self.loadPosts()
+                    }
                 }
                 
-                if self.currentUser!.objectId != posterUserId {
-                    
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionWithPoster))
-                    
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.showUserOptions))
-                    
-                } else {
-                    self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backArrow"), style: .plain, target: self, action: #selector(ProfileVC.backActionDefault))
-                    
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_settings_white_24dp"), style: .plain, target: self, action: #selector(ProfileVC.goToSettings))
-                    
-                    self.loadPosts()
-                }
-            }
-            
-        })
+            })
+        }
     }
     
 }
@@ -336,6 +339,7 @@ extension ProfileVC: UICollectionViewDataSource{
                 
                 headerView.profileName.text = user.userName
                 guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
+                    headerView.profileImage.image = UIImage(named: "persoicon")
                     return headerView
                 }
                 
@@ -361,34 +365,39 @@ extension ProfileVC: UICollectionViewDataSource{
                 
             } else {
                 
-                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-                    snapshot in
+                if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
                     
-                    if snapshot.exists() {
-                        self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                    firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: currentUserId).observe(.value, with: {
+                        snapshot in
                         
-                        headerView.profileName.text = self.currentUser?.userName
-                        if let imgUrl = self.currentUser?.userImgUrl {
-                            let ref = Storage.storage().reference(forURL: imgUrl)
+                        if snapshot.exists() {
+                            self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                             
-                            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                                if error != nil {
-                                    print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
-                                    
-                                } else {
-                                    if let imgData = data {
-                                        if let img = UIImage(data: imgData) {
-                                            
-                                            headerView.profileImage.image = img
-                                            FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
-                                            
+                            headerView.profileName.text = self.currentUser?.userName
+                            guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else{
+                                return
+                            }
+                                
+                                let ref = Storage.storage().reference(forURL: imgUrl)
+                                
+                                ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                                    if error != nil {
+                                        print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
+                                        
+                                    } else {
+                                        if let imgData = data {
+                                            if let img = UIImage(data: imgData) {
+                                                
+                                                headerView.profileImage.image = img
+                                                FeedVC.imageCache.setObject(img, forKey: imgUrl as NSString)
+                                                
+                                            }
                                         }
                                     }
-                                }
-                            })
+                                })
                         }
-                    }
-                })
+                    })
+                }
                 
                 return headerView
             }

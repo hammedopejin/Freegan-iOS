@@ -25,29 +25,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         Database.database().isPersistenceEnabled = true
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
+        
+        if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
+            
+            firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: currentUserId).observe(.value, with: {
+                snapshot in
+                if snapshot.exists() {
+                    let sorted = ((snapshot.value as! NSDictionary).allValues as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)])
                     
-        firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
-            if snapshot.exists() {
-                let sorted = ((snapshot.value as! NSDictionary).allValues as NSArray).sortedArray(using: [NSSortDescriptor(key: kDATE, ascending: false)])
-                
-                var counter = 0
-                var resultCounter = 0
-                for recent in sorted {
-                    
-                    let currentRecent = recent as! NSDictionary
-                    
-                    let tempCount = currentRecent[kCOUNTER] as! Int
-                    
-                    resultCounter += 1
-                    counter += tempCount
-              
-                    if (resultCounter == sorted.count) {
-                        UIApplication.shared.applicationIconBadgeNumber = counter
+                    var counter = 0
+                    var resultCounter = 0
+                    for recent in sorted {
+                        
+                        let currentRecent = recent as! NSDictionary
+                        
+                        let tempCount = currentRecent[kCOUNTER] as! Int
+                        
+                        resultCounter += 1
+                        counter += tempCount
+                        
+                        if (resultCounter == sorted.count) {
+                            UIApplication.shared.applicationIconBadgeNumber = counter
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
         
         return true
     }
@@ -82,10 +85,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
         let dataDict:[String: String] = ["token": fcmToken]
         NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
         
-        firebase.child(kUSER)
-            .child(KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
-            .child(kINSTANCEID)
-            .setValue(fcmToken)
+        if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
+            
+            firebase.child(kUSER)
+                .child(currentUserId)
+                .child(kINSTANCEID)
+                .setValue(fcmToken)
+        }
     }
     
     func application(
@@ -115,33 +121,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 completionHandler(UIBackgroundFetchResult.newData)
                 return
             }
-
-            firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!)
-                .observeSingleEvent(of: .value, with: {
-                    snapshot in
-                    
-                    if snapshot.exists() {
-
-                        let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                        let chatVC = ChatViewController()
-                        chatVC.withUserUserId = withUserUserId
-                        chatVC.currentUser = user
-
-                        DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
-                            if snapshot.exists() {
-                                let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                                chatVC.post = post
-                                chatVC.chatRoomId = chatRoomId
-                                chatVC.hidesBottomBarWhenPushed = true
-                                let bar = self.window?.rootViewController as? UITabBarController
-                                bar?.selectedIndex = 2
-                                let recentVC = bar?.selectedViewController! as! UINavigationController
-                                recentVC.pushViewController(chatVC, animated: true)
-                            }
-                        })
-                    }
-
-                })
+            
+            if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
+                
+                firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: currentUserId)
+                    .observeSingleEvent(of: .value, with: {
+                        snapshot in
+                        
+                        if snapshot.exists() {
+                            
+                            let user = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                            let chatVC = ChatViewController()
+                            chatVC.withUserUserId = withUserUserId
+                            chatVC.currentUser = user
+                            
+                            DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+                                if snapshot.exists() {
+                                    let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
+                                    chatVC.post = post
+                                    chatVC.chatRoomId = chatRoomId
+                                    chatVC.hidesBottomBarWhenPushed = true
+                                    let bar = self.window?.rootViewController as? UITabBarController
+                                    bar?.selectedIndex = 2
+                                    let recentVC = bar?.selectedViewController! as! UINavigationController
+                                    recentVC.pushViewController(chatVC, animated: true)
+                                }
+                            })
+                        }
+                        
+                    })
+            }
 
             completionHandler(UIBackgroundFetchResult.newData)
         } else {
