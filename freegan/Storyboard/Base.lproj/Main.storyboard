@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="R7F-fa-S1S">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
@@ -11,17 +11,17 @@
         <!--FeedVC-->
         <scene sceneID="oq0-RS-O4j">
             <objects>
-                <viewController storyboardIdentifier="FeedVC" id="VKv-Lz-4jQ" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedVC" modalPresentationStyle="fullScreen" id="VKv-Lz-4jQ" customClass="FeedVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Aje-dK-H7Z"/>
                         <viewControllerLayoutGuide type="bottom" id="9mv-S5-RPk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DX2-ki-a1h">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="06D-oa-gj6">
-                                <rect key="frame" x="0.0" y="88" width="414" height="789"/>
+                                <rect key="frame" x="-47" y="-254" width="414" height="789"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -57,7 +57,7 @@
                                 </connections>
                             </collectionView>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="STU-zh-Udr" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="318" y="719" width="56" height="56"/>
+                                <rect key="frame" x="235" y="363" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -94,11 +94,11 @@
                         <viewControllerLayoutGuide type="bottom" id="gmc-gr-6td"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="I3e-4j-y8f">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYW-Yz-wpm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
@@ -137,25 +137,25 @@
         <!--PostVC-->
         <scene sceneID="XYv-hz-jWY">
             <objects>
-                <viewController id="S0g-5w-CYb" customClass="PostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="S0g-5w-CYb" customClass="PostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RfZ-tu-z1B">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="freegan_logo" translatesAutoresizingMaskIntoConstraints="NO" id="rPg-Y6-sXk">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4R2-TC-Xf8" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="111" y="128" width="192" height="34"/>
+                                <rect key="frame" x="75" y="84" width="170.5" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-3E-m3Q" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="111" y="172" width="192" height="30"/>
+                                <rect key="frame" x="75" y="128" width="170.5" height="30"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="POST">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -214,16 +214,16 @@
                         <viewControllerLayoutGuide type="bottom" id="13T-bX-KwC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rxk-r3-T4f">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="freegan_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-a6-GDh">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_chat_bubble_white_24dp" translatesAutoresizingMaskIntoConstraints="NO" id="GfL-P8-VuE" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="318" y="701" width="56" height="56"/>
+                                <rect key="frame" x="235" y="354" width="56" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <gestureRecognizers/>
@@ -232,7 +232,7 @@
                                 </connections>
                             </imageView>
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uMn-I6-W42" customClass="CircleView" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="340" y="44" width="48" height="48"/>
+                                <rect key="frame" x="253" y="22" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
@@ -240,8 +240,8 @@
                                     <outletCollection property="gestureRecognizers" destination="8de-nr-Unq" appends="YES" id="toX-5v-gnb"/>
                                 </connections>
                             </imageView>
-                            <textView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4I-BU-3GB">
-                                <rect key="frame" x="20" y="784" width="374" height="39"/>
+                            <textView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4I-BU-3GB">
+                                <rect key="frame" x="15" y="403" width="290" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -252,7 +252,7 @@
                                 <viewLayoutGuide key="safeArea" id="qAw-gP-JVz"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -289,16 +289,16 @@
             </objects>
             <point key="canvasLocation" x="3673.913043478261" y="132.58928571428572"/>
         </scene>
-        <!--Freegans-->
+        <!--Navigation Controller-->
         <scene sceneID="kKT-Qs-IN4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GNh-BK-xVi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Freegans" image="staroflife" catalog="system" id="Ltm-Mr-Dfe"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="GNh-BK-xVi" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="Ltm-Mr-Dfe"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="JzM-rb-37F"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="01q-sa-dPS">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="barTintColor" red="0.25458964705467224" green="0.57744717597961426" blue="0.52156585454940796" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -318,22 +318,22 @@
         <!--Edit PostVC-->
         <scene sceneID="w0H-ia-qOQ">
             <objects>
-                <viewController storyboardIdentifier="EditPostVC" id="CpY-uO-yzl" customClass="EditPostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditPostVC" modalPresentationStyle="fullScreen" id="CpY-uO-yzl" customClass="EditPostVC" customModule="freegan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z2b-SZ-Oev">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1yX-wE-Fo0">
-                                <rect key="frame" x="0.0" y="0.0" width="418" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kv-z7-GMG">
-                                        <rect key="frame" x="0.0" y="76" width="418" height="821"/>
+                                        <rect key="frame" x="0.0" y="76" width="320" height="405"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jw-sJ-5zu">
-                                                <rect key="frame" x="0.0" y="40" width="418" height="120"/>
+                                                <rect key="frame" x="0.0" y="40" width="320" height="120"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="w0M-rp-57H">
-                                                        <rect key="frame" x="29.666666666666657" y="20" width="359" height="80"/>
+                                                        <rect key="frame" x="29.5" y="20" width="359" height="80"/>
                                                         <subviews>
                                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-PG-Nvu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -409,14 +409,14 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item description" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9WZ-dN-vPK" customClass="FancyField" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="666" width="378" height="34"/>
+                                <rect key="frame" x="16" y="284" width="288" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="1" green="0.07962868528" blue="0.067027487920000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9R-gU-h7V" customClass="FancyButton" customModule="freegan" customModuleProvider="target">
-                                <rect key="frame" x="107" y="710" width="204" height="40"/>
+                                <rect key="frame" x="107" y="328" width="106" height="40"/>
                                 <color key="backgroundColor" red="0.42566940190000002" green="0.70731186869999996" blue="0.62744474409999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <viewLayoutGuide key="safeArea" id="Jnp-Ly-igq"/>
                                 <state key="normal" title="SAVE">
@@ -427,7 +427,7 @@
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VfC-sm-S3x">
-                                <rect key="frame" x="0.0" y="57" width="418" height="44"/>
+                                <rect key="frame" x="0.0" y="13" width="320" height="44"/>
                                 <color key="barTintColor" red="0.36086896060000001" green="0.73836958409999998" blue="0.67450696229999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -524,7 +524,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="eaN-cs-vuR">
             <objects>
-                <tabBarController storyboardIdentifier="BaseVC" automaticallyAdjustsScrollViewInsets="NO" id="R7F-fa-S1S" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="BaseVC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="R7F-fa-S1S" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="61L-aX-o6p">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -554,11 +554,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backArrow" width="33.333332061767578" height="33.333332061767578"/>
+        <image name="backArrow" width="25" height="25"/>
         <image name="freegan_logo" width="512" height="512"/>
         <image name="freegan_logo_transparent" width="512" height="512"/>
-        <image name="ic_chat_bubble_white_24dp" width="32" height="32"/>
-        <image name="staroflife" catalog="system" width="62" height="64"/>
+        <image name="ic_chat_bubble_white_24dp" width="24" height="24"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

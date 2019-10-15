@@ -139,11 +139,11 @@
             </objects>
             <point key="canvasLocation" x="3537.68115942029" y="-687.05357142857144"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Recent chats-->
         <scene sceneID="2gK-FN-Mk9">
             <objects>
                 <navigationController storyboardIdentifier="recentVC" automaticallyAdjustsScrollViewInsets="NO" id="VrB-bp-cew" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="Gbl-nq-yHV"/>
+                    <tabBarItem key="tabBarItem" title="Recent chats" image="ic_chat_bubble_white_24dp" id="Gbl-nq-yHV"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="b3A-K9-FWP">
@@ -168,5 +168,6 @@
     </scenes>
     <resources>
         <image name="ic_account_circle_black_24dp" width="24" height="24"/>
+        <image name="ic_chat_bubble_white_24dp" width="24" height="24"/>
     </resources>
 </document>

@@ -52,7 +52,7 @@ class LogInVC : UIViewController, UITextFieldDelegate {
     
     @IBAction func gotoLogin(_ sender: Any) {
         
-        let register = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC")
+        let register = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
         self.present(register, animated: true, completion: nil)
     }
  

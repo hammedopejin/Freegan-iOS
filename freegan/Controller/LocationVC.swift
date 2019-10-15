@@ -42,7 +42,6 @@ class LocationVC: UIViewController {
     
     func createSearch() {
         searchController.searchBar.placeholder = "Search"
-        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .white

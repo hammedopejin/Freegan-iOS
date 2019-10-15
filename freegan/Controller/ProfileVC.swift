@@ -338,7 +338,7 @@ extension ProfileVC: UICollectionViewDataSource{
             if let user = self.poster {
                 
                 headerView.profileName.text = user.userName
-                guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else{
+                guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else {
                     headerView.profileImage.image = UIImage(named: "persoicon")
                     return headerView
                 }
@@ -374,7 +374,8 @@ extension ProfileVC: UICollectionViewDataSource{
                             self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                             
                             headerView.profileName.text = self.currentUser?.userName
-                            guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else{
+                            guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else {
+                                headerView.profileImage.image = UIImage(named: "persoicon")
                                 return
                             }
                                 

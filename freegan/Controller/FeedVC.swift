@@ -207,9 +207,10 @@ class FeedVC: UIViewController {
     
     func createSearch() {
         searchController.searchBar.placeholder = "Search"
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .red
+        searchController.searchBar.barStyle = .default
         searchController.searchBar.backgroundColor = .init(red: 73/255, green: 167/255, blue: 151/255, alpha: 1.0)
         definesPresentationContext = true
         navigationItem.titleView = searchController.searchBar
@@ -598,11 +599,11 @@ extension FeedVC: CLLocationManagerDelegate {
 
 //MARK: - SEARCH
 
-extension FeedVC: UISearchResultsUpdating {
+extension FeedVC: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        guard let search = searchController.searchBar.text else {
+        guard let search = searchBar.text else {
             return
         }
         filterFreegans(by: search)
@@ -611,11 +612,12 @@ extension FeedVC: UISearchResultsUpdating {
     //MARK: Helper func
     
     func isFiltering() -> Bool {
-        return !searchController.searchBar.text!.isEmpty && searchController.isActive
+        return ((!searchController.searchBar.text!.isEmpty && searchController.isActive) || posts.isEmpty)
     }
     
     func filterFreegans(by search: String) {
         filteredPosts = posts.filter({$0.description.lowercased().contains(search.lowercased())})
+        posts.removeAll()
         collectionView.reloadData()
     }
 }
