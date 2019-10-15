@@ -53,6 +53,15 @@ class FeedVC: UIViewController {
     
     let locationManager = CLLocationManager()
     let searchController = UISearchController(searchResultsController: nil)
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+                     #selector(FeedVC.refresh(_:)),
+                                 for: UIControl.Event.valueChanged)
+        refreshControl.tintColor = UIColor.red
+        
+        return refreshControl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +71,9 @@ class FeedVC: UIViewController {
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
-        self.collectionView.frame = self.view.bounds
+        collectionView.frame = self.view.bounds
+        collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,9 +89,7 @@ class FeedVC: UIViewController {
                 } else {
                     self.checkPosts()
                 }
-                
             }
-            
         })
     }
     
@@ -207,7 +216,7 @@ class FeedVC: UIViewController {
     
     func createSearch() {
         searchController.searchBar.placeholder = "Search"
-        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.tintColor = .red
         searchController.searchBar.barStyle = .default
@@ -222,6 +231,11 @@ class FeedVC: UIViewController {
         let logoButton = UIBarButtonItem(image: UIImage(), style: .plain, target: self, action: nil)
         logoButton.setBackgroundImage(resizeImage(image: UIImage(named: "freegan_logo_transparent")!, targetSize: CGSize(width: 60.0, height: 60.0)), for: .normal, barMetrics: .default)
         navigationItem.leftBarButtonItems = [logoButton]
+    }
+    
+    @objc func refresh(_ refreshControl: UIRefreshControl) {
+        checkPosts()
+        refreshControl.endRefreshing()
     }
     
     func requestLocation() {
@@ -345,7 +359,7 @@ class FeedVC: UIViewController {
         self.present(optionMenu, animated: true, completion: nil)
     }
     
-    func checkPosts(){
+    func checkPosts() {
         
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
             if(askLocationFlag){
@@ -599,11 +613,10 @@ extension FeedVC: CLLocationManagerDelegate {
 
 //MARK: - SEARCH
 
-extension FeedVC: UISearchBarDelegate {
+extension FeedVC: UISearchResultsUpdating {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        guard let search = searchBar.text else {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let search = searchController.searchBar.text else {
             return
         }
         filterFreegans(by: search)
@@ -612,13 +625,15 @@ extension FeedVC: UISearchBarDelegate {
     //MARK: Helper func
     
     func isFiltering() -> Bool {
-        return ((!searchController.searchBar.text!.isEmpty && searchController.isActive) || posts.isEmpty)
+        return ((!searchController.searchBar.text!.isEmpty && searchController.isActive) || posts.count == filteredPosts.count)
     }
     
     func filterFreegans(by search: String) {
-        filteredPosts = posts.filter({$0.description.lowercased().contains(search.lowercased())})
-        posts.removeAll()
-        collectionView.reloadData()
+        if !search.isEmpty && search != "" {
+            filteredPosts = posts.filter({$0.description.lowercased().contains(search.lowercased())})
+            posts = filteredPosts
+            collectionView.reloadData()
+        }
     }
 }
 
