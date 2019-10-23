@@ -3,109 +3,109 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_40-2.png",
+      "filename" : "freegan_icon_40_new-2.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_60.png",
+      "filename" : "freegan_icon_60_new.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_58-1.png",
+      "filename" : "freegan_icon_58_new-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_87.png",
+      "filename" : "freegan_icon_87_new.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_80-1.png",
+      "filename" : "freegan_icon_80_new-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_120-1.png",
+      "filename" : "freegan_icon_120_new-1.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_120.png",
+      "filename" : "freegan_icon_120_new.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "freegan_icon_180.png",
+      "filename" : "freegan_icon_180_new.png",
       "scale" : "3x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_20.png",
+      "filename" : "freegan_icon_20_new-1.png",
       "scale" : "1x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_40.png",
+      "filename" : "freegan_icon_40_new.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_29.png",
+      "filename" : "freegan_icon_29_new.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_58.png",
+      "filename" : "freegan_icon_58_new.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_40-1.png",
+      "filename" : "freegan_icon_40_new-1.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_80.png",
+      "filename" : "freegan_icon_80_new.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_76.png",
+      "filename" : "freegan_icon_76_new.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_152.png",
+      "filename" : "freegan_icon_152_new.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "freegan_icon_167.png",
+      "filename" : "freegan_icon_167_new.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "freegan_icon_1024.png",
+      "filename" : "freegan_icon.png",
       "scale" : "1x"
     }
   ],

@@ -42,7 +42,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Qhm-Th-bpG">
-                                        <rect key="frame" x="130" y="17" width="201" height="199"/>
+                                        <rect key="frame" x="69" y="17" width="201" height="199"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <viewLayoutGuide key="safeArea" id="l8L-rV-B4O"/>
                                     </imageView>
@@ -116,7 +116,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-807" y="42"/>
+            <point key="canvasLocation" x="-807" y="98"/>
         </scene>
         <!--Main-->
         <scene sceneID="BFK-Gf-vn3">
@@ -145,7 +145,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="freegan_logo_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="vER-kA-M3O">
-                                        <rect key="frame" x="132" y="17" width="201" height="199"/>
+                                        <rect key="frame" x="74" y="17" width="201" height="199"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <viewLayoutGuide key="safeArea" id="5xu-2v-KN3"/>
                                     </imageView>
@@ -207,7 +207,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-807" y="1011"/>
+            <point key="canvasLocation" x="-807" y="954"/>
         </scene>
     </scenes>
     <resources>
