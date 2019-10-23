@@ -189,9 +189,13 @@ extension PostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             imageSelected = true
         } else {
             print("MARK: A valid image wasn't selected")
-            
         }
         
         imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }
