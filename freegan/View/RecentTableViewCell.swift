@@ -36,7 +36,7 @@ class RecentTableViewCell: UITableViewCell {
             let postId = (recent[kPOSTID] as! String)
             
             firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: withUserId).observe(.value, with: {
-                snapshot in
+                [weak self] snapshot in
                 
                 if snapshot.exists() {
                     let userDictionary = ((snapshot.value as! NSDictionary).allValues as Array).first
@@ -49,7 +49,7 @@ class RecentTableViewCell: UITableViewCell {
                             } else {
                                 if let imgData = data {
                                     if let img = UIImage(data: imgData) {
-                                        self.avatarImageView.image = img
+                                        self?.avatarImageView.image = img
                                         FeedVC.imageCache.setObject(img, forKey: recentChatMate.userImgUrl! as NSString)
                                     }
                                 }
@@ -59,7 +59,7 @@ class RecentTableViewCell: UITableViewCell {
                 }
             })
             
-            DataService.ds.REF_POSTS.child(postId).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.child(postId).observe(.value, with: { [weak self] snapshot in
                 
                 if snapshot.exists() {
                     let currentPost = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
@@ -70,7 +70,7 @@ class RecentTableViewCell: UITableViewCell {
                         } else {
                             if let imgData = data {
                                 if let img = UIImage(data: imgData) {
-                                    self.postImageView.image = img
+                                    self?.postImageView.image = img
                                     FeedVC.imageCache.setObject(img, forKey: currentPost.imageUrl[0] as NSString)
                                 }
                             }
