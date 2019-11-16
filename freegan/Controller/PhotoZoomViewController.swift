@@ -56,7 +56,7 @@ class PhotoZoomViewController: UIViewController {
             blockedUsersList = poster!.blockedUsersList
             return
         }
-        self.loadWithUser(withUserUserId: poster!.objectId) { (poster) in
+        loadWithUser(withUserUserId: poster!.objectId) { [unowned self] (poster) in
             self.poster = poster
             self.blockedUsersList = poster.blockedUsersList
         }
@@ -84,7 +84,7 @@ class PhotoZoomViewController: UIViewController {
             chatVC.chatRoomId = freegan.startChat(user1: currentUser!, user2: poster!, postId: post!.postId)
             
             chatVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(chatVC, animated: true)
+            navigationController?.pushViewController(chatVC, animated: true)
         }
     }
     
@@ -113,7 +113,7 @@ class PhotoZoomViewController: UIViewController {
             let profileVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ProfileVC")  as! ProfileVC
             profileVC.posterUserId = poster.objectId
             
-            self.navigationController?.pushViewController(profileVC, animated: true)
+            navigationController?.pushViewController(profileVC, animated: true)
         }
         
     }
@@ -123,7 +123,7 @@ class PhotoZoomViewController: UIViewController {
         
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
         let editPostAction = UIAlertAction(title: "Edit Post", style: .default) { [unowned self] (alert: UIAlertAction!) in
             let editPostVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EditPostVC") as! EditPostVC
@@ -151,7 +151,7 @@ class PhotoZoomViewController: UIViewController {
         // This lines is for the popover you need to show in iPad
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
         let reportUserAction = UIAlertAction(title: "Report User", style: .default){ (alert: UIAlertAction!) in
             
@@ -198,10 +198,10 @@ class PhotoZoomViewController: UIViewController {
     
     func deletePost(postId: String) {
         
-        firebase.child(kPOST).child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+        firebase.child(kPOST).child(postId).observeSingleEvent(of: .value, with: { [weak self] (snapshot) in
             if snapshot.exists() {
                 
-                self.showSpinner(onView: self.view)
+                self?.showSpinner(onView: self!.view)
                 
                 let postData = snapshot.value as! Dictionary<String, AnyObject>
      
@@ -222,18 +222,18 @@ class PhotoZoomViewController: UIViewController {
                         for i in recents.keys {
                             firebase.child(kRECENT).child(i).removeValue()
                         }
-                        self.removeSpinner()
-                        self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
+                        self?.removeSpinner()
+                        self?.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
                             [unowned self] view in
                             view.dismiss(animated: true, completion: nil)
-                            self.parent?.parent?.navigationController?.popViewController(animated: true)
+                            self?.parent?.parent?.navigationController?.popViewController(animated: true)
                         }
                     } else {
-                        self.removeSpinner()
-                        self.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
+                        self?.removeSpinner()
+                        self?.showAlertWithEscaping(title: "Success!", message: "Post item deleted") {
                             [unowned self] view in
                             view.dismiss(animated: true, completion: nil)
-                            self.parent?.parent?.navigationController?.popViewController(animated: true)
+                            self?.parent?.parent?.navigationController?.popViewController(animated: true)
                         }
                     }
                 })

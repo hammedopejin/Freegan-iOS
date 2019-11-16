@@ -77,13 +77,14 @@ extension LocationVC: UITableViewDelegate {
         let searchResult = searchResults[indexPath.row]
         let searchRequest = MKLocalSearch.Request(completion: searchResult)
         let search = MKLocalSearch(request: searchRequest)
-        search.start { [unowned self] (response, error) in
+        search.start { [weak self] (response, error) in
+            guard let me = self else { return }
             let coordinate = response?.mapItems[0].placemark.coordinate
             if let location = coordinate {
-                self.updateUserLocation(location: location)
-                self.showToast( message: "Location successfully updated")
+                me.updateUserLocation(location: location)
+                me.showToast( message: "Location successfully updated")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    self.navigationController?.popViewController(animated: true)
+                    me.navigationController?.popViewController(animated: true)
                 }
             }
         }
@@ -109,8 +110,9 @@ extension LocationVC: MKLocalSearchCompleterDelegate {
     
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         searchResults = completer.results
-        DispatchQueue.main.async {
-            self.locationTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let me = self else { return }
+            me.locationTableView.reloadData()
         }
     }
 

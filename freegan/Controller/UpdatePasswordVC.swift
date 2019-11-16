@@ -50,15 +50,15 @@ class UpdatePasswordVC: UIViewController {
         }
         showSpinner(onView: view)
         
-        user.updatePassword(to: password) { [unowned self] (completion) in
+        user.updatePassword(to: password) { [weak self] (completion) in
             if (completion != nil) {
-                self.removeSpinner()
-                self.showError(title: "Error changing password!", message: completion!.localizedDescription)
+                self?.removeSpinner()
+                self?.showError(title: "Error changing password!", message: completion!.localizedDescription)
             } else {
-                self.removeSpinner()
+                self?.removeSpinner()
                 
-                self.showAlert(title: "Success!", message: "Password successfully updated.")
-                self.presentingViewController?.dismiss(animated: true, completion: nil)
+                self?.showAlert(title: "Success!", message: "Password successfully updated.")
+                self?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         }
         

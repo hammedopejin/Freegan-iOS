@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return self.orientationLock
+        return orientationLock
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -135,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                             chatVC.withUserUserId = withUserUserId
                             chatVC.currentUser = user
                             
-                            DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { (snapshot) in
+                            DataService.ds.REF_POSTS.child(postId).observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
                                 if snapshot.exists() {
                                     let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
                                     chatVC.post = post

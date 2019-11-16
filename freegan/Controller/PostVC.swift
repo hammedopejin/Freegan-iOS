@@ -20,7 +20,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
     var imageSelected = false
     static var useCamera = false
     var cam: Camera?
-    var currentUser: FUser?
+    var currentUser: FUser!
     var geoRef: GeoFire?
     
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.hidesBarsOnTap = true
         tabBarController?.tabBar.isHidden = true
     }
@@ -62,7 +62,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
             return
         }
         
-        self.view.endEditing(true)
+        view.endEditing(true)
         postButtonView.isHidden = true
         postDescription.isHidden = true
         showSpinner(onView: view)
@@ -84,7 +84,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 // Metadata contains file metadata such as size, content-type.
                 let _ = metadata.size
                 // You can also access to download URL after upload.
-                ref.downloadURL { (url, error) in
+                ref.downloadURL { [unowned self] (url, error) in
                     guard let downloadURL = url else {
                         
                         return
@@ -104,7 +104,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
             return
         }
         
-        self.view.endEditing(true)
+        view.endEditing(true)
         postButtonView.isHidden = true
         postDescription.isHidden = true
         showSpinner(onView: view)
@@ -126,7 +126,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 // Metadata contains file metadata such as size, content-type.
                 let _ = metadata.size
                 // You can also access to download URL after upload.
-                ref.downloadURL { (url, error) in
+                ref.downloadURL { [unowned self] (url, error) in
                     guard let downloadURL = url else {
                         
                         return
@@ -148,21 +148,21 @@ class PostVC: UIViewController, UITextFieldDelegate {
             kPOSTID : postId as AnyObject,
             kDESCRIPTION : postDescription.text! as AnyObject,
             kIMAGEURL : [imgUrl] as AnyObject,
-            kPROFILEIMAGEURL : currentUser!.userImgUrl as AnyObject,
-            kUSERNAME : self.currentUser!.userName as AnyObject,
+            kPROFILEIMAGEURL : currentUser.userImgUrl as AnyObject,
+            kUSERNAME : currentUser.userName as AnyObject,
             kPOSTDATE : time as AnyObject,
             kPOSTUSEROBJECTID : currentUser!.objectId as AnyObject
         ]
         
         postRef.setValue(post)
-        geoRef?.setLocation(CLLocation(latitude: (currentUser?.latitude)!, longitude: (currentUser?.longitude)!), forKey: postId)
+        geoRef?.setLocation(CLLocation(latitude: currentUser.latitude!, longitude: currentUser.longitude!), forKey: postId)
         
-        self.removeSpinner()
+        removeSpinner()
         postDescription.text = ""
         imageSelected = false
         postImage.image = UIImage(named: "1")
         
-        self.showAlertWithEscaping(title: "Success!", message: "Item successfully posted.") {
+        showAlertWithEscaping(title: "Success!", message: "Item successfully posted.") {
             [unowned self] view in
             view.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
@@ -196,6 +196,6 @@ extension PostVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagePicker.dismiss(animated: true, completion: nil)
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -70,7 +70,7 @@ class ReportUserVC: UIViewController, UITextViewDelegate {
         removeSpinner()
         descriptionTextView.text = ""
         
-        self.showAlertWithEscaping(title: "Success!", message: "Complaint sent successfully.") {
+        showAlertWithEscaping(title: "Success!", message: "Complaint sent successfully.") {
             [unowned self] view in
             view.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)

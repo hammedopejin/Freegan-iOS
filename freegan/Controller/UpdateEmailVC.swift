@@ -45,12 +45,12 @@ class UpdateEmailVC: UIViewController {
             return
         }
         showSpinner(onView: view)
-        user.updateEmail(to: email) { [unowned self] (completion) in
+        user.updateEmail(to: email) { [weak self] (completion) in
             if (completion != nil) {
-                self.removeSpinner()
-                self.showError(title: "Error changing email address!", message: completion!.localizedDescription)
+                self?.removeSpinner()
+                self?.showError(title: "Error changing email address!", message: completion!.localizedDescription)
             } else {
-                self.removeSpinner()
+                self?.removeSpinner()
                 
                 let date = Date()
                 let time = dateFormatterWithTime().string(from: date)
@@ -63,8 +63,8 @@ class UpdateEmailVC: UIViewController {
                 
                 values.removeAll()
                 
-                self.showAlert(title: "Success!", message: "Username successfully updated.")
-                self.presentingViewController?.dismiss(animated: true, completion: nil)
+                self?.showAlert(title: "Success!", message: "Username successfully updated.")
+                self?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         }
         

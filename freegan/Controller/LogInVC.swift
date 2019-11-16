@@ -27,24 +27,24 @@ class LogInVC : UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnTap = false
     }
  
     @IBAction func logInTapped(_ sender: Any) {
         if emailField.text == "" || pwdField.text == "" {
-            self.showToast(message : "All text fields must be entered properly!")
+            showToast(message : "All text fields must be entered properly!")
             return
         }
         
         if let email = emailField.text, let pwd = pwdField.text {
-            Auth.auth().signIn(withEmail: email, password: pwd, completion: { [unowned self] (user, error) in
+            Auth.auth().signIn(withEmail: email, password: pwd, completion: { [weak self] (user, error) in
                 if error == nil {
                     if let user = user {
-                        self.completeSignIn(id: user.user.uid)
+                        self?.completeSignIn(id: user.user.uid)
                     }
                 } else {
-                    self.showToast(message : "Login failed, invalid email and/or password")
+                    self?.showToast(message : "Login failed, invalid email and/or password")
                 }
             })
         }
@@ -53,7 +53,7 @@ class LogInVC : UIViewController, UITextFieldDelegate {
     @IBAction func gotoLogin(_ sender: Any) {
         
         let register = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "RegisterVC") as! RegisterVC
-        self.present(register, animated: true, completion: nil)
+        present(register, animated: true, completion: nil)
     }
  
     func completeSignIn(id: String) {
@@ -71,15 +71,15 @@ class LogInVC : UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardSize.height
             }
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
         }
     }
 }

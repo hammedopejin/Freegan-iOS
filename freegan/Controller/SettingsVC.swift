@@ -13,7 +13,7 @@ import CoreLocation
 
 class SettingsVC: UITableViewController {
     
-    var currentUser: FUser?
+    var currentUser: FUser!
     var imagePicker: UIImagePickerController!
     var cam: Camera?
     var locationAddress = ""
@@ -26,15 +26,15 @@ class SettingsVC: UITableViewController {
         cam = Camera(delegate_: self)
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observe(.value, with: {
-            snapshot in
+            [weak self] snapshot in
             
             if snapshot.exists() {
-                self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                if let lat = self.currentUser?.latitude, let lon = self.currentUser?.longitude {
-                    self.getAddressFromLatLong(latitude: lat, with: lon) { [unowned self] address, location in
-                        self.currentLocation = location
-                        self.locationAddress = address ?? ""
-                        self.tableView.reloadData()
+                self?.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
+                if let lat = self?.currentUser?.latitude, let lon = self?.currentUser?.longitude {
+                    self?.getAddressFromLatLong(latitude: lat, with: lon) { [weak self] address, location in
+                        self?.currentLocation = location
+                        self?.locationAddress = address ?? ""
+                        self?.tableView.reloadData()
                     }
                 }
                
@@ -153,7 +153,7 @@ class SettingsVC: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 4 {
             let locationVC = LocationVC()
             locationVC.currentLocation = currentLocation
-            self.show(locationVC, sender: self)
+            show(locationVC, sender: self)
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -163,13 +163,13 @@ class SettingsVC: UITableViewController {
         if indexPath.section == 1 && indexPath.row == 1 {
             let termsVC = TermsAndConitionsVC()
             termsVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(termsVC, animated: true)
+            navigationController?.pushViewController(termsVC, animated: true)
         }
         
         if indexPath.section == 1 && indexPath.row == 2 {
             let privacyVC = PrivacyPolicyVC()
             privacyVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(privacyVC, animated: true)
+            navigationController?.pushViewController(privacyVC, animated: true)
         }
         
         if indexPath.section == 1 && indexPath.row == 3 {
@@ -187,7 +187,7 @@ class SettingsVC: UITableViewController {
         // This lines is for the popover you need to show in iPad
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
         let logOut = UIAlertAction(title: "Log Out", style: .destructive){ [unowned self] (alert: UIAlertAction!) in
             self.logOut()
@@ -205,7 +205,7 @@ class SettingsVC: UITableViewController {
     
     func logOut(){
     
-        let keychainResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+        let _ = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         try! Auth.auth().signOut()
     
         let login = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC")
@@ -218,7 +218,7 @@ class SettingsVC: UITableViewController {
         // This lines is for the popover you need to show in iPad
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
         let camera = UIAlertAction(title: "Camera", style: .default){ [unowned self] (alert: UIAlertAction!) in
             self.cam!.presentPhotoCamera(target: self, canEdit: true, imagePicker: self.imagePicker)

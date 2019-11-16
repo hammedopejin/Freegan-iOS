@@ -16,13 +16,13 @@ class RecentViewController: UIViewController {
     
     var recents: [NSDictionary] = []
     var firstLoad: Bool?
-    var currentUser: FUser?
+    var currentUser: FUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
-            snapshot in
+            [unowned self] snapshot in
 
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -52,7 +52,7 @@ class RecentViewController: UIViewController {
     func loadRecents() {
         
         firebase.child(kRECENT).queryOrdered(byChild: kUSERID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)).observe(.value, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             self.recents.removeAll()
             
@@ -124,7 +124,7 @@ extension RecentViewController:  UITableViewDelegate {
         let chatRoomId = (recent[kCHATROOMID] as? String)!
         restartRecentChat(recent: recent, postId: postId)
         
-        loadWithUser(withUserUserId: withUserUserId) { (withUser) in
+        loadWithUser(withUserUserId: withUserUserId) { [unowned self] withUser in
             
             self.loadPost(postId: postId){ (post) in
                 

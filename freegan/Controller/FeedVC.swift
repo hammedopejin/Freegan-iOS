@@ -38,7 +38,7 @@ class FeedVC: UIViewController {
     var posters = Array(repeating: FUser(), count: 20)
     var posts = [Post]()
     var filteredPosts = [Post]()
-    var currentUser: FUser?
+    var currentUser: FUser!
     var postIds = [String]()
     var askLocationFlag = false
     let PAGE_LOAD_SIZE = 10
@@ -71,15 +71,18 @@ class FeedVC: UIViewController {
         
         //Manually set the collectionView frame to the size of the view bounds
         //(this is required to support iOS 10 devices and earlier)
-        collectionView.frame = self.view.bounds
+        collectionView.frame = view.bounds
         collectionView.addSubview(refreshControl)
         collectionView.alwaysBounceVertical = true
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnTap = false
+        
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID)!).observeSingleEvent(of: .value, with: {
-            snapshot in
+            [unowned self] snapshot in
             
             if snapshot.exists() {
                 self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -93,20 +96,14 @@ class FeedVC: UIViewController {
         })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.hidesBarsOnTap = false
-    }
-    
     override func viewSafeAreaInsetsDidChange() {
         
         //if the application launches in landscape mode, the safeAreaInsets
         //need to be updated from 0.0 if the device is an iPhone X model. At
         //application launch this function is called before viewWillLayoutSubviews()
         if #available(iOS 11, *) {
-            self.currentLeftSafeAreaInset = self.view.safeAreaInsets.left
-            self.currentRightSafeAreaInset = self.view.safeAreaInsets.right
+            currentLeftSafeAreaInset = view.safeAreaInsets.left
+            currentRightSafeAreaInset = view.safeAreaInsets.right
         }
     }
     
@@ -124,20 +121,20 @@ class FeedVC: UIViewController {
         
         if #available(iOS 11, *) {
             
-            self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.bounds.size)
-            self.collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.bounds.size)
+            view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: view.bounds.size)
+            collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: view.bounds.size)
             
-            self.collectionView.contentInsetAdjustmentBehavior = .never
+            collectionView.contentInsetAdjustmentBehavior = .never
             let statusBarHeight : CGFloat = UIApplication.shared.statusBarFrame.height
             let navBarHeight : CGFloat = navigationController?.navigationBar.frame.height ?? 0
-            self.edgesForExtendedLayout = .all
-            let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
+            edgesForExtendedLayout = .all
+            let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
             
             if UIDevice.current.orientation.isLandscape {
-                self.collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: self.currentLeftSafeAreaInset, bottom: tabBarHeight, right: self.currentRightSafeAreaInset)
+                collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: currentLeftSafeAreaInset, bottom: tabBarHeight, right: currentRightSafeAreaInset)
             }
             else {
-                self.collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: 0.0, bottom: tabBarHeight, right: 0.0)
+                collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: 0.0, bottom: tabBarHeight, right: 0.0)
             }
         }
     }
@@ -154,7 +151,7 @@ class FeedVC: UIViewController {
             
             //Check to see if the view is currently visible, and if so,
             //animate the frame transition to the new orientation
-            if self.viewIfLoaded?.window != nil {
+            if viewIfLoaded?.window != nil {
                 
                 coordinator.animate(alongsideTransition: { [unowned self] _ in
                     
@@ -175,11 +172,11 @@ class FeedVC: UIViewController {
                 //Otherwise, do not animate the transition
             else {
                 
-                self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
-                self.collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+                view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+                collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
                 
                 //Invalidate the collectionViewLayout
-                self.collectionView.collectionViewLayout.invalidateLayout()
+                collectionView.collectionViewLayout.invalidateLayout()
                 
             }
         }
@@ -208,10 +205,10 @@ class FeedVC: UIViewController {
     @IBAction func gotoPostVC(_ sender: AnyObject) {
         guard let _ = currentUser?.latitude, let _ = currentUser?.longitude else {
             showToast(message: "Current location needed to post an item!")
-            self.requestLocationPermission()
+            requestLocationPermission()
             return
         }
-        self.showCameraLibraryOptions()
+        showCameraLibraryOptions()
     }
     
     func createSearch() {
@@ -240,7 +237,7 @@ class FeedVC: UIViewController {
     
     func requestLocation() {
         
-        self.locationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
@@ -252,34 +249,34 @@ class FeedVC: UIViewController {
             
         // get the user location
         case .notDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization()
             break
             
         case .restricted, .denied:
             if (currentUser?.latitude == nil || currentUser?.longitude == nil){
-                self.requestLocationPermission()
+                requestLocationPermission()
             } else {
-                self.askLocationFlag = true
+                askLocationFlag = true
             }
             break
             
         case .authorizedAlways:
-            self.askLocationFlag = true
+            askLocationFlag = true
             break
         case .authorizedWhenInUse:
-            self.askLocationFlag = true
+            askLocationFlag = true
             break
             
         }
         
-        if (self.askLocationFlag){
+        if (askLocationFlag){
             checkPosts()
         }
     }
     
     func requestLocationPermission() {
         
-        self.askLocationFlag = true
+        askLocationFlag = true
         
         let alertController = UIAlertController(title: "Freegan", message: "Please go to Settings and turn on location permissions",
                                                 preferredStyle: .alert)
@@ -301,11 +298,11 @@ class FeedVC: UIViewController {
             break
             
         case .notDetermined:
-            self.locationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization()
             break
             
         case .restricted, .denied:
-            self.present(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
             break
         }
     }
@@ -336,16 +333,16 @@ class FeedVC: UIViewController {
         // This lines is for the popover you need to show in iPad
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
-        let camera = UIAlertAction(title: "Camera", style: .default){ (alert: UIAlertAction!) in
+        let camera = UIAlertAction(title: "Camera", style: .default){ [weak self] (alert: UIAlertAction!) in
             PostVC.useCamera = true
-            self.performSegue(withIdentifier: "goToPost", sender: nil)
+            self?.performSegue(withIdentifier: "goToPost", sender: nil)
         }
         
-        let library = UIAlertAction(title: "Photo Library", style: .default){ (alert: UIAlertAction!) in
+        let library = UIAlertAction(title: "Photo Library", style: .default){ [weak self] (alert: UIAlertAction!) in
             PostVC.useCamera = false
-            self.performSegue(withIdentifier: "goToPost", sender: nil)
+            self?.performSegue(withIdentifier: "goToPost", sender: nil)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert: UIAlertAction!) in
@@ -356,7 +353,7 @@ class FeedVC: UIViewController {
         optionMenu.addAction(library)
         optionMenu.addAction(cancelAction)
         
-        self.present(optionMenu, animated: true, completion: nil)
+        present(optionMenu, animated: true, completion: nil)
     }
     
     func checkPosts() {
@@ -374,7 +371,7 @@ class FeedVC: UIViewController {
         totalLoadSize = 0
         postIds.removeAll()
         posts.removeAll()
-        
+        collectionView.reloadData()
         query.observe(.keyEntered, with: { [unowned self] key, location in
             self.postIds.append(key)
         })
@@ -387,7 +384,10 @@ class FeedVC: UIViewController {
                     self.loadPosts(page_load_size: self.postIds.count, offset: 0);
                 }
             } else {
-                self.showToast(message: "No Freegan posted in your area yet! Go ahead, post one")
+                self.showAlert(title: "", message: "No Freegan posted in your area yet! Go ahead, post one")
+                if !self.refreshControl.isRefreshing {
+                    self.refreshControl.isHidden = true
+                }
             }
         }
     }
@@ -400,12 +400,12 @@ class FeedVC: UIViewController {
         }
         
         for i in offset..<maxBoundary {
-            DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.child(postIds[i]).observe(.value, with: { [weak self] (snapshot) in
                 if snapshot.exists() {
                     let post = Post(postId: snapshot.key, postData: snapshot.value as! Dictionary<String, AnyObject>)
-                    self.posts.append(post)
+                    self?.posts.append(post)
                     
-                    self.collectionView.reloadData()
+                    self?.collectionView.reloadData()
                 }
             })
         }
@@ -432,26 +432,26 @@ extension FeedVC: UICollectionViewDataSource {
         
         firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: fetchedPosts[indexPath.row].postUserObjectId)
             .observeSingleEvent(of: .value, with: {
-                snapshot in
+                [weak self] snapshot in
                 
                 if snapshot.exists() {
                     
                     let poster = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
-                    self.posters[indexPath.row] = poster
+                    self?.posters[indexPath.row] = poster
                     var ref = Storage.storage().reference(forURL: "gs://freegan-eabd2.appspot.com/user_images/ic_account_circle_black_24dp.png")
                     
                     if (!(poster.userImgUrl?.isEmpty)!){
                         ref = Storage.storage().reference(forURL: poster.userImgUrl!)
                     }
                     
-                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { [weak self] (data, error) in
                         if error != nil {
                             print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                             
                         } else {
                             if let imgData = data {
                                 if let img = UIImage(data: imgData) {
-                                    self.posterImages[indexPath.row] = img
+                                    self?.posterImages[indexPath.row] = img
                                     FeedVC.imageCache.setObject(img, forKey: poster.userImgUrl! as NSString)
                                 }
                             }
@@ -466,7 +466,7 @@ extension FeedVC: UICollectionViewDataSource {
             
             let ref = Storage.storage().reference(forURL: i)
             
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { [weak self] (data, error) in
                 if error != nil {
                     print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                     
@@ -477,7 +477,7 @@ extension FeedVC: UICollectionViewDataSource {
                                 cell.imageView.image = img
                                 FeedVC.imageCache.setObject(img, forKey: i as NSString)
                             }
-                            self.postImages[indexPath.row][j] = img
+                            self?.postImages[indexPath.row][j] = img
                             j += 1
                         }
                     }
@@ -487,7 +487,7 @@ extension FeedVC: UICollectionViewDataSource {
         
         let totalItemsCount = collectionView.numberOfItems(inSection: 0)
         
-        if indexPath.row >= self.totalLoadSize - 3 {
+        if indexPath.row >= totalLoadSize - 3 {
             if (PAGE_LOAD_SIZE < postIds.count) {
                 loadPosts(page_load_size: PAGE_LOAD_SIZE, offset: totalItemsCount);
                 totalLoadSize += PAGE_LOAD_SIZE;
@@ -523,21 +523,21 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
     func getImageViewFromCollectionViewCell(for selectedIndexPath: IndexPath) -> UIImageView {
         
         //Get the array of visible cells in the collectionView
-        let visibleCells = self.collectionView.indexPathsForVisibleItems
+        let visibleCells = collectionView.indexPathsForVisibleItems
         
         //If the current indexPath is not visible in the collectionView,
         //scroll the collectionView to the cell to prevent it from returning a nil value
-        if !visibleCells.contains(self.selectedIndexPath) {
+        if !visibleCells.contains(selectedIndexPath) {
             
             //Scroll the collectionView to the current selectedIndexPath which is offscreen
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+            collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
             
             //Reload the items at the newly visible indexPaths
-            self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-            self.collectionView.layoutIfNeeded()
+            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            collectionView.layoutIfNeeded()
             
             //Guard against nil values
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 //Return a default UIImageView
                 return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
@@ -546,7 +546,7 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
         }
         else {
             //Guard against nil return values
-            guard let guardedCell = self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell else {
+            guard let guardedCell = collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell else {
                 //Return a default UIImageView
                 return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
@@ -561,21 +561,21 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
     func getFrameFromCollectionViewCell(for selectedIndexPath: IndexPath) -> CGRect {
         
         //Get the currently visible cells from the collectionView
-        let visibleCells = self.collectionView.indexPathsForVisibleItems
+        let visibleCells = collectionView.indexPathsForVisibleItems
         
         //If the current indexPath is not visible in the collectionView,
         //scroll the collectionView to the cell to prevent it from returning a nil value
-        if !visibleCells.contains(self.selectedIndexPath) {
+        if !visibleCells.contains(selectedIndexPath) {
             
             //Scroll the collectionView to the cell that is currently offscreen
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+            collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
             
             //Reload the items at the newly visible indexPaths
-            self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-            self.collectionView.layoutIfNeeded()
+            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            collectionView.layoutIfNeeded()
             
             //Prevent the collectionView from returning a nil value
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             
@@ -584,7 +584,7 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
             //Otherwise the cell should be visible
         else {
             //Prevent the collectionView from returning a nil value
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             //The cell was found successfully
@@ -641,7 +641,7 @@ extension FeedVC: PhotoPageContainerViewControllerDelegate {
     
     func containerViewController(_ containerViewController: PhotoPageContainerViewController, indexDidUpdate currentIndex: Int) {
         selectedIndexPath = IndexPath(row: currentIndex, section: 0)
-        collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+        collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
     }
 }
 
@@ -667,7 +667,7 @@ extension FeedVC: ZoomAnimatorDelegate {
         //Get a guarded reference to the cell's frame
         let unconvertedFrame = getFrameFromCollectionViewCell(for: selectedIndexPath)
         
-        let cellFrame = collectionView.convert(unconvertedFrame, to: self.view)
+        let cellFrame = collectionView.convert(unconvertedFrame, to: view)
         
         if cellFrame.minY < collectionView.contentInset.top {
             return CGRect(x: cellFrame.minX, y: collectionView.contentInset.top,

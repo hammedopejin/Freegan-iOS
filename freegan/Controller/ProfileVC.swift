@@ -34,7 +34,7 @@ class ProfileVC: UIViewController {
     var postImages = Array(repeating: Array(repeating: #imageLiteral(resourceName: "freegan_logo"), count: 4), count: 20)
     var posterImages = Array(repeating: #imageLiteral(resourceName: "freegan_logo"), count: 20)
     var posts = [Post]()
-    var currentUser: FUser?
+    var currentUser: FUser!
     var poster: FUser!
     var posterUserId: String!
     var blockedUsersList: [String] = []
@@ -49,8 +49,8 @@ class ProfileVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let posterUserId = self.posterUserId {
-            self.loadWithUser(withUserUserId: posterUserId) { (poster) in
+        if let posterUserId = posterUserId {
+            loadWithUser(withUserUserId: posterUserId) { [unowned self] (poster) in
                 self.poster = poster
                 self.blockedUsersList = poster.blockedUsersList
                 self.loadPosts()
@@ -60,7 +60,7 @@ class ProfileVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnTap = false
     }
     
@@ -76,8 +76,8 @@ class ProfileVC: UIViewController {
         //need to be updated from 0.0 if the device is an iPhone X model. At
         //application launch this function is called before viewWillLayoutSubviews()
         if #available(iOS 11, *) {
-            self.currentLeftSafeAreaInset = self.view.safeAreaInsets.left
-            self.currentRightSafeAreaInset = self.view.safeAreaInsets.right
+            currentLeftSafeAreaInset = view.safeAreaInsets.left
+            currentRightSafeAreaInset = view.safeAreaInsets.right
         }
     }
     
@@ -95,20 +95,20 @@ class ProfileVC: UIViewController {
         
         if #available(iOS 11, *) {
             
-            self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.bounds.size)
-            self.collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.bounds.size)
+            view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: view.bounds.size)
+            collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: view.bounds.size)
             
-            self.collectionView.contentInsetAdjustmentBehavior = .never
+            collectionView.contentInsetAdjustmentBehavior = .never
             let statusBarHeight : CGFloat = UIApplication.shared.statusBarFrame.height
             let navBarHeight : CGFloat = navigationController?.navigationBar.frame.height ?? 0
-            self.edgesForExtendedLayout = .all
-            let tabBarHeight = self.tabBarController?.tabBar.frame.height ?? 0
+            edgesForExtendedLayout = .all
+            let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
             
             if UIDevice.current.orientation.isLandscape {
-                self.collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: self.currentLeftSafeAreaInset, bottom: tabBarHeight, right: self.currentRightSafeAreaInset)
+                collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: currentLeftSafeAreaInset, bottom: tabBarHeight, right: currentRightSafeAreaInset)
             }
             else {
-                self.collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: 0.0, bottom: tabBarHeight, right: 0.0)
+                collectionView.contentInset = UIEdgeInsets(top: (navBarHeight) + statusBarHeight, left: 0.0, bottom: tabBarHeight, right: 0.0)
             }
         }
     }
@@ -125,9 +125,9 @@ class ProfileVC: UIViewController {
             
             //Check to see if the view is currently visible, and if so,
             //animate the frame transition to the new orientation
-            if self.viewIfLoaded?.window != nil {
+            if viewIfLoaded?.window != nil {
                 
-                coordinator.animate(alongsideTransition: { _ in
+                coordinator.animate(alongsideTransition: { [unowned self] _ in
                     
                     //This needs to be called inside viewWillTransition() instead of viewWillLayoutSubviews()
                     //for devices running iOS 10.0 and earlier otherwise the frames for the view and the
@@ -146,11 +146,11 @@ class ProfileVC: UIViewController {
                 //Otherwise, do not animate the transition
             else {
                 
-                self.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
-                self.collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+                view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
+                collectionView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: size)
                 
                 //Invalidate the collectionViewLayout
-                self.collectionView.collectionViewLayout.invalidateLayout()
+                collectionView.collectionViewLayout.invalidateLayout()
                 
             }
         }
@@ -163,7 +163,7 @@ class ProfileVC: UIViewController {
         // This lines is for the popover you need to show in iPad
         optionMenu.popoverPresentationController?.sourceView = view
         optionMenu.popoverPresentationController?.permittedArrowDirections = []
-        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
         
         let report = UIAlertAction(title: "Report User", style: .default){ [unowned self] (alert: UIAlertAction!) in
             
@@ -176,11 +176,11 @@ class ProfileVC: UIViewController {
         }
         
         let block = UIAlertAction(title: "Block User", style: .default){ [unowned self] (alert: UIAlertAction!) in
-            self.blockedUsersList.append(self.currentUser!.objectId)
+            self.blockedUsersList.append(self.currentUser.objectId)
         }
         
         let unBlock = UIAlertAction(title: "Unblock User", style: .default) { [unowned self] (alert: UIAlertAction!) in
-            self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser!.objectId)!)
+            self.blockedUsersList.remove(at: self.blockedUsersList.index(of:self.currentUser.objectId)!)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (alert: UIAlertAction!) in
@@ -224,7 +224,7 @@ class ProfileVC: UIViewController {
         
         guard let poster = poster else {
             
-            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.currentUser!.objectId).observe(.value, with: { (snapshot) in
+            DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: self.currentUser.objectId).observe(.value, with: { [unowned self] snapshot in
                 if snapshot.exists() {
                 
                     let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -239,7 +239,7 @@ class ProfileVC: UIViewController {
             return
         }
         
-        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { (snapshot) in
+        DataService.ds.REF_POSTS.queryOrdered(byChild: kPOSTUSEROBJECTID).queryEqual(toValue: poster.objectId).observe(.value, with: { [unowned self] snapshot in
             if snapshot.exists() {
                 
                 let postData = snapshot.value as! Dictionary<String, AnyObject>
@@ -258,7 +258,7 @@ class ProfileVC: UIViewController {
         if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
         
             firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: currentUserId).observe(.value, with: {
-                snapshot in
+                [unowned self] snapshot in
                 
                 if snapshot.exists() {
                     self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
@@ -304,11 +304,11 @@ extension ProfileVC: UICollectionViewDataSource{
         
         var j = 0
         
-        for i in self.posts[indexPath.row].imageUrl{
+        for i in posts[indexPath.row].imageUrl{
             
             let ref = Storage.storage().reference(forURL: i)
             
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { [unowned self] (data, error) in
                 if error != nil {
                     print("MARK: Unable to download image from Firebase storage \(error.debugDescription)")
                     
@@ -335,7 +335,7 @@ extension ProfileVC: UICollectionViewDataSource{
         if (kind == UICollectionView.elementKindSectionHeader) {
             let headerView: ProfileCollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath) as! ProfileCollectionReusableView
             
-            if let user = self.poster {
+            if let user = poster {
                 
                 headerView.profileName.text = user.userName
                 guard let imgUrl = user.userImgUrl, !imgUrl.isEmpty else {
@@ -368,13 +368,13 @@ extension ProfileVC: UICollectionViewDataSource{
                 if let currentUserId = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID) {
                     
                     firebase.child(kUSER).queryOrdered(byChild: kOBJECTID).queryEqual(toValue: currentUserId).observe(.value, with: {
-                        snapshot in
+                        [unowned self] snapshot in
                         
                         if snapshot.exists() {
                             self.currentUser = FUser.init(_dictionary: ((snapshot.value as! NSDictionary).allValues as NSArray).firstObject! as! NSDictionary)
                             
-                            headerView.profileName.text = self.currentUser?.userName
-                            guard let imgUrl = self.currentUser?.userImgUrl, !imgUrl.isEmpty else {
+                            headerView.profileName.text = self.currentUser.userName
+                            guard let imgUrl = self.currentUser.userImgUrl, !imgUrl.isEmpty else {
                                 headerView.profileImage.image = UIImage(named: "persoicon")
                                 return
                             }
@@ -413,7 +413,7 @@ extension ProfileVC: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.posts.count
+        return posts.count
     }
 }
 
@@ -433,7 +433,7 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedIndexPath = indexPath
+        selectedIndexPath = indexPath
         
         let photoPageContainerViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "PhotoPageContainerViewController") as! PhotoPageContainerViewController
         
@@ -444,21 +444,21 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         } else {
             posters = Array(repeating: currentUser!, count: posts.count)
         }
-        let nav = self.navigationController
+        let nav = navigationController
         
         nav?.delegate = photoPageContainerViewController.transitionController
         photoPageContainerViewController.transitionController.fromDelegate = self
         photoPageContainerViewController.transitionController.toDelegate = photoPageContainerViewController
         photoPageContainerViewController.delegate = self
-        photoPageContainerViewController.currentIndex = self.selectedIndexPath.row
-        photoPageContainerViewController.posts = self.posts
+        photoPageContainerViewController.currentIndex = selectedIndexPath.row
+        photoPageContainerViewController.posts = posts
         photoPageContainerViewController.fromProfileFlag = true
         photoPageContainerViewController.posters = posters
-        photoPageContainerViewController.posterImages = self.posterImages
-        photoPageContainerViewController.postImages = self.postImages
-        photoPageContainerViewController.currentUser = self.currentUser
+        photoPageContainerViewController.posterImages = posterImages
+        photoPageContainerViewController.postImages = postImages
+        photoPageContainerViewController.currentUser = currentUser
         
-        self.navigationController?.pushViewController(photoPageContainerViewController, animated: true)
+        navigationController?.pushViewController(photoPageContainerViewController, animated: true)
         
     }
     
@@ -467,21 +467,21 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
     func getImageViewFromCollectionViewCell(for selectedIndexPath: IndexPath) -> UIImageView {
         
         //Get the array of visible cells in the collectionView
-        let visibleCells = self.collectionView.indexPathsForVisibleItems
+        let visibleCells = collectionView.indexPathsForVisibleItems
         
         //If the current indexPath is not visible in the collectionView,
         //scroll the collectionView to the cell to prevent it from returning a nil value
-        if !visibleCells.contains(self.selectedIndexPath) {
+        if !visibleCells.contains(selectedIndexPath) {
             
             //Scroll the collectionView to the current selectedIndexPath which is offscreen
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+            collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
             
             //Reload the items at the newly visible indexPaths
-            self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-            self.collectionView.layoutIfNeeded()
+            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            collectionView.layoutIfNeeded()
             
             //Guard against nil values
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 //Return a default UIImageView
                 return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
@@ -490,7 +490,7 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
         }
         else {
             //Guard against nil return values
-            guard let guardedCell = self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell else {
+            guard let guardedCell = collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell else {
                 //Return a default UIImageView
                 return UIImageView(frame: CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0))
             }
@@ -505,21 +505,21 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
     func getFrameFromCollectionViewCell(for selectedIndexPath: IndexPath) -> CGRect {
         
         //Get the currently visible cells from the collectionView
-        let visibleCells = self.collectionView.indexPathsForVisibleItems
+        let visibleCells = collectionView.indexPathsForVisibleItems
         
         //If the current indexPath is not visible in the collectionView,
         //scroll the collectionView to the cell to prevent it from returning a nil value
-        if !visibleCells.contains(self.selectedIndexPath) {
+        if !visibleCells.contains(selectedIndexPath) {
             
             //Scroll the collectionView to the cell that is currently offscreen
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+            collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
             
             //Reload the items at the newly visible indexPaths
-            self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-            self.collectionView.layoutIfNeeded()
+            collectionView.reloadItems(at: collectionView.indexPathsForVisibleItems)
+            collectionView.layoutIfNeeded()
             
             //Prevent the collectionView from returning a nil value
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             
@@ -528,7 +528,7 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
             //Otherwise the cell should be visible
         else {
             //Prevent the collectionView from returning a nil value
-            guard let guardedCell = (self.collectionView.cellForItem(at: self.selectedIndexPath) as? PhotoCollectionViewCell) else {
+            guard let guardedCell = (collectionView.cellForItem(at: selectedIndexPath) as? PhotoCollectionViewCell) else {
                 return CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 120.0, height: 180.0)
             }
             //The cell was found successfully
@@ -541,8 +541,8 @@ extension ProfileVC: UICollectionViewDelegateFlowLayout {
 extension ProfileVC: PhotoPageContainerViewControllerDelegate {
     
     func containerViewController(_ containerViewController: PhotoPageContainerViewController, indexDidUpdate currentIndex: Int) {
-        self.selectedIndexPath = IndexPath(row: currentIndex, section: 0)
-        self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .centeredVertically, animated: false)
+        selectedIndexPath = IndexPath(row: currentIndex, section: 0)
+        collectionView.scrollToItem(at: selectedIndexPath, at: .centeredVertically, animated: false)
     }
 }
 
@@ -551,37 +551,37 @@ extension ProfileVC: ZoomAnimatorDelegate {
     func transitionWillStartWith(zoomAnimator: ZoomAnimator) {}
     
     func transitionDidEndWith(zoomAnimator: ZoomAnimator) {
-        let cell = self.collectionView.cellForItem(at: self.selectedIndexPath) as! PhotoCollectionViewCell
+        let cell = collectionView.cellForItem(at: selectedIndexPath) as! PhotoCollectionViewCell
         
         let cellFrame = self.collectionView.convert(cell.frame, to: self.view)
         
-        if cellFrame.minY < self.collectionView.contentInset.top {
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .top, animated: false)
-        } else if cellFrame.maxY > self.view.frame.height - self.collectionView.contentInset.bottom {
-            self.collectionView.scrollToItem(at: self.selectedIndexPath, at: .bottom, animated: false)
+        if cellFrame.minY < collectionView.contentInset.top {
+            collectionView.scrollToItem(at: selectedIndexPath, at: .top, animated: false)
+        } else if cellFrame.maxY > view.frame.height - collectionView.contentInset.bottom {
+            collectionView.scrollToItem(at: selectedIndexPath, at: .bottom, animated: false)
         }
     }
     
     func referenceImageView(for zoomAnimator: ZoomAnimator) -> UIImageView? {
         
         //Get a guarded reference to the cell's UIImageView
-        let referenceImageView = getImageViewFromCollectionViewCell(for: self.selectedIndexPath)
+        let referenceImageView = getImageViewFromCollectionViewCell(for: selectedIndexPath)
         
         return referenceImageView
     }
     
     func referenceImageViewFrameInTransitioningView(for zoomAnimator: ZoomAnimator) -> CGRect? {
         
-        self.view.layoutIfNeeded()
-        self.collectionView.layoutIfNeeded()
+        view.layoutIfNeeded()
+        collectionView.layoutIfNeeded()
         
         //Get a guarded reference to the cell's frame
-        let unconvertedFrame = getFrameFromCollectionViewCell(for: self.selectedIndexPath)
+        let unconvertedFrame = getFrameFromCollectionViewCell(for: selectedIndexPath)
         
-        let cellFrame = self.collectionView.convert(unconvertedFrame, to: self.view)
+        let cellFrame = collectionView.convert(unconvertedFrame, to: view)
         
-        if cellFrame.minY < self.collectionView.contentInset.top {
-            return CGRect(x: cellFrame.minX, y: self.collectionView.contentInset.top, width: cellFrame.width, height: cellFrame.height - (self.collectionView.contentInset.top - cellFrame.minY))
+        if cellFrame.minY < collectionView.contentInset.top {
+            return CGRect(x: cellFrame.minX, y: collectionView.contentInset.top, width: cellFrame.width, height: cellFrame.height - (collectionView.contentInset.top - cellFrame.minY))
         }
         return cellFrame
     }

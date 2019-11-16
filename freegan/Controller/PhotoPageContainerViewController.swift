@@ -19,11 +19,11 @@ class PhotoPageContainerViewController: UIViewController {
     weak var delegate: PhotoPageContainerViewControllerDelegate?
     
     var pageViewController: UIPageViewController {
-        return self.children[0] as! UIPageViewController
+        return children[0] as! UIPageViewController
     }
     
     var currentViewController: PhotoZoomViewController {
-        return self.pageViewController.viewControllers![0] as! PhotoZoomViewController
+        return pageViewController.viewControllers![0] as! PhotoZoomViewController
     }
     
     var postImages = [[UIImage]]()
@@ -81,7 +81,7 @@ class PhotoPageContainerViewController: UIViewController {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
 
-                if vertIndex > 0 && posts[self.currentIndex].imageUrl.count > 1{
+                if vertIndex > 0 && posts[currentIndex].imageUrl.count > 1{
                     vertIndex -= 1
                     vc.postImage = postImages[currentIndex][vertIndex]
                     vc.posterImage = posterImages[currentIndex]

@@ -29,7 +29,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.hidesBarsOnTap = false
         
         if let _ = KeychainWrapper.defaultKeychainWrapper.string(forKey: KEY_UID){
@@ -39,18 +39,18 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @IBAction func registerTapped(_ sender: Any) {
         if emailField.text == "" || userNameField.text == "" || pwdField.text == "" {
-            self.showToast(message : "All text fields must be entered properly!")
+            showToast(message : "All text fields must be entered properly!")
             return
         }
         if let email = emailField.text, let pwd = pwdField.text, let userName = userNameField.text {
             
-            Auth.auth().createUser(withEmail: email, password: pwd, completion: { [unowned self] (user, error) in
+            Auth.auth().createUser(withEmail: email, password: pwd, completion: { [weak self] (user, error) in
                 if error != nil {
-                    self.showToast(message : "Registration failed, invalid credentials")
+                    self?.showToast(message : "Registration failed, invalid credentials")
                 } else {
                     if let user = user {
                         FUser.registerUserWith(email: email, firuseruid: user.user.uid, userName: userName)
-                        self.completeSignIn(id: user.user.uid)
+                        self?.completeSignIn(id: user.user.uid)
                     }
                 }
             })
@@ -59,7 +59,7 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @IBAction func gotoLogin(_ sender: Any) {
         let logIn = UIStoryboard(name: "Register", bundle: nil).instantiateViewController(withIdentifier: "LogInVC") as! LogInVC
-        self.present(logIn, animated: true, completion: nil)
+        present(logIn, animated: true, completion: nil)
     }
     
     func completeSignIn(id: String) {
@@ -77,15 +77,15 @@ class RegisterVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= keyboardSize.height
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardSize.height
             }
         }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        if self.view.frame.origin.y != 0 {
-            self.view.frame.origin.y = 0
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
         }
     }
 }

@@ -38,7 +38,7 @@ class UpdateUsernameVC: UIViewController {
             removeSpinner()
             
             showAlert(title: "Success!", message: "Username successfully updated.")
-            self.presentingViewController?.dismiss(animated: true, completion: nil)
+            presentingViewController?.dismiss(animated: true, completion: nil)
             
         }
     }
